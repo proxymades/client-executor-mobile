@@ -1,0 +1,49 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@screens/*": [
+                "./src/screens/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@common_components/*": [
+                "./src/components/Common/*"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
+            ],
+            "@hooks_utils/*": [
+                "./src/hooks/utils/*"
+            ],
+            "@hooks_mutation/*": [
+                "./src/hooks/mutation/*"
+            ],
+            "@hooks_query/*": [
+                "./src/hooks/query/*"
+            ],
+            "@hooks_subscription/*": [
+                "./src/hooks/subscription/*"
+            ],
+            "@hooks_actions/*": [
+                "./src/hooks/actions/*"
+            ],
+            "@gql_mutation/*": [
+                "./src/gql/mutation/*"
+            ],
+            "@gql_query/*": [
+                "./src/gql/query/*"
+            ],
+            "@gql_actions/*": [
+                "./src/gql/actions/*"
+            ],
+            "@gql_subscription/*": [
+                "./src/gql/subscription/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
