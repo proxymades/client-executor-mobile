@@ -1,26 +1,22 @@
 //core
 import React, { useEffect, useState } from 'react'
-import { useMutation, useLazyQuery, useReactiveVar } from '@apollo/client'
-import cuid from 'cuid'
+import { useReactiveVar } from '@apollo/client'
 import { Text, TextInput, View, Pressable } from 'react-native'
-import { useMMKVString } from 'react-native-mmkv'
 import CheckBox from '@react-native-community/checkbox'
-import jwt_decode from 'jwt-decode'
 
-//gql
-import { SIGNUP } from '@gql_mutation/auth/Signup'
-import { CHECK_USERNAME } from '@gql_query/auth/CheckUsername'
-import { CHECK_REG_PHONE } from '@gql_query/auth/CheckRegPhone'
+//hooks
+import { useSignup } from '@hooks_mutation/auth/useSignup'
+import { useCheckPhone } from '@hooks_query/auth/useCheckPhone'
 
 //utils
-import { blackColorVar, isNotifedVar, localeVar } from '@utils/cache'
-import { REG_LOGIN, REG_PHONE } from '@utils/regulars'
+import { blackColorVar, localeVar } from '@utils/cache'
+import { IS_NUMBERS } from '@utils/regulars'
 
 //common components
 import { WhiteButton } from '@common_components/Buttons/WhiteButton'
 import { LoadingModal } from '@common_components/Modals/LoadingModal'
 import { BlackLoader } from '@common_components/Loaders/BlackLoader'
-import { ExtraModal } from '@common_components/Modals/ExtraModal'
+// import { ExtraModal } from '@common_components/Modals/ExtraModal'
 // import { DataPolicyForm } from '@common_components/Modals/Forms/DataPolicyForm'
 
 //icons
@@ -31,45 +27,18 @@ import { lightblueColor, lightgrayColor, lightredColor } from '@utils/colors'
 
 export const Signup = ({ signupState, setSignupState }) => {
 
-    //hooks
-    const [token, setToken] = useMMKVString('token')
-
     //states
     const [signupDisabled, setSignupDisabled] = useState(false)
     const [signupError, setSignupError] = useState({ message: '' })
-    const [regPhoneError, setRegPhoneError] = useState({ message: '' })
+    const [phoneError, setPhoneError] = useState({ message: '' })
     const [passwordError, setPasswordError] = useState({ message: '' })
     const [passwordVisible, setPasswordVisible] = useState(true)
-    const [registering, setRegistering] = useState(false)
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
     // const [dataPolicyExtra, setDataPolicyExtra] = useState(false)
 
-    //queries
-    const [checkUsername, { data: signupData }] = useLazyQuery(CHECK_USERNAME, {
-        fetchPolicy: 'network-only'
-    })
-
-    const [checkRegPhone, { data: regPhoneData }] = useLazyQuery(CHECK_REG_PHONE, {
-        fetchPolicy: 'network-only'
-    })
-
-    //mutations
-    const [signup] = useMutation(SIGNUP, {
-        variables: {
-            id: cuid(),
-            username: signupState.username.toLowerCase().trim(),
-            password: signupState.password.trim(),
-            regPhone: signupState.regPhone.trim(),
-            fullName: signupState.fullName.trim(),
-        },
-        onCompleted: ({ signup }) => {
-            setToken(signup.token)
-        },
-        onError: (err) => {
-            isNotifedVar(`${err.message}`)
-            setRegistering(false)
-        }
-    })
+    //hooks
+    const { registering, setRegistering, signup } = useSignup(signupState)
+    const { checkPhone, phoneData } = useCheckPhone()
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -82,57 +51,30 @@ export const Signup = ({ signupState, setSignupState }) => {
 
     //effects
     useEffect(() => {
-        let signupTimer
-        if (signupState.username !== '' && signupState.username.length < 3) {
-            signupTimer = setTimeout(() => setSignupError({
-                ...signupError,
-                message: locale.login_warning
-            }), 1000)
-        } else
-            setSignupError({
-                ...signupError,
-                message: ''
-            })
-        if (signupState.username.length > 2) {
-            signupState.username.match(REG_LOGIN) ?
-                checkUsername({
+        if (signupState.phone !== '') {
+            if (signupState.phone.match(IS_NUMBERS) && signupState.phone.length > 9) {
+                checkPhone({
                     variables: {
-                        username: signupState.username.trim()
-                    }
-                }) :
-                setSignupError({
-                    ...signupError,
-                    message: locale.loginSymbols_warning
-                })
-        }
-        return () => clearTimeout(signupTimer)
-    }, [signupState.username])
-
-    useEffect(() => {
-        if (signupState.regPhone !== '') {
-            if (signupState.regPhone.match(REG_PHONE) && signupState.regPhone.length > 10) {
-                checkRegPhone({
-                    variables: {
-                        regPhone: signupState.regPhone.trim()
+                        phone: signupState.phone.trim()
                     }
                 })
-                setRegPhoneError({
-                    ...regPhoneError,
+                setPhoneError({
+                    ...phoneError,
                     message: ''
                 })
             } else {
-                setRegPhoneError({
-                    ...regPhoneError,
+                setPhoneError({
+                    ...phoneError,
                     message: locale.phone_warning
                 })
             }
         } else {
-            setRegPhoneError({
-                ...regPhoneError,
+            setPhoneError({
+                ...phoneError,
                 message: ''
             })
         }
-    }, [signupState.regPhone])
+    }, [signupState.phone])
 
     useEffect(() => {
         if (signupState.password !== '') {
@@ -156,28 +98,20 @@ export const Signup = ({ signupState, setSignupState }) => {
     }, [signupState.password])
 
     useEffect(() => {
-        signupData?.checkUsername &&
-            setSignupError({
-                ...signupError,
-                message: locale.loginUse_warning
-            })
-    }, [signupData])
-
-    useEffect(() => {
-        regPhoneData?.checkRegPhone &&
-            setRegPhoneError({
-                ...regPhoneError,
+        phoneData?.checkPhone &&
+            setPhoneError({
+                ...phoneError,
                 message: locale.phoneUse_warning
             })
-    }, [regPhoneData])
+    }, [phoneData])
 
     useEffect(() => {
-        signupError.message === '' && signupState.username.length > 2 &&
-            regPhoneError.message === '' && signupState.regPhone.length > 10 &&
-            passwordError.message === '' && signupState.password.length > 6 &&
+        signupError.message === '' &&
+            phoneError.message === '' && signupState.phone.length > 9 &&
+            passwordError.message === '' && signupState.password.length > 5 &&
             toggleCheckBox ?
             setSignupDisabled(false) : setSignupDisabled(true)
-    }, [signupState, signupError.message, regPhoneError.message, passwordError.message, toggleCheckBox])
+    }, [signupState, signupError.message, phoneError.message, passwordError.message, toggleCheckBox])
 
     //handles
     const handleAuth = () => {
@@ -207,35 +141,22 @@ export const Signup = ({ signupState, setSignupState }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        onChangeText={e => handleInputChange(e, 'regPhone')}
-                        value={signupState.regPhone}
-                        placeholder={locale.regPhone_placeholder}
+                        onChangeText={e => handleInputChange(e, 'phone')}
+                        value={signupState.phone}
+                        placeholder={locale.phone_placeholder}
                         placeholderTextColor={lightgrayColor}
                         keyboardType='phone-pad'
                         maxLength={20}
                     />
-                    {regPhoneError.message !== '' &&
-                        <Text style={styles.errorMessage}>{regPhoneError.message}</Text>
-                    }
-
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={e => handleInputChange(e, 'username')}
-                        value={signupState.username}
-                        placeholder={locale.login_placeholder}
-                        placeholderTextColor={lightgrayColor}
-                        autoCapitalize='none'
-                        maxLength={30}
-                    />
-                    {signupError.message !== '' &&
-                        <Text style={styles.errorMessage}>{signupError.message}</Text>
+                    {phoneError.message !== '' &&
+                        <Text style={styles.errorMessage}>{phoneError.message}</Text>
                     }
 
                     <TextInput
                         style={styles.input}
                         onChangeText={e => handleInputChange(e, 'fullName')}
                         value={signupState.fullName}
-                        placeholder="имя и фамилия"
+                        placeholder={locale.name_placeholder}
                         placeholderTextColor={lightgrayColor}
                         autoCapitalize='words'
                         maxLength={90}

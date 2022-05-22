@@ -1,15 +1,13 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { useMutation, useReactiveVar } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import { Text, TextInput, View, Pressable } from 'react-native'
-import { useMMKVString } from 'react-native-mmkv'
-import jwt_decode from 'jwt-decode'
 
-//gql
-import { LOGIN } from '@gql_mutation/auth/Login'
+//hooks
+import { useLogin } from '@hooks_mutation/auth/useLogin'
 
 //utils
-import { blackColorVar, isNotifedVar, localeVar } from '@utils/cache'
+import { blackColorVar, localeVar } from '@utils/cache'
 
 //common components
 import { WhiteButton } from '@common_components/Buttons/WhiteButton'
@@ -24,28 +22,12 @@ import { lightblueColor, lightgrayColor } from '@utils/colors'
 
 export const Login = ({ loginState, setLoginState }) => {
 
-    //hooks
-    const [token, setToken] = useMMKVString('token')
-
     //states
     const [loginDisabled, setLoginDisabled] = useState(true)
     const [passwordVisible, setPasswordVisible] = useState(true)
-    const [logining, setLogining] = useState(false)
 
-    //mutations
-    const [login] = useMutation(LOGIN, {
-        variables: {
-            username: loginState.username,
-            password: loginState.password
-        },
-        onCompleted: ({ login }) => {
-            setToken(login.token)
-        },
-        onError: (err) => {
-            isNotifedVar(`${err.message}`)
-            setLogining(false)
-        }
-    })
+    //hooks
+    const { logining, setLogining, login } = useLogin(loginState)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -58,8 +40,8 @@ export const Login = ({ loginState, setLoginState }) => {
 
     //effects
     useEffect(() => {
-        loginState.username.length > 2 &&
-            loginState.password.length > 6 ?
+        loginState.phone.length > 9 &&
+            loginState.password.length > 5 ?
             setLoginDisabled(false) :
             setLoginDisabled(true)
     }, [loginState])
@@ -87,11 +69,12 @@ export const Login = ({ loginState, setLoginState }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        onChangeText={e => handleInputChange(e, 'username')}
-                        value={loginState.username}
-                        placeholder={locale.login_placeholder}
+                        onChangeText={e => handleInputChange(e, 'phone')}
+                        value={loginState.phone}
+                        placeholder={locale.phone_placeholder}
                         placeholderTextColor={lightgrayColor}
-                        autoCapitalize='none'
+                        keyboardType='phone-pad'
+                        maxLength={20}
                     />
                 </View>
 

@@ -1,7 +1,7 @@
 //core
 import React, { useEffect, useState } from 'react'
 import { useReactiveVar } from '@apollo/client'
-import { View, Text, StatusBar, ScrollView, Keyboard } from 'react-native'
+import { View, Text, StatusBar, ScrollView } from 'react-native'
 
 //utils
 import { blackColorVar, isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -28,15 +28,14 @@ export const Auth = () => {
     })
 
     const [loginState, setLoginState] = useState({
-        username: '',
+        phone: '',
         password: ''
     })
 
     const [signupState, setSignupState] = useState({
         id: '',
-        username: '',
+        phone: '',
         password: '',
-        regPhone: '',
         fullName: '',
     })
 
@@ -71,8 +70,8 @@ export const Auth = () => {
         <>
             <StatusBar
                 animated={true}
-            // backgroundColor={whiteColor}
-            // barStyle={whiteColor === '#fff' ? 'dark-content' : 'light-content'}
+                backgroundColor={whiteColor}
+                barStyle={whiteColor === '#fff' ? 'dark-content' : 'light-content'}
             />
 
             <ScrollView
