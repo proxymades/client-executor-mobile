@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { useApolloClient, useReactiveVar } from '@apollo/client'
-import { useColorScheme, Linking, Keyboard } from 'react-native'
+import { useColorScheme, Keyboard } from 'react-native'
 import { useMMKVString } from 'react-native-mmkv'
 import jwt_decode from 'jwt-decode'
 

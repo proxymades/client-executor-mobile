@@ -23,13 +23,12 @@ import { BlackLoader } from '@common_components/Loaders/BlackLoader'
 import { ShowIcon } from '@common_components/Svg/Svg'
 
 //colors
-import { lightblueColor, lightgrayColor, lightredColor } from '@utils/colors'
+import { blueColor, lightblueColor, lightgrayColor, lightredColor } from '@utils/colors'
 
-export const Signup = ({ signupState, setSignupState }) => {
+export const Signup = ({ signupState, setSignupState, type, setType }) => {
 
     //states
     const [signupDisabled, setSignupDisabled] = useState(false)
-    const [signupError, setSignupError] = useState({ message: '' })
     const [phoneError, setPhoneError] = useState({ message: '' })
     const [passwordError, setPasswordError] = useState({ message: '' })
     const [passwordVisible, setPasswordVisible] = useState(true)
@@ -106,12 +105,14 @@ export const Signup = ({ signupState, setSignupState }) => {
     }, [phoneData])
 
     useEffect(() => {
-        signupError.message === '' &&
-            phoneError.message === '' && signupState.phone.length > 9 &&
-            passwordError.message === '' && signupState.password.length > 5 &&
+        phoneError.message === '' &&
+            signupState.phone.length > 9 &&
+            passwordError.message === '' &&
+            signupState.password.length > 5 &&
             toggleCheckBox ?
-            setSignupDisabled(false) : setSignupDisabled(true)
-    }, [signupState, signupError.message, phoneError.message, passwordError.message, toggleCheckBox])
+            setSignupDisabled(false) :
+            setSignupDisabled(true)
+    }, [signupState, phoneError.message, passwordError.message, toggleCheckBox])
 
     //handles
     const handleAuth = () => {
@@ -133,10 +134,50 @@ export const Signup = ({ signupState, setSignupState }) => {
         setDataPolicyExtra(true)
     }
 
+    const handleSetClient = () => {
+        setType('client')
+    }
+
     return (
         <>
 
+
             <View style={styles.container}>
+
+                <View style={styles.typeContainer}>
+                    <View style={styles.typeChecker}>
+                        <WhiteButton
+                            handleAction={handleSetClient}
+                            isDisabled={type === 'client'}
+                        >
+                            <Text
+                                style={
+                                    [
+                                        styles.typeCheckerText, type === 'client' &&
+                                        { color: blueColor }
+                                    ]
+                                }
+                            >
+                                Клиент
+                            </Text>
+
+                        </WhiteButton>
+                        <WhiteButton
+                            handleAction={() => setType('executor')}
+                        >
+                            <Text
+                                style={
+                                    [
+                                        styles.typeCheckerText, type === 'executor' &&
+                                        { color: blueColor }
+                                    ]
+                                }
+                            >
+                                Исполнитель
+                            </Text>
+                        </WhiteButton>
+                    </View>
+                </View>
 
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -156,7 +197,7 @@ export const Signup = ({ signupState, setSignupState }) => {
                         style={styles.input}
                         onChangeText={e => handleInputChange(e, 'fullName')}
                         value={signupState.fullName}
-                        placeholder={locale.name_placeholder}
+                        placeholder={type === 'client' ? locale.name_placeholder : 'введите название компании'}
                         placeholderTextColor={lightgrayColor}
                         autoCapitalize='words'
                         maxLength={90}
@@ -231,6 +272,17 @@ const getStyles = (blackColor) => ({
     container: {
         width: '80%',
         alignItems: 'center'
+    },
+    typeContainer: {
+        width: '80%',
+    },
+    typeChecker: {
+        textAlign: 'center',
+        padding: 10
+    },
+    typeCheckerText: {
+        textAlign: 'center',
+        color: blackColor,
     },
     inputContainer: {
         width: '100%',

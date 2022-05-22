@@ -23,6 +23,8 @@ import { blueColor, grayColor } from '@utils/colors'
 export const Auth = () => {
 
     //states
+    const [type, setType] = useState('client')
+
     const [authForm, setAuthForm] = useState({
         authType: 'login'
     })
@@ -87,6 +89,8 @@ export const Auth = () => {
                     <Signup
                         signupState={signupState}
                         setSignupState={setSignupState}
+                        type={type}
+                        setType={setType}
                     />
                 }
 
@@ -94,18 +98,20 @@ export const Auth = () => {
                     <Login
                         loginState={loginState}
                         setLoginState={setLoginState}
+                        type={type}
+                        setType={setType}
                     />
                 }
 
                 <View style={styles.changeButton}>
                     {authForm.authType === 'login' ?
                         <>
-                            <Text
+                            {/* <Text
                                 style={styles.authResetText}
                                 onPress={() => setExtraShow(true)}
                             >
                                 {locale.forgot}
-                            </Text>
+                            </Text> */}
                             <Text
                                 style={styles.authTypeText}
                                 onPress={() => handleSwitchAuth('signup')}
