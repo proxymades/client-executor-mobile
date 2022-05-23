@@ -20,11 +20,9 @@ import { AppLogo } from '@common_components/Svg/Svg'
 import { blueColor, grayColor } from '@utils/colors'
 
 
-export const Auth = () => {
+export const Auth = ({ route }) => {
 
     //states
-    const [type, setType] = useState('client')
-
     const [authForm, setAuthForm] = useState({
         authType: 'login'
     })
@@ -38,7 +36,7 @@ export const Auth = () => {
         id: '',
         phone: '',
         password: '',
-        fullName: '',
+        name: '',
     })
 
     //hooks
@@ -89,8 +87,7 @@ export const Auth = () => {
                     <Signup
                         signupState={signupState}
                         setSignupState={setSignupState}
-                        type={type}
-                        setType={setType}
+                        type={route.params.type}
                     />
                 }
 
@@ -98,8 +95,7 @@ export const Auth = () => {
                     <Login
                         loginState={loginState}
                         setLoginState={setLoginState}
-                        type={type}
-                        setType={setType}
+                        type={route.params.type}
                     />
                 }
 

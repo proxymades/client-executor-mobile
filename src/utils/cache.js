@@ -14,7 +14,8 @@ export const isKeyboardHeightVar = makeVar(0)
 export const colorSchemeVar = makeVar('')
 export const isDeepLinkVar = makeVar(false)
 
-export const isUsernameVar = makeVar('')
+export const isUserPhoneVar = makeVar('')
+export const isUserTypeVar = makeVar('')
 export const isUserIdVar = makeVar('')
 export const isTokenVar = makeVar('')
 

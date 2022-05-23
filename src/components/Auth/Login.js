@@ -20,14 +20,14 @@ import { ShowIcon } from '@common_components/Svg/Svg'
 //colors
 import { lightblueColor, lightgrayColor } from '@utils/colors'
 
-export const Login = ({ loginState, setLoginState }) => {
+export const Login = ({ loginState, setLoginState, type }) => {
 
     //states
     const [loginDisabled, setLoginDisabled] = useState(true)
     const [passwordVisible, setPasswordVisible] = useState(true)
 
     //hooks
-    const { logining, setLogining, login } = useLogin(loginState)
+    const { logining, setLogining, login } = useLogin(loginState, type)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -67,6 +67,7 @@ export const Login = ({ loginState, setLoginState }) => {
             <View style={styles.container}>
 
                 <View style={styles.inputContainer}>
+                    <Text style={styles.template}>+7</Text>
                     <TextInput
                         style={styles.input}
                         onChangeText={e => handleInputChange(e, 'phone')}
@@ -122,11 +123,17 @@ const getStyles = (blackColor) => ({
     },
     inputContainer: {
         width: '100%',
+        justifyContent: 'center'
     },
     passwordIcon: {
         position: 'absolute',
         bottom: 15,
         right: 0
+    },
+    template: {
+        color: blackColor,
+        position: 'absolute',
+        left: -10,
     },
     input: {
         width: '100%',
@@ -136,7 +143,7 @@ const getStyles = (blackColor) => ({
         borderBottomColor: lightgrayColor,
         padding: 10,
         paddingRight: 35,
-        color: blackColor
+        color: blackColor,
     },
     activeButtonText: {
         color: blackColor,

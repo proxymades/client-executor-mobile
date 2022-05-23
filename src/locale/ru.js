@@ -51,6 +51,9 @@ export const locale = {
     bookmarksEmptyShort: 'Сохранения публикаций видны только вам и недоступны для других пользователей',
 
     //c
+    client: 'Клиент',
+
+
     camera: 'Камера',
     camera_description: 'Использовать вашу камеру для снимка',
     career: 'Карьера',
@@ -139,6 +142,8 @@ export const locale = {
     drafts: 'Черновики',
 
     //e
+    executor: 'Исполнитель',
+
     edit: 'Редактировать',
     edited: 'Отредактировано',
     edition: 'Редактирование',
@@ -162,6 +167,8 @@ export const locale = {
     expects: 'ожидает',
 
     //f
+    field_warning: 'Введите данные',
+
     feedOwnerProfileEmpty: 'Здесь пока ничего нет, попробуйте создать Цитату, Статью или Биографию нажав значок + в профиле',
     feedGuestProfileEmpty: 'Здесь пока ничего нет, пользователь еще ничего не создал',
     follow: 'Подписаться',
@@ -249,6 +256,7 @@ export const locale = {
     //n
     name: 'Имя/Фамилия',
     name_placeholder: 'добавьте имя и/или фамилию',
+
     nation: 'Национальность',
     newMessages: 'Новые сообщения',
     notifications: 'Уведомления',

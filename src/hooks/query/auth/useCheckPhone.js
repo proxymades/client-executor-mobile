@@ -2,14 +2,22 @@
 const { useLazyQuery } = require("@apollo/client")
 
 //gql
-const { CHECK_PHONE } = require("@gql_query/auth/CheckPhone")
+const { CHECK_CLIENT_PHONE } = require("@gql_query/auth/CheckClientPhone")
 
-export const useCheckPhone = () => {
+export const useCheckPhone = (type) => {
 
     //queries
-    const [checkPhone, { data: phoneData }] = useLazyQuery(CHECK_PHONE, {
+    const [checkClientPhone, { data: clientPhoneData }] = useLazyQuery(CHECK_CLIENT_PHONE, {
         fetchPolicy: 'network-only'
     })
 
-    return { checkPhone, phoneData }
+    //handles
+    const checkPhone = () => {
+        type === 'client' && checkClientPhone()
+    }
+
+    return {
+        checkPhone,
+        phoneData: type === 'client' ? clientPhoneData : ''
+    }
 }

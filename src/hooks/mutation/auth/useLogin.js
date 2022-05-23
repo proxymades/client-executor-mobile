@@ -4,12 +4,12 @@ import { useMutation } from '@apollo/client'
 import { useMMKVString } from 'react-native-mmkv'
 
 //gql
-import { LOGIN } from '@gql_mutation/auth/Login'
+import { CLIENT_LOGIN } from '@gql_mutation/auth/ClientLogin'
 
 //utils
 import { isNotifedVar } from '@utils/cache'
 
-export const useLogin = (loginState) => {
+export const useLogin = (loginState, type) => {
 
     //global hooks
     const [token, setToken] = useMMKVString('token')
@@ -18,19 +18,24 @@ export const useLogin = (loginState) => {
     const [logining, setLogining] = useState(false)
 
     //mutations
-    const [login] = useMutation(LOGIN, {
+    const [clientLogin] = useMutation(CLIENT_LOGIN, {
         variables: {
             phone: loginState.phone,
             password: loginState.password
         },
-        onCompleted: ({ login }) => {
-            setToken(login.token)
+        onCompleted: ({ clientLogin }) => {
+            setToken(clientLogin.token)
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)
             setLogining(false)
         }
     })
+
+    //handles
+    const login = () => {
+        type === 'client' && clientLogin()
+    }
 
     return {
         logining,

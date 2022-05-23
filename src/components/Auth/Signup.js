@@ -23,20 +23,21 @@ import { BlackLoader } from '@common_components/Loaders/BlackLoader'
 import { ShowIcon } from '@common_components/Svg/Svg'
 
 //colors
-import { blueColor, lightblueColor, lightgrayColor, lightredColor } from '@utils/colors'
+import { lightblueColor, lightgrayColor, lightredColor } from '@utils/colors'
 
-export const Signup = ({ signupState, setSignupState, type, setType }) => {
+export const Signup = ({ signupState, setSignupState, type }) => {
 
     //states
     const [signupDisabled, setSignupDisabled] = useState(false)
     const [phoneError, setPhoneError] = useState({ message: '' })
     const [passwordError, setPasswordError] = useState({ message: '' })
+    const [nameError, setNameError] = useState({ message: '' })
     const [passwordVisible, setPasswordVisible] = useState(true)
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
     // const [dataPolicyExtra, setDataPolicyExtra] = useState(false)
 
     //hooks
-    const { registering, setRegistering, signup } = useSignup(signupState)
+    const { registering, setRegistering, signup } = useSignup(signupState, type)
     const { checkPhone, phoneData } = useCheckPhone()
 
     //lang hooks
@@ -70,31 +71,38 @@ export const Signup = ({ signupState, setSignupState, type, setType }) => {
         } else {
             setPhoneError({
                 ...phoneError,
-                message: ''
+                message: locale.phone_warning
             })
         }
     }, [signupState.phone])
 
     useEffect(() => {
-        if (signupState.password !== '') {
-            if (signupState.password.length > 6) {
-                setPasswordError({
-                    ...passwordError,
-                    message: ''
-                })
-            } else {
-                setPasswordError({
-                    ...passwordError,
-                    message: locale.password_warning
-                })
-            }
-        } else {
+        if (signupState.password.length > 6) {
             setPasswordError({
                 ...passwordError,
                 message: ''
             })
+        } else {
+            setPasswordError({
+                ...passwordError,
+                message: locale.password_warning
+            })
         }
     }, [signupState.password])
+
+    useEffect(() => {
+        if (signupState.name.length > 0) {
+            setNameError({
+                ...nameError,
+                message: ''
+            })
+        } else {
+            setNameError({
+                ...nameError,
+                message: locale.field_warning
+            })
+        }
+    }, [signupState.name])
 
     useEffect(() => {
         phoneData?.checkPhone &&
@@ -134,52 +142,14 @@ export const Signup = ({ signupState, setSignupState, type, setType }) => {
         setDataPolicyExtra(true)
     }
 
-    const handleSetClient = () => {
-        setType('client')
-    }
-
     return (
         <>
 
 
             <View style={styles.container}>
 
-                <View style={styles.typeContainer}>
-                    <View style={styles.typeChecker}>
-                        <WhiteButton
-                            handleAction={handleSetClient}
-                            isDisabled={type === 'client'}
-                        >
-                            <Text
-                                style={
-                                    [
-                                        styles.typeCheckerText, type === 'client' &&
-                                        { color: blueColor }
-                                    ]
-                                }
-                            >
-                                Клиент
-                            </Text>
-
-                        </WhiteButton>
-                        <WhiteButton
-                            handleAction={() => setType('executor')}
-                        >
-                            <Text
-                                style={
-                                    [
-                                        styles.typeCheckerText, type === 'executor' &&
-                                        { color: blueColor }
-                                    ]
-                                }
-                            >
-                                Исполнитель
-                            </Text>
-                        </WhiteButton>
-                    </View>
-                </View>
-
                 <View style={styles.inputContainer}>
+                    <Text style={styles.template}>+7</Text>
                     <TextInput
                         style={styles.input}
                         onChangeText={e => handleInputChange(e, 'phone')}
@@ -189,21 +159,25 @@ export const Signup = ({ signupState, setSignupState, type, setType }) => {
                         keyboardType='phone-pad'
                         maxLength={20}
                     />
-                    {phoneError.message !== '' &&
-                        <Text style={styles.errorMessage}>{phoneError.message}</Text>
-                    }
+                </View>
+                <Text style={styles.errorMessage}>
+                    {phoneError.message !== '' && phoneError.message}
+                </Text>
 
+                <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        onChangeText={e => handleInputChange(e, 'fullName')}
+                        onChangeText={e => handleInputChange(e, 'name')}
                         value={signupState.fullName}
                         placeholder={type === 'client' ? locale.name_placeholder : 'введите название компании'}
                         placeholderTextColor={lightgrayColor}
                         autoCapitalize='words'
                         maxLength={90}
                     />
-
                 </View>
+                <Text style={styles.errorMessage}>
+                    {nameError.message !== '' && nameError.message}
+                </Text>
 
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -222,10 +196,10 @@ export const Signup = ({ signupState, setSignupState, type, setType }) => {
                     >
                         <ShowIcon width='20' height='20' fill={passwordVisible ? lightgrayColor : lightblueColor} />
                     </Pressable>
-                    {passwordError.message !== '' &&
-                        <Text style={styles.errorMessage}>{passwordError.message}</Text>
-                    }
                 </View>
+                <Text style={styles.errorMessage}>
+                    {passwordError.message !== '' && passwordError.message}
+                </Text>
 
                 <View style={styles.inputAcceptContainer}>
                     <CheckBox
@@ -273,19 +247,14 @@ const getStyles = (blackColor) => ({
         width: '80%',
         alignItems: 'center'
     },
-    typeContainer: {
-        width: '80%',
-    },
-    typeChecker: {
-        textAlign: 'center',
-        padding: 10
-    },
-    typeCheckerText: {
-        textAlign: 'center',
+    template: {
         color: blackColor,
+        position: 'absolute',
+        left: -10,
     },
     inputContainer: {
         width: '100%',
+        justifyContent: 'center',
     },
     inputAcceptContainer: {
         width: '100%',
@@ -302,13 +271,13 @@ const getStyles = (blackColor) => ({
     },
     passwordIcon: {
         position: 'absolute',
-        bottom: 15,
+        bottom: 10,
         right: 0
     },
     input: {
         width: '100%',
         height: 40,
-        margin: 5,
+        marginLeft: 5,
         borderBottomWidth: 1,
         borderBottomColor: lightgrayColor,
         padding: 7,
@@ -325,6 +294,7 @@ const getStyles = (blackColor) => ({
     errorMessage: {
         fontSize: 12,
         color: lightredColor,
+        height: 16
     },
     creatingWrap: {
         width: '100%',

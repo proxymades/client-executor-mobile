@@ -16,8 +16,10 @@ import { NavigationScreen } from '@screens/NavigationScreen/NavigationScreen'
 
 //common components
 import { Notify } from '@common_components/Notify/Notify'
+import { Auth } from '@components/Auth/Auth'
+import { Selector } from '@components/Auth/Selector'
 
-export const Screens = () => {
+export const AuthScreen = () => {
 
     //stack
     const Stack = createNativeStackNavigator()
@@ -48,30 +50,25 @@ export const Screens = () => {
                 <Stack.Navigator>
 
                     <Stack.Screen
-                        name="NavigationScreen"
-                        component={NavigationScreen}
+                        name="Selector"
+                        component={Selector}
                         options={{
                             headerShown: false,
                         }}
                     />
 
-                    <Stack.Group>
-
-                        {/* <Stack.Screen
-                            name='EditProfile'
-                            component={EditProfile}
-                            options={{
-                                title: locale.edition,
-                            }}
-                        /> */}
-
-                    </Stack.Group>
+                    <Stack.Screen
+                        name="Auth"
+                        component={Auth}
+                        options={({ route }) => ({
+                            title: route.params.type === 'client' ? locale.client : locale.executor
+                            // headerShown: false,
+                        })}
+                    />
 
                 </Stack.Navigator>
 
             </NavigationContainer>
-
-            <Notify />
 
         </>
     )

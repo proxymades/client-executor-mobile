@@ -51,6 +51,8 @@ export const locale = {
     bookmarksEmptyShort: 'Post saves are visible only to you and not available to other users',
 
     //c
+    client: 'Client',
+
     camera: 'Camera',
     camera_description: 'Use your camera to take a picture',
     career: 'Career',
@@ -140,6 +142,8 @@ export const locale = {
     drafts: 'Drafts',
 
     //e
+    executor: 'Executor',
+
     edit: 'Edit',
     edited: 'Edited',
     edition: 'Edit',
@@ -163,6 +167,8 @@ export const locale = {
     expects: 'expects',
 
     //f
+    field_warning: 'Enter data',
+
     feedOwnerProfileEmpty: 'There is nothing here yet, try to create a Quote, Article or Biography by clicking the + icon in the profile',
     feedGuestProfileEmpty: 'Nothing here yet, user hasn’t created anything yet',
     follow: 'Follow',

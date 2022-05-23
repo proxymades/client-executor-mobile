@@ -1,20 +1,14 @@
 //core
 import React, { useEffect, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { useApolloClient, useReactiveVar } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import { useColorScheme, Keyboard } from 'react-native'
 import { useMMKVString } from 'react-native-mmkv'
 import jwt_decode from 'jwt-decode'
 
 //screens
-import { Screens } from '@screens/Screens'
-
-//hooks
-
-//components
-import { Auth } from '@components/Auth/Auth'
-
-//common components
+import { ClientScreens } from '@screens/client/ClientScreens'
+import { AuthScreen } from '@screens/AuthScreen'
 
 //hooks_utils
 import { useLanguage } from '@hooks_utils/useLanguage'
@@ -22,7 +16,8 @@ import { useLanguage } from '@hooks_utils/useLanguage'
 //utils
 import {
   isLoggedInVar,
-  isUsernameVar,
+  isUserPhoneVar,
+  isUserTypeVar,
   isUserIdVar,
   isTokenVar,
   whiteColorVar,
@@ -31,18 +26,17 @@ import {
   lightengrayColorVar,
   isKeyboardHeightVar,
   localeVar,
-  isNotifedVar
 } from '@utils/cache'
 
 export const App = () => {
 
   //global hooks
-  const client = useApolloClient()
   const colorScheme = useColorScheme()
   const [token, setToken] = useMMKVString('token')
   const [theme, setTheme] = useMMKVString('theme')
   const [language, setLanguage] = useMMKVString('language')
   const isLoggedIn = useReactiveVar(isLoggedInVar)
+  const isUserType = useReactiveVar(isUserTypeVar)
   const { lang } = useLanguage()
 
   //states
@@ -52,7 +46,8 @@ export const App = () => {
     if (token) {
       setLoading(false)
       isLoggedInVar(true)
-      isUsernameVar(jwt_decode(token).username)
+      isUserPhoneVar(jwt_decode(token).phone)
+      isUserTypeVar(jwt_decode(token).type)
       isUserIdVar(jwt_decode(token).id)
       isTokenVar(token)
     } else {
@@ -110,9 +105,18 @@ export const App = () => {
   return (
     <SafeAreaProvider>
       {!loading && isLoggedIn ?
-        <Screens />
+        <>
+          {isUserType === 'client' ?
+            <ClientScreens />
+            :
+            isUserType === 'executor' ?
+              null
+              :
+              null
+          }
+        </>
         : !loading && !isLoggedIn ?
-          <Auth />
+          <AuthScreen />
           : null
       }
     </SafeAreaProvider>

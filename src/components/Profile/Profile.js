@@ -4,7 +4,7 @@ import { ScrollView, View, Text, TouchableOpacity, RefreshControl, } from 'react
 import { NetworkStatus, useReactiveVar } from '@apollo/client'
 
 //utils
-import { blackColorVar, isUsernameVar, localeVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 import { IMAGES_URI } from '@utils/uri'
 
 //hooks
@@ -22,7 +22,7 @@ export const Profile = ({ route, navigation }) => {
 
     //constants
     const isProfileTab = route.name === 'Profile'
-    const username = route?.params?.username || isUsernameVar()
+    // const username = route?.params?.username || isUsernameVar()
 
     //states
     const [refreshing, setRefreshing] = useState(false)
