@@ -2,7 +2,7 @@
 import { useQuery } from '@apollo/client'
 
 //gql
-import { CLIENT_PROFILE } from '@gql_query/auth/client/ClientProfile'
+import { CLIENT_PROFILE } from '@gql_query/client/ClientProfile'
 
 export const useClientProfile = (phone) => {
 

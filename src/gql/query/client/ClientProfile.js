@@ -10,6 +10,7 @@ export const CLIENT_PROFILE = gql`
                 id
                 avatar
                 name
+                phone
                 verified
                 createdAt
             }

@@ -144,6 +144,7 @@ export const locale = {
     drafts: 'Черновики',
 
     //e
+    error_notify: 'Ошибка, попробуйте позже',
     executor: 'Исполнитель',
 
     edit: 'Редактировать',
@@ -451,6 +452,7 @@ export const locale = {
     //x
 
     //y
+    yourRegNumber: 'Ваш регистрационный телефон:',
 
     //z
 

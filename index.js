@@ -4,8 +4,9 @@ import { AppRegistry } from 'react-native'
 import { App } from './App'
 import { name as appName } from './app.json'
 import { enableScreens } from 'react-native-screens'
-import { ApolloClient, createHttpLink, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import { createUploadLink } from 'apollo-upload-client'
 
 //utils
 import { isTokenVar } from '@utils/cache'
@@ -13,7 +14,7 @@ import { URI } from '@utils/uri'
 
 enableScreens(true)
 
-const httpLink = createHttpLink({
+const uploadLink = new createUploadLink({
     uri: URI
 })
 
@@ -27,7 +28,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: authLink.concat(uploadLink),
     cache: new InMemoryCache()
 })
 

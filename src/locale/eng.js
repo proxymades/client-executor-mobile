@@ -143,6 +143,7 @@ export const locale = {
     drafts: 'Drafts',
 
     //e
+    error_notify: 'Error, please try again later',
     executor: 'Executor',
 
     edit: 'Edit',
@@ -449,6 +450,7 @@ export const locale = {
     //x
 
     //y
+    yourRegNumber: 'Your registration phone:',
 
     //z
 
