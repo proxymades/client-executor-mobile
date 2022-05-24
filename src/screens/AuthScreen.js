@@ -11,8 +11,6 @@ import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 //components
 // import { EditProfile } from '@components/Profile/EditProfile/EditProfile'
 
-//screens
-import { NavigationScreen } from '@screens/NavigationScreen/NavigationScreen'
 
 //common components
 import { Notify } from '@common_components/Notify/Notify'

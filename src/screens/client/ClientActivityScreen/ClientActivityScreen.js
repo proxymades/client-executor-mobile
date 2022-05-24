@@ -4,12 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useReactiveVar } from '@apollo/client'
 
 //components
-import { Profile } from '@components/Profile/Profile'
+import { ClientProfile } from '@components/client/ClientProfile/ClientProfile'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 
-export const ProfileScreen = () => {
+export const ClientActivityScreen = () => {
 
     //stack
     const Stack = createNativeStackNavigator()
@@ -25,10 +25,10 @@ export const ProfileScreen = () => {
         <Stack.Navigator>
 
             <Stack.Screen
-                name='Profile'
-                component={Profile}
+                name='ClientProfile'
+                component={ClientProfile}
                 options={{
-                    title: locale.profile,
+                    title: locale.notifications,
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
                 }}

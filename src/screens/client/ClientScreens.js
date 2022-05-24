@@ -9,10 +9,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //components
-// import { EditProfile } from '@components/Profile/EditProfile/EditProfile'
+import { EditClientProfile } from '@components/client/ClientProfile/EditClientProfile/EditClientProfile'
 
 //screens
-import { NavigationScreen } from '@screens/NavigationScreen/NavigationScreen'
+import { ClientNavigationScreen } from '@screens/client/ClientNavigationScreen/ClientNavigationScreen'
 
 //common components
 import { Notify } from '@common_components/Notify/Notify'
@@ -48,8 +48,8 @@ export const ClientScreens = () => {
                 <Stack.Navigator>
 
                     <Stack.Screen
-                        name="NavigationScreen"
-                        component={NavigationScreen}
+                        name="ClientNavigationScreen"
+                        component={ClientNavigationScreen}
                         options={{
                             headerShown: false,
                         }}
@@ -57,13 +57,13 @@ export const ClientScreens = () => {
 
                     <Stack.Group>
 
-                        {/* <Stack.Screen
-                            name='EditProfile'
-                            component={EditProfile}
+                        <Stack.Screen
+                            name='EditClientProfile'
+                            component={EditClientProfile}
                             options={{
                                 title: locale.edition,
                             }}
-                        /> */}
+                        />
 
                     </Stack.Group>
 

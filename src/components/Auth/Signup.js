@@ -169,7 +169,7 @@ export const Signup = ({ signupState, setSignupState, type }) => {
                         style={styles.input}
                         onChangeText={e => handleInputChange(e, 'name')}
                         value={signupState.fullName}
-                        placeholder={type === 'client' ? locale.name_placeholder : 'введите название компании'}
+                        placeholder={type === 'client' ? locale.name_placeholder : locale.company_placeholder}
                         placeholderTextColor={lightgrayColor}
                         autoCapitalize='words'
                         maxLength={90}

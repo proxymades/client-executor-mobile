@@ -1,8 +1,8 @@
 //core
-const { useLazyQuery } = require("@apollo/client")
+import { useLazyQuery } from '@apollo/client'
 
 //gql
-const { CHECK_CLIENT_PHONE } = require("@gql_query/auth/CheckClientPhone")
+import { CHECK_CLIENT_PHONE } from '@gql_query/auth/CheckClientPhone'
 
 export const useCheckPhone = (type) => {
 

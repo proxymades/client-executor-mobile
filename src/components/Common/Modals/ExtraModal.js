@@ -54,21 +54,15 @@ const getStyles = (whiteColor, blackColor) => ({
         opacity: 0.2,
     },
     modalView: {
-        width: '100%',
+        width: '95%',
+        alignSelf: 'center',
         backgroundColor: whiteColor,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        borderRadius: 20,
         alignItems: 'center',
         shadowColor: blackColor,
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
         elevation: 5,
         zIndex: 2,
         position: 'absolute',
-        bottom: 0
+        top: 80
     },
 })

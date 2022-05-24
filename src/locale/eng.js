@@ -52,6 +52,7 @@ export const locale = {
 
     //c
     client: 'Client',
+    company_placeholder: 'enter company name',
 
     camera: 'Camera',
     camera_description: 'Use your camera to take a picture',
@@ -256,14 +257,18 @@ export const locale = {
     //n
     name: 'Name',
     name_placeholder: 'add first and/or last name',
+    newOrder: 'New order',
+    notifications: 'Notifications',
+
     nation: 'Nationality',
     newMessages: 'New messages',
-    notifications: 'Notifications',
     numberBiographies: 'Number of biographies',
     numberPublications: 'Number of publications',
     numberProfiles: 'Number of profiles',
 
     //o
+    orders: 'Orders',
+
     onText: '(on)',
     offText: '(off)',
     onArticle: 'Article',
@@ -310,14 +315,18 @@ export const locale = {
     quoteTo: 'Quote',
 
     //r
+    rating: 'Rating',
+    register: 'no account? register',
+    registerDate: 'Date of registration',
+    registration: 'registration',
+    reviews: 'Reviews',
+
     rankType: 'Rank type',
     rankType_placeholder: 'military or special',
     read: 'Read',
     readerBecame: 'became your reader',
     readsEmptyLong: 'There is nothing here yet, try marking Read by clicking on the Points icon inside a quote, article or biography',
     readsEmptyShort: 'Read publications are visible only to you and are not available to other users',
-    registration: 'registration',
-    register: 'no account? register',
     registerText: 'sign up',
     regEmail_placeholder: 'email',
     regPhone_placeholder: 'phone',
@@ -420,6 +429,8 @@ export const locale = {
     videoAlbum: 'Video album',
 
     //w
+    works: 'Works',
+
     web: 'Web site',
     web_placeholder: 'add website',
     weddingDate: 'Wedding date',

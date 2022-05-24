@@ -51,6 +51,7 @@ export const locale = {
     bookmarksEmptyShort: 'Сохранения публикаций видны только вам и недоступны для других пользователей',
 
     //c
+    company_placeholder: 'введите название компании',
     client: 'Клиент',
 
 
@@ -116,6 +117,7 @@ export const locale = {
     credo_placeholder: 'добавьте жизненное кредо',
 
     //d
+
     darkTheme: 'Темная',
     darkTheme_description: 'будет установлена темная тема: темный фон, белый текст',
     dataPolicy: 'Политика конфиденциальности',
@@ -242,13 +244,14 @@ export const locale = {
     lowStatistics: 'Недостаточно информации для отображения данных статистики',
 
     //m
+    messages: 'Сообщения',
+
     marksRead: 'отметки "прочитано"',
     marksLike: 'отметки "нравится"',
     marksRepost: 'отметки "репостов"',
     marriage: 'Регистрация брака с',
     merits: 'Награды/ почести',
     message: 'Сообщение',
-    messages: 'Сообщения',
     military: 'Служба',
     monument: 'Памятник',
     more: '...еще',
@@ -256,15 +259,18 @@ export const locale = {
     //n
     name: 'Имя/Фамилия',
     name_placeholder: 'добавьте имя и/или фамилию',
+    newOrder: 'Новый заказ',
+    notifications: 'Уведомления',
 
     nation: 'Национальность',
     newMessages: 'Новые сообщения',
-    notifications: 'Уведомления',
     numberBiographies: 'Количество биографий',
     numberPublications: 'Количество публикаций',
     numberProfiles: 'Количество пользователей',
 
     //o
+    orders: 'Заказы',
+
     onText: '(вкл.)',
     offText: '(откл.)',
     onArticle: 'Статье',
@@ -312,14 +318,18 @@ export const locale = {
     quoteTo: 'Цитату',
 
     //r
+    rating: 'Рейтинг',
+    register: 'нет аккаунта? зарегистрируйтесь',
+    registerDate: 'Дата регистрации',
+    registerText: 'регистрация',
+    reviews: 'Отзывы',
+
     rankType: 'Тип звания',
     rankType_placeholder: 'воинское или специальное',
     read: 'Прочитано',
     readerBecame: 'стал(-а) вашим читателем',
     readsEmptyLong: 'Здесь пока ничего нет, попробуйте поставить отметку Прочитано нажав на значок Очки внутри цитаты, статьи или биографии',
     readsEmptyShort: 'Прочитанные публикации видны только вам и недоступны для других пользователей',
-    register: 'нет аккаунта? зарегистрируйтесь',
-    registerText: 'регистрация',
     regEmail_placeholder: 'электронный адрес',
     regPhone_placeholder: 'телефон',
     relative: 'Родственник',
@@ -421,6 +431,8 @@ export const locale = {
     videoAlbum: 'Видеоальбом',
 
     //w
+    works: 'Работы',
+
     web: 'Веб-сайт',
     web_placeholder: 'добавьте веб-сайт',
     weddingDate: 'Дата свадьбы',

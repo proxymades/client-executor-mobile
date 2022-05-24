@@ -5,24 +5,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Image, Text, View, Dimensions } from 'react-native'
 
 //screens
-import { ProfileScreen } from '@screens/ProfileScreen/ProfileScreen'
+import { ClientProfileScreen } from '@screens/client/ClientProfileScreen/ClientProfileScreen'
+import { ClientActivityScreen } from '@screens/client/ClientActivityScreen/ClientActivityScreen'
 
 //hooks
 
 //utils
 import { IMAGES_URI } from '@utils/uri'
-import { isUsernameVar, blackColorVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //icons
 import {
-    Avatar,
-
+    AvatarIcon,
+    ActivityIcon,
 } from '@common_components/Svg/Svg'
 
 //colors
 import { blueColor } from '@utils/colors'
 
-export const NavigationScreen = () => {
+export const ClientNavigationScreen = () => {
 
     //tabs
     const Tab = createBottomTabNavigator()
@@ -52,15 +53,28 @@ export const NavigationScreen = () => {
         >
 
             <Tab.Screen
-                name='ProfileScreen'
-                component={ProfileScreen}
+                name='ClientProfileScreen'
+                component={ClientProfileScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
-                        <Avatar width={size} height={size} fill={color} />
+                        <AvatarIcon width={size} height={size} fill={color} />
                     ),
                     headerShown: false,
                 }}
             />
+
+
+            <Tab.Screen
+                name='ClientActivityScreen'
+                component={ClientActivityScreen}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <ActivityIcon width={size} height={size} fill={color} />
+                    ),
+                    headerShown: false,
+                }}
+            />
+
 
         </Tab.Navigator>
 
@@ -70,11 +84,6 @@ export const NavigationScreen = () => {
 const windowWidth = Dimensions.get('window').width
 
 const getStyles = (whiteColor) => ({
-    userPhoto: {
-        width: 80,
-        height: 80,
-        borderRadius: 40
-    },
     newsDot: {
         position: 'absolute',
         right: -9,
