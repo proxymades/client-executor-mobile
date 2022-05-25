@@ -38,9 +38,9 @@ export const useImagePicker = (isAvatar, cameraRequest) => {
             } else {
                 ImagePicker.openPicker({
                     compressImageMaxWidth: 1080,
-                    compressImageMaxHeight: isPanoram ? 540 : 1080,
+                    compressImageMaxHeight: 540,
                     width: Platform.OS === 'ios' ? 1080 : 0,
-                    height: isPanoram && Platform.OS === 'ios' ? 540 : Platform.OS === 'ios' ? 1080 : 0,
+                    height: Platform.OS === 'ios' ? 1080 : 0,
                     cropping: true,
                     cropperToolbarTitle: locale.photoEditing,
                     compressImageQuality: 0.3,
@@ -75,7 +75,7 @@ export const useImagePicker = (isAvatar, cameraRequest) => {
             } else {
                 ImagePicker.openPicker({
                     width: isAvatar ? 540 : 1080,
-                    height: isAvatar ? 540 : isPanoram ? 540 : 1080,
+                    height: isAvatar ? 540 : 540,
                     cropping: true,
                     cropperToolbarTitle: locale.photoEditing,
                     compressImageQuality: 0.3,

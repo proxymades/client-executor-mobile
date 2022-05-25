@@ -1,6 +1,8 @@
 export const locale = {
 
     //a
+    addCount_placeholder: 'add quantity',
+
     about: 'About',
     account: 'Account',
     achies: 'Works/ achievements',
@@ -51,6 +53,8 @@ export const locale = {
     bookmarksEmptyShort: 'Post saves are visible only to you and not available to other users',
 
     //c
+    category: 'Category',
+    checkField_notify: 'Check field',
     client: 'Client',
     company_placeholder: 'enter company name',
 
@@ -259,6 +263,7 @@ export const locale = {
     name: 'Name',
     name_placeholder: 'add first and/or last name',
     newOrder: 'New order',
+    newText: 'New',
     notifications: 'Notifications',
 
     nation: 'Nationality',
@@ -269,6 +274,7 @@ export const locale = {
 
     //o
     orders: 'Orders',
+    outad: 'Outdoor advertising',
 
     onText: '(on)',
     offText: '(off)',
@@ -276,6 +282,8 @@ export const locale = {
     onQuote: 'Quote',
 
     //p
+    polygraphy: 'Polygraphy',
+
     paidBlocks: 'Paid blocks',
     password_placeholder: 'password',
     password_warning: 'Password must be longer than 6 characters',
@@ -309,6 +317,8 @@ export const locale = {
     purchases: 'Purchases',
 
     //q
+    quantity: 'Quantity',
+
     qr: 'QR code',
     qualification: 'Qualification',
     quote: 'Quote',
@@ -317,6 +327,7 @@ export const locale = {
 
     //r
     rating: 'Rating',
+    readyText: 'Ready',
     register: 'no account? register',
     registerDate: 'Date of registration',
     registration: 'registration',
@@ -361,6 +372,9 @@ export const locale = {
     resentSearch: 'Recent Search',
 
     //s
+    select_placeholder: 'select from the list',
+    souvenir: 'Souvenir products',
+
     save: 'Save',
     saved_notify: 'Saved',
     save_description: 'all entered data will be saved',
@@ -413,6 +427,9 @@ export const locale = {
     typing: '...typing',
 
     //u
+    urgentOrderYes: 'Urgent order - yes',
+    urgentOrderNo: 'Urgent order - no',
+
     university: 'University',
     uniques: 'Unique',
     untilNow: 'until now',
@@ -431,6 +448,7 @@ export const locale = {
 
     //w
     works: 'Works',
+    workText: 'In work',
 
     web: 'Web site',
     web_placeholder: 'add website',
@@ -453,5 +471,11 @@ export const locale = {
     yourRegNumber: 'Your registration phone:',
 
     //z
+
+    //cities
+    nursultan: 'Nur-Sultan',
+    almaty: 'Almaty',
+    karaganda: 'Karaganda',
+    atyrau: 'Atyrau',
 
 }

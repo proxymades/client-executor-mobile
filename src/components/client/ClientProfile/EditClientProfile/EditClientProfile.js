@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 
 //common components
 import { ExtraModal } from '@common_components/Modals/ExtraModal'
-import { EditProfileAvatarForm } from '@common_components/Modals/Forms/EditProfileAvatarForm'
+import { EditImageForm } from '@common_components/Modals/Forms/EditImageForm'
 import { ProfilePhoto } from '@common_components/Profile/ProfilePhoto'
 import { InputLine } from '@common_components/Inputs/InputLine'
 import { ProfilePhone } from '@common_components/Profile/ProfilePhone'
@@ -145,7 +145,7 @@ export const EditClientProfile = () => {
         <View style={styles.container}>
 
             <ProfilePhoto
-                size={18}
+                size={80}
                 action={handleExtraAvatarShow}
                 avatar={formState.avatar}
                 preview={preview}
@@ -166,9 +166,9 @@ export const EditClientProfile = () => {
                 modalVisible={extraAvatarShow}
                 setModalVisible={setExtraAvatarShow}
             >
-                <EditProfileAvatarForm
-                    existAvatar={profileQuery.clientProfile.avatar}
-                    deleteAvatar={handleDeleteAvatar}
+                <EditImageForm
+                    existImage={profileQuery.clientProfile.avatar}
+                    deleteImage={handleDeleteAvatar}
                     openImagePicker={setOpenImagePicker}
                     setPickerType={setPickerType}
                     setModalVisible={setExtraAvatarShow}

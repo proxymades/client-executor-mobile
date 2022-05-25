@@ -5,6 +5,7 @@ import { useReactiveVar } from '@apollo/client'
 
 //components
 import { ClientProfile } from '@components/client/ClientProfile/ClientProfile'
+import { ClientOrders } from '@components/client/ClientProfile/ClientOrders/ClientOrders'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -29,6 +30,16 @@ export const ClientProfileScreen = () => {
                 component={ClientProfile}
                 options={{
                     title: locale.profile,
+                    headerStyle: { backgroundColor: whiteColor },
+                    headerTitleStyle: { color: blackColor },
+                }}
+            />
+
+            <Stack.Screen
+                name='ClientOrders'
+                component={ClientOrders}
+                options={{
+                    title: locale.orders,
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
                 }}

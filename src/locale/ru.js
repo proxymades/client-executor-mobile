@@ -1,6 +1,8 @@
 export const locale = {
 
     //a
+    addCount_placeholder: 'добавьте количество',
+
     about: 'Информация',
     account: 'Аккаунт',
     achies: 'Труды/ достижения',
@@ -51,6 +53,8 @@ export const locale = {
     bookmarksEmptyShort: 'Сохранения публикаций видны только вам и недоступны для других пользователей',
 
     //c
+    category: 'Категория',
+    checkField_notify: 'Проверьте поле',
     company_placeholder: 'введите название компании',
     client: 'Клиент',
 
@@ -261,6 +265,7 @@ export const locale = {
     name: 'Имя/Фамилия',
     name_placeholder: 'добавьте имя и/или фамилию',
     newOrder: 'Новый заказ',
+    newText: 'Новые',
     notifications: 'Уведомления',
 
     nation: 'Национальность',
@@ -271,6 +276,7 @@ export const locale = {
 
     //o
     orders: 'Заказы',
+    outad: 'Наружная реклама',
 
     onText: '(вкл.)',
     offText: '(откл.)',
@@ -279,6 +285,8 @@ export const locale = {
     onQuote: 'Цитате',
 
     //p
+    polygraphy: 'Полиграфия',
+
     paidBlocks: 'Оплаченные блоки',
     password_placeholder: 'пароль',
     password_warning: 'Пароль должен быть длиннее 6 символов',
@@ -312,6 +320,8 @@ export const locale = {
     purchases: 'Покупки',
 
     //q
+    quantity: 'Количество',
+
     qr: 'QR код',
     qualification: 'Квалификация',
     quote: 'Цитата',
@@ -320,6 +330,7 @@ export const locale = {
 
     //r
     rating: 'Рейтинг',
+    readyText: 'Готовые',
     register: 'нет аккаунта? зарегистрируйтесь',
     registerDate: 'Дата регистрации',
     registerText: 'регистрация',
@@ -363,6 +374,9 @@ export const locale = {
     resentSearch: 'Недавний поиск',
 
     //s
+    select_placeholder: 'выберите из списка',
+    souvenir: 'Сувенирная продукция',
+
     save: 'Сохранить',
     saved_notify: 'Сохранено',
     save_description: 'все введенные данные будут сохранены',
@@ -415,6 +429,10 @@ export const locale = {
     typing: '...печатает',
 
     //u
+    urgentOrderYes: 'Срочный заказ - да',
+    urgentOrderNo: 'Срочный заказ - нет',
+
+
     university: 'Университет',
     uniques: 'Уникальные',
     untilNow: 'по н.в.',
@@ -433,6 +451,7 @@ export const locale = {
 
     //w
     works: 'Работы',
+    workText: 'В работе',
 
     web: 'Веб-сайт',
     web_placeholder: 'добавьте веб-сайт',
@@ -455,5 +474,11 @@ export const locale = {
     yourRegNumber: 'Ваш регистрационный телефон:',
 
     //z
+
+    //cities
+    nursultan: 'Нур-Султан',
+    almaty: 'Алматы',
+    karaganda: 'Караганда',
+    atyrau: 'Атырау',
 
 }

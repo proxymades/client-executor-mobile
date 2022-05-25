@@ -18,7 +18,5 @@ export const useUploadClientAvatar = () => {
         })
     }
 
-    return {
-        uploadClientAvatar
-    }
+    return { uploadClientAvatar }
 }

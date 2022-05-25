@@ -12,9 +12,9 @@ import { TerminateIcon, BackIcon, CameraSelectIcon, ImageSelectIcon } from '@com
 //colors
 import { blueColor, grayColor, lightgrayColor, lightredColor } from '@utils/colors'
 
-export const EditProfileAvatarForm = ({
-    existAvatar,
-    deleteAvatar,
+export const EditImageForm = ({
+    existImage,
+    deleteImage,
     openImagePicker,
     setModalVisible,
     setPickerType
@@ -30,18 +30,18 @@ export const EditProfileAvatarForm = ({
     const styles = getStyles(blackColor)
 
     //handles
-    const handleDeleteAvatar = () => {
+    const handleDeleteImage = () => {
         setModalVisible(false)
-        deleteAvatar()
+        deleteImage()
     }
 
-    const handleLoadAvatar = () => {
+    const handleLoadImage = () => {
         setModalVisible(false)
         openImagePicker(true)
         setPickerType('gallery')
     }
 
-    const handleMakeAvatar = () => {
+    const handleMakeImage = () => {
         setModalVisible(false)
         openImagePicker(true)
         setPickerType('camera')
@@ -56,18 +56,18 @@ export const EditProfileAvatarForm = ({
 
             <View style={styles.items}>
 
-                {existAvatar ?
+                {existImage ?
                     <>
                         <TouchableOpacity
                             style={styles.item}
-                            onPress={handleLoadAvatar}
+                            onPress={handleLoadImage}
                         >
                             <ImageSelectIcon width='30' height='25' fill={blueColor} />
                             <Text style={styles.blueText}>{locale.gallery}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.item}
-                            onPress={handleMakeAvatar}
+                            onPress={handleMakeImage}
                         >
                             <CameraSelectIcon width='30' height='25' fill={blueColor} />
                             <Text style={styles.blueText}>{locale.camera}</Text>
@@ -76,10 +76,10 @@ export const EditProfileAvatarForm = ({
                     : null
                 }
 
-                {existAvatar ?
+                {existImage ?
                     <TouchableOpacity
                         style={styles.item}
-                        onPress={handleDeleteAvatar}
+                        onPress={handleDeleteImage}
                     >
                         <TerminateIcon width='30' height='25' fill={lightredColor} />
                         <Text style={styles.redText}>{locale.delete}</Text>
@@ -88,14 +88,14 @@ export const EditProfileAvatarForm = ({
                     <>
                         <TouchableOpacity
                             style={styles.item}
-                            onPress={handleLoadAvatar}
+                            onPress={handleLoadImage}
                         >
                             <ImageSelectIcon width='30' height='25' fill={blueColor} />
                             <Text style={styles.blueText}>{locale.gallery}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.item}
-                            onPress={handleMakeAvatar}
+                            onPress={handleMakeImage}
                         >
                             <CameraSelectIcon width='30' height='25' fill={blueColor} />
                             <Text style={styles.blueText}>{locale.camera}</Text>

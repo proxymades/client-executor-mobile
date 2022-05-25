@@ -1,7 +1,10 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { ScrollView, View, Text, TouchableOpacity, RefreshControl, } from 'react-native'
-import { NetworkStatus, useReactiveVar } from '@apollo/client'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { useReactiveVar } from '@apollo/client'
+
+//hooks
+import { useClientProfile } from '@hooks_query/client/useClientProfile'
 
 //utils
 import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -9,14 +12,15 @@ import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar 
 //common components
 import { ProfileData } from '@common_components/Profile/ProfileData'
 import { ProfilePhoto } from '@common_components/Profile/ProfilePhoto'
-import { ProfileMenu } from '@components/Common/Profile/ProfileMenu'
-import { WhiteButton } from '@components/Common/Buttons/WhiteButton'
-import { ProfileRegisterDate } from '@components/Common/Profile/ProfileRegisterDate'
-import { useClientProfile } from '@hooks_query/client/useClientProfile'
-import { Loader } from '@components/Common/Loaders/Loader'
-import { MenuIcon } from '@components/Common/Svg/Svg'
-import { ExtraModal } from '@components/Common/Modals/ExtraModal'
-import { ProfileMenuForm } from '@components/Common/Modals/Forms/ProfileMenuForm'
+import { ProfileMenu } from '@common_components/Profile/ProfileMenu'
+import { WhiteButton } from '@common_components/Buttons/WhiteButton'
+import { ProfileRegisterDate } from '@common_components/Profile/ProfileRegisterDate'
+import { Loader } from '@common_components/Loaders/Loader'
+import { ExtraModal } from '@common_components/Modals/ExtraModal'
+import { ProfileMenuForm } from '@common_components/Modals/Forms/ProfileMenuForm'
+
+//icons
+import { MenuIcon } from '@common_components/Svg/Svg'
 
 export const ClientProfile = ({ route, navigation }) => {
 
@@ -61,13 +65,21 @@ export const ClientProfile = ({ route, navigation }) => {
         navigation.push('EditClientProfile')
     }
 
+    const handleCreateOrder = () => {
+        navigation.push('CreateOrder')
+    }
+
+    const handleOpenOrders = () => {
+        navigation.push('ClientOrders')
+    }
+
     if (clientProfileLoading) return <Loader />
 
     return (
         <View style={styles.container}>
 
             <ProfilePhoto
-                size={18}
+                size={80}
                 avatar={clientProfileData.avatar}
             />
 
@@ -77,15 +89,16 @@ export const ClientProfile = ({ route, navigation }) => {
             />
 
             <ProfileMenu
-                ordersCount={30}
+                ordersCount={clientProfileData.order.length}
                 ratingCount={5}
                 reviewsCount={77}
                 type={isUserTypeVar()}
+                openOrders={handleOpenOrders}
             />
 
             {isUserTypeVar() === 'client' ?
                 <View style={styles.orderButton}>
-                    <WhiteButton>
+                    <WhiteButton handleAction={handleCreateOrder}>
                         <Text style={styles.orderText}>{locale.newOrder}</Text>
                     </WhiteButton>
                 </View>
@@ -104,7 +117,7 @@ export const ClientProfile = ({ route, navigation }) => {
                 />
             </ExtraModal>
 
-        </View>
+        </View >
     )
 }
 

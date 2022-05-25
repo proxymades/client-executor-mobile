@@ -4,29 +4,27 @@ import { Text, TextInput, View } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
-import { blackColorVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar } from '@utils/cache'
 
 //common components
 import { Counter } from '@common_components/Counter/Counter'
 
 //colors
-import { lightgrayColor } from '@utils/colors'
+import { lightblueColor, lightgrayColor } from '@utils/colors'
 
-export const InputLine = ({
+export const InputMultiline = ({
     inputChange,
     input,
-    symbols,
     placeholder,
     label,
-    isNumeric,
+    symbols
 }) => {
 
     //color hooks
     const blackColor = useReactiveVar(blackColorVar)
-    const whiteColor = useReactiveVar(whiteColorVar)
 
     //styles
-    const styles = getStyles(blackColor, whiteColor)
+    const styles = getStyles(blackColor)
 
     return (
 
@@ -34,42 +32,39 @@ export const InputLine = ({
 
             <Text style={styles.label}>{label} *</Text>
             <TextInput
-                style={styles.input}
+                style={styles.multiline}
+                multiline
+                textAlignVertical='top'
+                numberOfLines={5}
                 onChangeText={inputChange}
                 value={input}
                 placeholder={placeholder}
                 placeholderTextColor={lightgrayColor}
-                maxLength={isNumeric ? 6 : symbols}
-                keyboardType={isNumeric ? 'phone-pad' : 'default'}
+                maxLength={symbols}
             />
-            {symbols ?
-                <Counter counter={input.length} max={symbols} />
-                : null
-            }
+            <Counter counter={input.length} max={symbols} />
 
         </View>
 
     )
 }
 
-const getStyles = (blackColor, whiteColor) => ({
+const getStyles = (blackColor) => ({
     container: {
         width: '90%',
         marginVertical: 10,
         alignSelf: 'center',
     },
-    label: {
-        color: blackColor,
-        fontSize: 14,
-        marginTop: 15,
-    },
-    input: {
+    multiline: {
         width: '100%',
-        height: 40,
-        margin: 5,
         borderBottomWidth: 0.5,
         borderBottomColor: lightgrayColor,
         padding: 7,
+        color: blackColor
+    },
+    label: {
         color: blackColor,
+        fontSize: 14,
+        marginTop: 15
     },
 })

@@ -16,6 +16,7 @@ import { ClientNavigationScreen } from '@screens/client/ClientNavigationScreen/C
 
 //common components
 import { Notify } from '@common_components/Notify/Notify'
+import { CreateOrder } from '@components/client/Order/CreateOrder'
 
 export const ClientScreens = () => {
 
@@ -62,6 +63,14 @@ export const ClientScreens = () => {
                             component={EditClientProfile}
                             options={{
                                 title: locale.edition,
+                            }}
+                        />
+
+                        <Stack.Screen
+                            name='CreateOrder'
+                            component={CreateOrder}
+                            options={{
+                                title: locale.creation,
                             }}
                         />
 

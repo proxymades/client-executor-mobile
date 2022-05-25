@@ -9,7 +9,14 @@ import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 //icons
 import { OrdersIcon, RatingIcon, ReviewsIcon, WorksIcon } from '../Svg/Svg'
 
-export const ProfileMenu = ({ ordersCount, worksCount, ratingCount, reviewsCount, type }) => {
+export const ProfileMenu = ({
+    ordersCount,
+    worksCount,
+    ratingCount,
+    reviewsCount,
+    type,
+    openOrders
+}) => {
 
     //states
 
@@ -29,17 +36,25 @@ export const ProfileMenu = ({ ordersCount, worksCount, ratingCount, reviewsCount
             <View style={styles.items}>
                 <View style={styles.item}>
                     {type === 'client' ?
-                        <>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={openOrders}
+                            disabled={ordersCount === 0}
+                        >
                             <OrdersIcon width={40} height={40} fill={blackColor} />
                             <Text style={styles.text}>{locale.orders}</Text>
                             <Text style={styles.count}>{ordersCount}</Text>
-                        </>
+                        </TouchableOpacity>
                         :
-                        <>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={openOrders}
+                            disabled={worksCount === 0}
+                        >
                             <WorksIcon width={40} height={40} fill={blackColor} />
                             <Text style={styles.text}>{locale.works}</Text>
                             <Text style={styles.count}>{worksCount}</Text>
-                        </>
+                        </TouchableOpacity>
                     }
                 </View>
                 <View style={styles.item}>
@@ -73,6 +88,9 @@ const getStyles = (whiteColor, blackColor) => ({
         alignSelf: 'center'
     },
     item: {
+        alignItems: 'center',
+    },
+    button: {
         alignItems: 'center',
     },
     text: {

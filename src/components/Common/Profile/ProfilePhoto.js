@@ -45,7 +45,7 @@ export const ProfilePhoto = ({ size, action, preview, avatar, isEdit }) => {
                         }}
                     />
                     :
-                    <Avatar size={80} />
+                    <Avatar size={size} />
             }
 
             {isEdit ?
@@ -53,7 +53,7 @@ export const ProfilePhoto = ({ size, action, preview, avatar, isEdit }) => {
                     style={styles.photoEdit}
                     onPress={handleAction}
                 >
-                    <CameraIcon width={size} height={size} fill={blackColor} />
+                    <CameraIcon width={18} height={18} fill={blackColor} />
                 </Pressable>
                 : null
             }
