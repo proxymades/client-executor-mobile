@@ -275,6 +275,7 @@ export const locale = {
     numberProfiles: 'Количество пользователей',
 
     //o
+    orderCreated_notify: 'Заказ создан',
     orders: 'Заказы',
     outad: 'Наружная реклама',
 

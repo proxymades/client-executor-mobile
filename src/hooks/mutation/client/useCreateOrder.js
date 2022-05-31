@@ -1,5 +1,5 @@
 //core
-import { useMutation } from '@apollo/client'
+import { useMutation, useReactiveVar } from '@apollo/client'
 import cuid from 'cuid'
 import { ReactNativeFile } from 'apollo-upload-client'
 import { useNavigation } from '@react-navigation/native'
@@ -8,10 +8,16 @@ import { useNavigation } from '@react-navigation/native'
 import { CREATE_ORDER } from '@gql_mutation/client/CreateOrder'
 import { UPLOAD_ORDER_IMAGE } from '@gql_mutation/client/UploadOrderImage'
 
+//utils
+import { isNotifedVar, localeVar } from '@utils/cache'
+
 export const useCreateOrder = (formState) => {
 
     //global hooks
     const navigation = useNavigation()
+
+    //lang hooks
+    const locale = useReactiveVar(localeVar)
 
     //mutations
     const [createOrder] = useMutation(CREATE_ORDER, {
@@ -28,7 +34,10 @@ export const useCreateOrder = (formState) => {
         refetchQueries: ['ClientProfile'],
         onCompleted: (data) => {
             createImageFile(formState.image, data.createOrder.id)
-            setTimeout(() => navigation.goBack(), 2000)
+            setTimeout(() => {
+                isNotifedVar(locale.orderCreated_notify)
+                navigation.goBack()
+            }, 2000)
         }
     })
 

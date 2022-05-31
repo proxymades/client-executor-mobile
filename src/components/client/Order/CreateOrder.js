@@ -23,6 +23,7 @@ import { ExtraModal } from '@components/Common/Modals/ExtraModal'
 import { useNavigation } from '@react-navigation/native'
 import { AcceptIcon } from '@components/Common/Svg/Svg'
 import { useCreateOrder } from '@hooks_mutation/client/useCreateOrder'
+import { IS_COIUNT_NUMBERS } from '@utils/regulars'
 
 //styles
 
@@ -113,7 +114,7 @@ export const CreateOrder = () => {
     const handleCheckData = () => {
         formState.header === '' ?
             isNotifedVar(`${locale.checkField_notify} - ${locale.header}`) :
-            formState.count === '' ?
+            formState.count === '' && formState.count.match(IS_COIUNT_NUMBERS) === null ?
                 isNotifedVar(`${locale.checkField_notify} - ${locale.quantity}`) :
                 formState.text === '' ?
                     isNotifedVar(`${locale.checkField_notify} - ${locale.text}`) :

@@ -273,6 +273,7 @@ export const locale = {
     numberProfiles: 'Number of profiles',
 
     //o
+    orderCreated_notify: 'Order created',
     orders: 'Orders',
     outad: 'Outdoor advertising',
 
