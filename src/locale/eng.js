@@ -57,6 +57,7 @@ export const locale = {
     checkField_notify: 'Check field',
     client: 'Client',
     company_placeholder: 'enter company name',
+    confirmOrderDeletion: 'Confirm order deletion?',
 
     camera: 'Camera',
     camera_description: 'Use your camera to take a picture',
@@ -264,6 +265,7 @@ export const locale = {
     name_placeholder: 'add first and/or last name',
     newOrder: 'New order',
     newText: 'New',
+    no: 'No',
     notifications: 'Notifications',
 
     nation: 'Nationality',
@@ -274,6 +276,7 @@ export const locale = {
 
     //o
     orderCreated_notify: 'Order created',
+    orderDate: 'Order placement date',
     orders: 'Orders',
     outad: 'Outdoor advertising',
 
@@ -333,6 +336,7 @@ export const locale = {
     registerDate: 'Date of registration',
     registration: 'registration',
     reviews: 'Reviews',
+    requests: 'Requests',
 
     rankType: 'Rank type',
     rankType_placeholder: 'military or special',
@@ -428,6 +432,7 @@ export const locale = {
     typing: '...typing',
 
     //u
+    urgent: 'Urgent',
     urgentOrderYes: 'Urgent order - yes',
     urgentOrderNo: 'Urgent order - no',
 
@@ -469,6 +474,7 @@ export const locale = {
     //x
 
     //y
+    yes: 'Yes',
     yourRegNumber: 'Your registration phone:',
 
     //z

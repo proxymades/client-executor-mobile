@@ -6,14 +6,14 @@ import { useReactiveVar } from '@apollo/client'
 //utils
 import { blackColorVar, whiteColorVar } from '@utils/cache'
 
-export const ExtraModal = ({ children, modalVisible, setModalVisible, isEditing }) => {
+export const ExtraModal = ({ children, modalVisible, setModalVisible, isEditing, isSubmenu }) => {
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
     const blackColor = useReactiveVar(blackColorVar)
 
     //styles
-    const styles = getStyles(whiteColor, blackColor)
+    const styles = getStyles(whiteColor, blackColor, isSubmenu)
 
     //handles
     const handleCloseModal = () => {
@@ -45,7 +45,7 @@ export const ExtraModal = ({ children, modalVisible, setModalVisible, isEditing 
     )
 }
 
-const getStyles = (whiteColor, blackColor) => ({
+const getStyles = (whiteColor, blackColor, isSubmenu) => ({
     blackWrap: {
         flex: 1,
         justifyContent: 'center',
@@ -63,6 +63,6 @@ const getStyles = (whiteColor, blackColor) => ({
         elevation: 5,
         zIndex: 2,
         position: 'absolute',
-        top: 80
+        top: isSubmenu ? 180 : 80
     },
 })

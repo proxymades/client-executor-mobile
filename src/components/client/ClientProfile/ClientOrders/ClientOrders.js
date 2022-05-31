@@ -67,32 +67,35 @@ export const ClientOrders = () => {
             }}
         >
 
-            <Tab.Screen name="ClientNewOrders"
-                component={ClientNewOrders}
+            <Tab.Group
                 options={{
-                    title: locale.newText,
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
                 }}
-            />
+            >
 
-            <Tab.Screen name="ClientWorkOrders"
-                component={ClientWorkOrders}
-                options={{
-                    title: locale.workText,
-                    headerStyle: { backgroundColor: whiteColor },
-                    headerTitleStyle: { color: blackColor },
-                }}
-            />
+                <Tab.Screen name="ClientNewOrders"
+                    component={ClientNewOrders}
+                    options={{
+                        title: locale.newText,
+                    }}
+                />
 
-            <Tab.Screen name="ClientReadyOrders"
-                component={ClientReadyOrders}
-                options={{
-                    title: locale.readyText,
-                    headerStyle: { backgroundColor: whiteColor },
-                    headerTitleStyle: { color: blackColor },
-                }}
-            />
+                <Tab.Screen name="ClientWorkOrders"
+                    component={ClientWorkOrders}
+                    options={{
+                        title: locale.workText,
+                    }}
+                />
+
+                <Tab.Screen name="ClientReadyOrders"
+                    component={ClientReadyOrders}
+                    options={{
+                        title: locale.readyText,
+                    }}
+                />
+
+            </Tab.Group>
 
         </Tab.Navigator>
     )

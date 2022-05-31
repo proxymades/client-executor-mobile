@@ -55,9 +55,9 @@ export const locale = {
     //c
     category: 'Категория',
     checkField_notify: 'Проверьте поле',
-    company_placeholder: 'введите название компании',
     client: 'Клиент',
-
+    company_placeholder: 'введите название компании',
+    confirmOrderDeletion: 'Подтверждаете удаление заказа?',
 
     camera: 'Камера',
     camera_description: 'Использовать вашу камеру для снимка',
@@ -266,6 +266,7 @@ export const locale = {
     name_placeholder: 'добавьте имя и/или фамилию',
     newOrder: 'Новый заказ',
     newText: 'Новые',
+    no: 'Нет',
     notifications: 'Уведомления',
 
     nation: 'Национальность',
@@ -276,6 +277,7 @@ export const locale = {
 
     //o
     orderCreated_notify: 'Заказ создан',
+    orderDate: 'Дата размещения заказа',
     orders: 'Заказы',
     outad: 'Наружная реклама',
 
@@ -336,6 +338,7 @@ export const locale = {
     registerDate: 'Дата регистрации',
     registerText: 'регистрация',
     reviews: 'Отзывы',
+    requests: 'Заявки',
 
     rankType: 'Тип звания',
     rankType_placeholder: 'воинское или специальное',
@@ -430,6 +433,7 @@ export const locale = {
     typing: '...печатает',
 
     //u
+    urgent: 'Срочный',
     urgentOrderYes: 'Срочный заказ - да',
     urgentOrderNo: 'Срочный заказ - нет',
 
@@ -472,6 +476,7 @@ export const locale = {
     //x
 
     //y
+    yes: 'Да',
     yourRegNumber: 'Ваш регистрационный телефон:',
 
     //z

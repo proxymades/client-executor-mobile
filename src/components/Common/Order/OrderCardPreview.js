@@ -2,6 +2,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
+import { useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
 
 //utils
@@ -24,7 +25,8 @@ import { blueColor, lightgrayColor } from '@utils/colors'
 
 export const OrderCardPreview = ({ item }) => {
 
-    //hooks
+    //global hooks
+    const navigation = useNavigation()
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -36,11 +38,18 @@ export const OrderCardPreview = ({ item }) => {
     //styles
     const styles = getStyles(whiteColor, blackColor)
 
+    //handles
+    const handleOpenOrder = () => {
+        navigation.push('Order', { orderId: item.id, title: item.header })
+    }
+
     return (
 
         <View style={styles.container}>
 
-            <OrderButton>
+            <OrderButton
+                handleAction={handleOpenOrder}
+            >
 
                 <View style={styles.wrap}>
 

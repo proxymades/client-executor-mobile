@@ -7,12 +7,12 @@ import { useReactiveVar } from '@apollo/client'
 import { blackColorVar, localeVar } from '@utils/cache'
 
 //icons
-import { BackIcon, EditProfileIcon, SettingsIcon } from '@common_components/Svg/Svg'
+import { BackIcon, EditOrderIcon, RequestsIcon, TrashIcon } from '@common_components/Svg/Svg'
 
-
-export const ProfileMenuForm = ({
+export const OrderClientMenuForm = ({
     setModalVisible,
-    editProfile
+    editOrder,
+    setDeleteMenuShow,
 }) => {
 
     //lang hooks
@@ -25,13 +25,17 @@ export const ProfileMenuForm = ({
     const styles = getStyles(blackColor)
 
     //handles
-    const handleEditProfile = () => {
+    const handleEditOrder = () => {
         setModalVisible(false)
-        editProfile()
+        editOrder()
     }
 
-    const handleOpenSettings = () => {
+    const handleOpenRequests = () => {
         setModalVisible(false)
+    }
+
+    const handleDeleteOrder = () => {
+        setDeleteMenuShow()
     }
 
     const handleCloseModal = () => {
@@ -45,18 +49,26 @@ export const ProfileMenuForm = ({
 
                 <TouchableOpacity
                     style={styles.item}
-                    onPress={handleEditProfile}
+                    onPress={handleOpenRequests}
                 >
-                    <EditProfileIcon width='30' height='25' fill={blackColor} />
+                    <RequestsIcon width='30' height='25' fill={blackColor} />
+                    <Text style={styles.text}>{locale.requests}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.item}
+                    onPress={handleEditOrder}
+                >
+                    <EditOrderIcon width='30' height='25' fill={blackColor} />
                     <Text style={styles.text}>{locale.edit}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.item}
-                    onPress={handleOpenSettings}
+                    onPress={handleDeleteOrder}
                 >
-                    <SettingsIcon width='30' height='25' fill={blackColor} />
-                    <Text style={styles.text}>{locale.settings}</Text>
+                    <TrashIcon width='30' height='25' fill={blackColor} />
+                    <Text style={styles.text}>{locale.delete}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity

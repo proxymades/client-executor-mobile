@@ -3,19 +3,16 @@ import React from 'react'
 import { View, Pressable, Image, Text, Dimensions } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
-//common components
-import { Avatar } from '@common_components/Avatar/Avatar'
-
 //utils
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
-import { IMAGES_URI } from '@utils/uri'
+
+//icons
+import { ImageSelectIcon, TrashIcon } from '../Svg/Svg'
 
 //colors
-import { CameraIcon, ImageSelectIcon, TrashIcon } from '../Svg/Svg'
 import { lightgrayColor, lightredColor } from '@utils/colors'
 
 export const OrderImage = ({
-    size,
     action,
     image,
     setImage,
