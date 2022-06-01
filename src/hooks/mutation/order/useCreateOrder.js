@@ -5,7 +5,7 @@ import { ReactNativeFile } from 'apollo-upload-client'
 import { useNavigation } from '@react-navigation/native'
 
 //gql
-import { CREATE_ORDER } from '@gql_mutation/client/CreateOrder'
+import { CREATE_ORDER } from '@gql_mutation/order/CreateOrder'
 import { UPLOAD_ORDER_IMAGE } from '@gql_mutation/client/UploadOrderImage'
 
 //utils

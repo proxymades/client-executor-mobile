@@ -1,14 +1,13 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { ScrollView, View, Dimensions, Image, Text, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Dimensions, Image, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
 
 //hooks
 import { useOrder } from '@hooks_query/order/useOrder'
-
-//components
+import { useDeleteOrder } from '@hooks_mutation/order/useDeleteOrder'
 
 //common components
 import { Loader } from '@components/Common/Loaders/Loader'
@@ -24,7 +23,7 @@ import { IMAGES_URI } from '@utils/uri'
 import { MenuIcon, UrgentIcon } from '@components/Common/Svg/Svg'
 
 //colors
-import { blueColor, lightgrayColor } from '@utils/colors'
+import { blueColor, lightblueColor, lightgrayColor } from '@utils/colors'
 
 export const Order = ({ route }) => {
 
@@ -34,9 +33,11 @@ export const Order = ({ route }) => {
     //states
     const [orderMenuShow, setOrderMenuShow] = useState(false)
     const [deleteMenuShow, setDeleteMenuShow] = useState(false)
+    const [deleting, setDeleting] = useState(false)
 
     //hooks
     const { orderLoading, orderData } = useOrder(route.params.orderId)
+    const { deleteOrder } = useDeleteOrder(route.params.orderId)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -57,17 +58,29 @@ export const Order = ({ route }) => {
                     onPress={handleOpenOrderMenu}
                 >
                     {isUserTypeVar() === 'client' ?
-                        <MenuIcon width={22} height={22} fill={blackColor} />
+                        <>
+                            {deleting ?
+                                <ActivityIndicator size='small' color={lightblueColor} />
+                                :
+                                <MenuIcon width={22} height={22} fill={blackColor} />
+                            }
+                        </>
                         : null
                     }
                 </TouchableOpacity>
             ),
         })
-    }, [navigation, whiteColor, blackColor, locale])
+    }, [navigation, whiteColor, blackColor, locale, deleting])
 
     //handles
     const handleOpenOrderMenu = () => {
         setOrderMenuShow(true)
+    }
+
+    const handleDeleteOrder = () => {
+        setDeleting(true)
+        deleteOrder()
+        setOrderMenuShow(false)
     }
 
     if (orderLoading) return <Loader />
@@ -80,6 +93,12 @@ export const Order = ({ route }) => {
             contentContainerStyle={{ paddingBottom: 80, paddingHorizontal: 10 }}
             showsVerticalScrollIndicator={false}
         >
+
+            <View style={styles.item}>
+                <Text style={styles.orderDate}>
+                    {locale.orderDate} {dayjs(orderData.createdAt).format('DD.MM.YYYY')}
+                </Text>
+            </View>
 
             {orderData.urgent ?
                 <View style={styles.urgentWrap}>
@@ -140,11 +159,6 @@ export const Order = ({ route }) => {
                 </View>
                 : null
             }
-            <View style={styles.item}>
-                <Text style={styles.orderDate}>
-                    {locale.orderDate} {dayjs(orderData.createdAt).format('DD.MM.YYYY')}
-                </Text>
-            </View>
 
             <ExtraModal
                 modalVisible={orderMenuShow}
@@ -164,7 +178,15 @@ export const Order = ({ route }) => {
                 <DeleteMenuForm
                     setModalVisible={setDeleteMenuShow}
                     label={locale.confirmOrderDeletion}
+                    deleteAction={handleDeleteOrder}
                 />
+            </ExtraModal>
+
+            <ExtraModal
+                modalVisible={deleting}
+                isEditing={true}
+            >
+                <View style={styles.blackWrap} />
             </ExtraModal>
 
         </ScrollView>
@@ -182,7 +204,8 @@ const getStyles = (whiteColor, blackColor) => ({
     urgentWrap: {
         alignSelf: 'flex-end',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10
     },
     urgentText: {
         fontSize: 12,
@@ -192,7 +215,7 @@ const getStyles = (whiteColor, blackColor) => ({
     },
     image: {
         width: windowWidth - 20,
-        aspectRatio: 1,
+        aspectRatio: 1.5,
         resizeMode: 'contain',
         marginTop: 5,
     },
@@ -211,8 +234,8 @@ const getStyles = (whiteColor, blackColor) => ({
     },
     orderDate: {
         textAlign: 'center',
-        fontSize: 14,
-        color: blackColor,
+        fontSize: 12,
+        color: lightgrayColor,
     },
 
     accept: {

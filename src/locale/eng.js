@@ -276,6 +276,7 @@ export const locale = {
 
     //o
     orderCreated_notify: 'Order created',
+    orderDeleted_notify: 'Order deleted',
     orderDate: 'Order placement date',
     orders: 'Orders',
     outad: 'Outdoor advertising',

@@ -22,7 +22,7 @@ import { EditImageForm } from '@components/Common/Modals/Forms/EditImageForm'
 import { ExtraModal } from '@components/Common/Modals/ExtraModal'
 import { useNavigation } from '@react-navigation/native'
 import { AcceptIcon } from '@components/Common/Svg/Svg'
-import { useCreateOrder } from '@hooks_mutation/client/useCreateOrder'
+import { useCreateOrder } from '@hooks_mutation/order/useCreateOrder'
 import { IS_COIUNT_NUMBERS } from '@utils/regulars'
 
 //styles
