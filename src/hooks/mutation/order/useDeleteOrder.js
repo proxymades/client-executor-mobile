@@ -22,7 +22,7 @@ export const useDeleteOrder = (orderId) => {
             id: orderId
         },
         refetchQueries: ['ClientProfile', 'ClientNewOrders'],
-        onCompleted: (data) => {
+        onCompleted: () => {
             setTimeout(() => {
                 isNotifedVar(locale.orderDeleted_notify)
                 navigation.goBack()

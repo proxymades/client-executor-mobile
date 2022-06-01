@@ -10,13 +10,14 @@ import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //components
 import { EditClientProfile } from '@components/client/ClientProfile/EditClientProfile/EditClientProfile'
+import { CreateOrder } from '@components/client/Order/CreateOrder'
+import { EditOrder } from '@components/client/Order/EditOrder'
 
 //screens
 import { ClientNavigationScreen } from '@screens/client/ClientNavigationScreen/ClientNavigationScreen'
 
 //common components
 import { Notify } from '@common_components/Notify/Notify'
-import { CreateOrder } from '@components/client/Order/CreateOrder'
 
 export const ClientScreens = () => {
 
@@ -71,6 +72,14 @@ export const ClientScreens = () => {
                             component={CreateOrder}
                             options={{
                                 title: locale.creation,
+                            }}
+                        />
+
+                        <Stack.Screen
+                            name='EditOrder'
+                            component={EditOrder}
+                            options={{
+                                title: locale.edition,
                             }}
                         />
 

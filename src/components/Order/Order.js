@@ -83,6 +83,11 @@ export const Order = ({ route }) => {
         setOrderMenuShow(false)
     }
 
+    const handleEditOrder = () => {
+        setOrderMenuShow(false)
+        navigation.push('EditOrder', { orderId: route.params.orderId })
+    }
+
     if (orderLoading) return <Loader />
 
     return (
@@ -167,6 +172,7 @@ export const Order = ({ route }) => {
                 <OrderClientMenuForm
                     setModalVisible={setOrderMenuShow}
                     setDeleteMenuShow={setDeleteMenuShow}
+                    editOrder={handleEditOrder}
                 />
             </ExtraModal>
 
@@ -236,18 +242,5 @@ const getStyles = (whiteColor, blackColor) => ({
         textAlign: 'center',
         fontSize: 12,
         color: lightgrayColor,
-    },
-
-    accept: {
-        paddingLeft: 10,
-        paddingRight: 5,
-    },
-    blackWrap: {
-        width: '100%',
-        height: '100%',
-        zIndex: 3,
-        position: 'absolute',
-        backgroundColor: blackColor,
-        opacity: 0.4
     },
 })

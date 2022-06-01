@@ -278,6 +278,8 @@ export const locale = {
     //o
     orderCreated_notify: 'Заказ создан',
     orderDeleted_notify: 'Заказ удален',
+    orderImageDeleted_notify: 'Фотография удалена',
+    orderUpdated_notify: 'Заказ обновлен',
     orderDate: 'Дата размещения заказа',
     orders: 'Заказы',
     outad: 'Наружная реклама',

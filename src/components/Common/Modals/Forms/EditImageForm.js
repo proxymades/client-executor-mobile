@@ -10,7 +10,7 @@ import { blackColorVar, localeVar } from '@utils/cache'
 import { TerminateIcon, BackIcon, CameraSelectIcon, ImageSelectIcon } from '@common_components/Svg/Svg'
 
 //colors
-import { blueColor, grayColor, lightgrayColor, lightredColor } from '@utils/colors'
+import { grayColor, lightgrayColor } from '@utils/colors'
 
 export const EditImageForm = ({
     existImage,
@@ -62,15 +62,15 @@ export const EditImageForm = ({
                             style={styles.item}
                             onPress={handleLoadImage}
                         >
-                            <ImageSelectIcon width='30' height='25' fill={blueColor} />
-                            <Text style={styles.blueText}>{locale.gallery}</Text>
+                            <ImageSelectIcon width='30' height='25' fill={blackColor} />
+                            <Text style={styles.text}>{locale.gallery}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.item}
                             onPress={handleMakeImage}
                         >
-                            <CameraSelectIcon width='30' height='25' fill={blueColor} />
-                            <Text style={styles.blueText}>{locale.camera}</Text>
+                            <CameraSelectIcon width='30' height='25' fill={blackColor} />
+                            <Text style={styles.text}>{locale.camera}</Text>
                         </TouchableOpacity>
                     </>
                     : null
@@ -81,8 +81,8 @@ export const EditImageForm = ({
                         style={styles.item}
                         onPress={handleDeleteImage}
                     >
-                        <TerminateIcon width='30' height='25' fill={lightredColor} />
-                        <Text style={styles.redText}>{locale.delete}</Text>
+                        <TerminateIcon width='30' height='25' fill={blackColor} />
+                        <Text style={styles.text}>{locale.delete}</Text>
                     </TouchableOpacity>
                     :
                     <>
@@ -90,15 +90,15 @@ export const EditImageForm = ({
                             style={styles.item}
                             onPress={handleLoadImage}
                         >
-                            <ImageSelectIcon width='30' height='25' fill={blueColor} />
-                            <Text style={styles.blueText}>{locale.gallery}</Text>
+                            <ImageSelectIcon width='30' height='25' fill={blackColor} />
+                            <Text style={styles.text}>{locale.gallery}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.item}
                             onPress={handleMakeImage}
                         >
-                            <CameraSelectIcon width='30' height='25' fill={blueColor} />
-                            <Text style={styles.blueText}>{locale.camera}</Text>
+                            <CameraSelectIcon width='30' height='25' fill={blackColor} />
+                            <Text style={styles.text}>{locale.camera}</Text>
                         </TouchableOpacity>
                     </>
                 }
@@ -140,21 +140,9 @@ const getStyles = (blackColor) => ({
         justifyContent: 'center',
     },
     text: {
-        fontSize: 14,
+        fontSize: 12,
         marginTop: 5,
         color: blackColor,
-        textAlign: 'center'
-    },
-    redText: {
-        fontSize: 14,
-        marginTop: 5,
-        color: lightredColor,
-        textAlign: 'center'
-    },
-    blueText: {
-        fontSize: 14,
-        marginTop: 5,
-        color: blueColor,
         textAlign: 'center'
     },
     descHeadline: {

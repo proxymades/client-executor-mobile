@@ -88,7 +88,7 @@ export const OrderClientMenuForm = ({
 const getStyles = (blackColor) => ({
     container: {
         width: '100%',
-        marginVertical: 20
+        marginVertical: 20,
     },
     items: {
         justifyContent: 'space-around',
@@ -96,6 +96,7 @@ const getStyles = (blackColor) => ({
         width: '100%',
     },
     item: {
+        width: '25%',
         alignItems: 'center',
         justifyContent: 'center',
     },

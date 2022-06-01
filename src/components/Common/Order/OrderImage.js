@@ -1,6 +1,6 @@
 //core
 import React from 'react'
-import { View, Pressable, Image, Text, Dimensions } from 'react-native'
+import { View, Pressable, Text, Dimensions, Image } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
@@ -11,6 +11,7 @@ import { ImageSelectIcon, TrashIcon } from '../Svg/Svg'
 
 //colors
 import { lightgrayColor, lightredColor } from '@utils/colors'
+import { IMAGES_URI } from '@utils/uri'
 
 export const OrderImage = ({
     action,
@@ -19,7 +20,6 @@ export const OrderImage = ({
     preview,
     isEdit
 }) => {
-
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -47,7 +47,7 @@ export const OrderImage = ({
             <View style={styles.items}>
 
                 <Text style={styles.label}>{locale.photo}</Text>
-                {(preview || image !== '') ?
+                {(preview || image !== '') && !isEdit ?
                     <Pressable
                         onPress={handleDeletePreview}
                         hitSlop={{ bottom: 10, left: 40, right: 40, top: 30 }}
@@ -65,14 +65,30 @@ export const OrderImage = ({
 
             </View>
 
-            {preview ?
+            {!isEdit && preview ?
                 <Image
                     style={styles.image}
                     source={{
                         uri: preview,
                     }}
                 />
-                : null
+                :
+                isEdit && preview ?
+                    <Image
+                        style={styles.image}
+                        source={{
+                            uri: preview,
+                        }}
+                    />
+                    :
+                    isEdit && image !== '' ?
+                        <Image
+                            style={styles.image}
+                            source={{
+                                uri: `${IMAGES_URI}${image}`,
+                            }}
+                        />
+                        : null
             }
 
         </View>

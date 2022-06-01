@@ -5,21 +5,25 @@ import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
 //hooks
-import { useCreateOrder } from '@hooks_mutation/order/useCreateOrder'
+import { useOrderCache } from '@hooks_query/order/useOrderCache'
+import { useUpdateOrder } from '@hooks_mutation/order/useUpdateOrder'
+import { useDeleteOrderImage } from '@hooks_mutation/order/useDeleteOrderImage'
+
+//components
 
 //common components
 import { ExtraModal } from '@components/Common/Modals/ExtraModal'
-import { InputMultiline } from '@components/Common/Inputs/InputMultiline'
+import { InputLine } from '@components/Common/Inputs/InputLine'
 import { PickerLine } from '@components/Common/Inputs/PickerLine'
+import { InputMultiline } from '@components/Common/Inputs/InputMultiline'
 import { SwitchLine } from '@components/Common/Inputs/SwitchLine'
 import { OrderImage } from '@components/Common/Order/OrderImage'
-import { InputLine } from '@components/Common/Inputs/InputLine'
 import { EditImageForm } from '@components/Common/Modals/Forms/EditImageForm'
 
 //utils
 import { blackColorVar, isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
-import { IS_COIUNT_NUMBERS } from '@utils/regulars'
 import { useImagePicker } from '@hooks_utils/useImagePicker'
+import { IS_COIUNT_NUMBERS } from '@utils/regulars'
 
 //icons
 import { AcceptIcon } from '@components/Common/Svg/Svg'
@@ -27,7 +31,7 @@ import { AcceptIcon } from '@components/Common/Svg/Svg'
 //colors
 import { blueColor, lightblueColor, lightgrayColor } from '@utils/colors'
 
-export const CreateOrder = () => {
+export const EditOrder = ({ route }) => {
 
     //global hooks
     const navigation = useNavigation()
@@ -35,20 +39,22 @@ export const CreateOrder = () => {
     //states
     const [formState, setFormState] = useState({
         header: '',
-        category: 'polygraphy',
+        category: '',
         count: '',
         text: '',
-        city: 'nursultan',
+        city: '',
         urgent: false,
         image: '',
     })
     const [pickerType, setPickerType] = useState('')
     const [extraImageShow, setExtraImageShow] = useState(false)
-    const [creating, setCreating] = useState(false)
+    const [updating, setUpdating] = useState(false)
 
     //hooks
+    const { orderQuery } = useOrderCache(route.params.orderId)
     const { setOpenImagePicker, preview, setPreview } = useImagePicker(false, pickerType)
-    const { createOrder } = useCreateOrder(formState)
+    const { deleteOrderImage } = useDeleteOrderImage(route.params.orderId)
+    const { updateOrder } = useUpdateOrder(formState, preview, route.params.orderId)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -67,20 +73,33 @@ export const CreateOrder = () => {
                 <TouchableOpacity
                     style={styles.accept}
                     onPress={handleCheckData}
-                    disabled={creating}
+                    disabled={updating}
                 >
-                    {creating ?
+                    {updating ?
                         <ActivityIndicator size='small' color={lightblueColor} />
                         :
-                        <AcceptIcon width={22} height={22} fill={!creating ? blueColor : lightgrayColor} />
+                        <AcceptIcon width={22} height={22} fill={!updating ? blueColor : lightgrayColor} />
                     }
                 </TouchableOpacity>
             ),
         })
-    }, [navigation, formState, preview.image, creating, whiteColor, blackColor, locale])
+    }, [navigation, formState, preview.image, updating, whiteColor, blackColor, locale])
 
     useEffect(() => {
-        preview &&
+        setFormState({
+            ...formState,
+            header: orderQuery.order.header,
+            category: orderQuery.order.category,
+            count: orderQuery.order.count,
+            text: orderQuery.order.text,
+            city: orderQuery.order.city,
+            urgent: orderQuery.order.urgent,
+            image: orderQuery.order.image,
+        })
+    }, [orderQuery])
+
+    useEffect(() => {
+        preview.image !== '' &&
             setFormState({
                 ...formState,
                 image: preview.image
@@ -88,9 +107,9 @@ export const CreateOrder = () => {
     }, [preview.image])
 
     useEffect(() => {
-        creating &&
-            createOrder()
-    }, [creating])
+        updating &&
+            updateOrder()
+    }, [updating])
 
     //handles
     const handleInputFormChange = (value, name) => {
@@ -111,6 +130,14 @@ export const CreateOrder = () => {
         })
     }
 
+    const handleDeleteImage = () => {
+        setFormState({
+            ...formState,
+            image: ''
+        })
+        deleteOrderImage()
+    }
+
     const handleCheckData = () => {
         formState.header === '' ?
             isNotifedVar(`${locale.checkField_notify} - ${locale.header}`) :
@@ -118,7 +145,7 @@ export const CreateOrder = () => {
                 isNotifedVar(`${locale.checkField_notify} - ${locale.quantity}`) :
                 formState.text === '' ?
                     isNotifedVar(`${locale.checkField_notify} - ${locale.text}`) :
-                    setCreating(true)
+                    setUpdating(true)
     }
 
     return (
@@ -178,6 +205,7 @@ export const CreateOrder = () => {
                 preview={preview.image}
                 image={formState.image}
                 setImage={handleDeletePreview}
+                isEdit={true}
             />
 
             <ExtraModal
@@ -185,6 +213,8 @@ export const CreateOrder = () => {
                 setModalVisible={setExtraImageShow}
             >
                 <EditImageForm
+                    existImage={orderQuery.order.image}
+                    deleteImage={handleDeleteImage}
                     openImagePicker={setOpenImagePicker}
                     setPickerType={setPickerType}
                     setModalVisible={setExtraImageShow}
@@ -192,7 +222,7 @@ export const CreateOrder = () => {
             </ExtraModal>
 
             <ExtraModal
-                modalVisible={creating}
+                modalVisible={updating}
                 isEditing={true}
             >
                 <View style={styles.blackWrap} />

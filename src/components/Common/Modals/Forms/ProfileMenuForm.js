@@ -84,6 +84,7 @@ const getStyles = (blackColor) => ({
         width: '100%',
     },
     item: {
+        width: '25%',
         alignItems: 'center',
         justifyContent: 'center',
     },
