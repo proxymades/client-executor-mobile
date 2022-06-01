@@ -5,6 +5,7 @@ import { useMMKVString } from 'react-native-mmkv'
 
 //gql
 import { CLIENT_LOGIN } from '@gql_mutation/auth/ClientLogin'
+import { EXECUTOR_LOGIN } from '@gql_mutation/auth/ExecutorLogin'
 
 //utils
 import { isNotifedVar } from '@utils/cache'
@@ -32,9 +33,24 @@ export const useLogin = (loginState, type) => {
         }
     })
 
+    const [executorLogin] = useMutation(EXECUTOR_LOGIN, {
+        variables: {
+            phone: loginState.phone,
+            password: loginState.password
+        },
+        onCompleted: ({ executorLogin }) => {
+            setToken(executorLogin.token)
+        },
+        onError: (err) => {
+            isNotifedVar(`${err.message}`)
+            setLogining(false)
+        }
+    })
+
     //handles
     const login = () => {
         type === 'client' && clientLogin()
+        type === 'executor' && executorLogin()
     }
 
     return {

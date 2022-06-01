@@ -102,12 +102,6 @@ export const Auth = ({ route }) => {
                 <View style={styles.changeButton}>
                     {authForm.authType === 'login' ?
                         <>
-                            {/* <Text
-                                style={styles.authResetText}
-                                onPress={() => setExtraShow(true)}
-                            >
-                                {locale.forgot}
-                            </Text> */}
                             <Text
                                 style={styles.authTypeText}
                                 onPress={() => handleSwitchAuth('signup')}
@@ -115,7 +109,6 @@ export const Auth = ({ route }) => {
                                 {locale.register}
                             </Text>
                         </>
-
                         :
                         <Text
                             style={styles.authTypeText}

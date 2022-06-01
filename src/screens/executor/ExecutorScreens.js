@@ -9,15 +9,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //components
-// import { EditProfile } from '@components/Profile/EditProfile/EditProfile'
+// import { EditExecutorProfile } from '@components/executor/ExecutorProfile/EditExecutorProfile/EditExecutorProfile'
 
+//screens
+import { ExecutorNavigationScreen } from '@screens/executor/ExecutorNavigationScreen/ExecutorNavigationScreen'
 
 //common components
 import { Notify } from '@common_components/Notify/Notify'
-import { Auth } from '@components/Auth/Auth'
-import { Selector } from '@components/Auth/Selector'
 
-export const AuthScreen = () => {
+export const ExecutorScreens = () => {
 
     //stack
     const Stack = createNativeStackNavigator()
@@ -48,24 +48,30 @@ export const AuthScreen = () => {
                 <Stack.Navigator>
 
                     <Stack.Screen
-                        name="Selector"
-                        component={Selector}
+                        name="ExecutorNavigationScreen"
+                        component={ExecutorNavigationScreen}
                         options={{
                             headerShown: false,
                         }}
                     />
 
-                    <Stack.Screen
-                        name="Auth"
-                        component={Auth}
-                        options={({ route }) => ({
-                            title: route.params.type === 'client' ? locale.client : locale.executor
-                        })}
-                    />
+                    {/* <Stack.Group>
+
+                        <Stack.Screen
+                            name='EditExecutorProfile'
+                            component={EditExecutorProfile}
+                            options={{
+                                title: locale.edition,
+                            }}
+                        />
+
+                    </Stack.Group> */}
 
                 </Stack.Navigator>
 
             </NavigationContainer>
+
+            <Notify />
 
         </>
     )

@@ -22,7 +22,7 @@ import { ProfileMenuForm } from '@common_components/Modals/Forms/ProfileMenuForm
 //icons
 import { MenuIcon } from '@common_components/Svg/Svg'
 
-export const ClientProfile = ({ navigation }) => {
+export const ExecutorProfile = ({ navigation }) => {
 
     //states
     const [extraShow, setExtraShow] = useState(false)

@@ -1,12 +1,12 @@
 //core
 import { gql } from '@apollo/client'
 
-export const LOGIN = gql`
-    mutation Login(
+export const EXECUTOR_LOGIN = gql`
+    mutation ExecutorLogin(
         $phone: String!
         $password: String!
         ){
-            login(
+            executorLogin(
                 phone: $phone
                 password: $password
             ){

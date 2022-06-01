@@ -25,7 +25,7 @@ export const Selector = ({ navigation }) => {
     const styles = getStyles(blackColor, whiteColor)
 
     //handles
-    const handleSetClient = (type) => {
+    const handleSetAccountType = (type) => {
         navigation.push('Auth', { type: type })
     }
 
@@ -40,7 +40,7 @@ export const Selector = ({ navigation }) => {
             <View style={styles.typeContainer}>
                 <View style={styles.typeChecker}>
                     <WhiteButton
-                        handleAction={() => handleSetClient('client')}
+                        handleAction={() => handleSetAccountType('client')}
                     >
                         <Text style={styles.typeCheckerText}>
                             {locale.client}
@@ -48,7 +48,7 @@ export const Selector = ({ navigation }) => {
 
                     </WhiteButton>
                     <WhiteButton
-                        handleAction={() => handleSetClient('executor')}
+                        handleAction={() => handleSetAccountType('executor')}
                     >
                         <Text style={styles.typeCheckerText}>
                             {locale.executor}

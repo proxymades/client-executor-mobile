@@ -8,6 +8,7 @@ import jwt_decode from 'jwt-decode'
 
 //screens
 import { ClientScreens } from '@screens/client/ClientScreens'
+import { ExecutorScreens } from '@screens/executor/ExecutorScreens'
 import { AuthScreen } from '@screens/AuthScreen'
 
 //hooks_utils
@@ -110,7 +111,7 @@ export const App = () => {
             <ClientScreens />
             :
             isUserType === 'executor' ?
-              null
+              <ExecutorScreens />
               :
               null
           }

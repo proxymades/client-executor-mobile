@@ -1,17 +1,17 @@
 import { gql } from '@apollo/client'
 
-export const SIGNUP = gql`
-    mutation Signup(
+export const EXECUTOR_SIGNUP = gql`
+    mutation ExecutorSignup(
             $id: ID!
             $phone: String!
             $password: String!
-            $fullName: String!
+            $name: String!
         ){
-            signup(
+            executorSignup(
                 id: $id
                 phone: $phone
                 password: $password
-                fullName: $fullName
+                name: $name
             ){
                 token
         }

@@ -1,6 +1,6 @@
 //core
-import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, RefreshControl, } from 'react-native'
+import React from 'react'
+import { View, Text, TouchableOpacity, } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
@@ -17,8 +17,6 @@ export const ProfileMenu = ({
     type,
     openOrders
 }) => {
-
-    //states
 
     //lang hooks
     const locale = useReactiveVar(localeVar)

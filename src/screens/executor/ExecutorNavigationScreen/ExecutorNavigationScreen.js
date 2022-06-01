@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Dimensions } from 'react-native'
 
 //screens
-import { ClientProfileScreen } from '@screens/client/ClientProfileScreen/ClientProfileScreen'
+import { ExecutorProfileScreen } from '../ExecutorProfileScreen/ExecutorProfileScreen'
 import { ClientActivityScreen } from '@screens/client/ClientActivityScreen/ClientActivityScreen'
 
 //utils
@@ -15,12 +15,13 @@ import { blackColorVar, whiteColorVar } from '@utils/cache'
 import {
     AvatarIcon,
     ActivityIcon,
+    OrdersIcon,
 } from '@common_components/Svg/Svg'
 
 //colors
 import { blueColor } from '@utils/colors'
 
-export const ClientNavigationScreen = () => {
+export const ExecutorNavigationScreen = () => {
 
     //tabs
     const Tab = createBottomTabNavigator()
@@ -47,8 +48,8 @@ export const ClientNavigationScreen = () => {
         >
 
             <Tab.Screen
-                name='ClientProfileScreen'
-                component={ClientProfileScreen}
+                name='ExecutorProfileScreen'
+                component={ExecutorProfileScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <AvatarIcon width={size} height={size} fill={color} />
@@ -58,8 +59,19 @@ export const ClientNavigationScreen = () => {
             />
 
             <Tab.Screen
-                name='ClientActivityScreen'
-                component={ClientActivityScreen}
+                name='ExecutorFeedScreen'
+                component={ExecutorProfileScreen}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <OrdersIcon width={size} height={size} fill={color} />
+                    ),
+                    headerShown: false,
+                }}
+            />
+
+            <Tab.Screen
+                name='ExecutorActivityScreen'
+                component={ExecutorProfileScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <ActivityIcon width={size} height={size} fill={color} />
