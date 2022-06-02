@@ -4,12 +4,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useReactiveVar } from '@apollo/client'
 
 //components
-import { ExecutorProfile } from '@components/executor/ExecutorProfile/ExecutorProfile'
+import { ExecutorNewOrders } from '@components/executor/ExecutorNewOrders/ExecutorNewOrders'
+import { Order } from '@components/Order/Order'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 
-export const ExecutorProfileScreen = () => {
+export const ExecutorNewOrdersScreen = () => {
 
     //stack
     const Stack = createNativeStackNavigator()
@@ -32,11 +33,19 @@ export const ExecutorProfileScreen = () => {
             >
 
                 <Stack.Screen
-                    name='ExecutorProfile'
-                    component={ExecutorProfile}
+                    name='ExecutorNewOrders'
+                    component={ExecutorNewOrders}
                     options={{
-                        title: locale.profile,
+                        title: locale.orders,
                     }}
+                />
+
+                <Stack.Screen
+                    name='Order'
+                    component={Order}
+                    options={({ route }) => ({
+                        title: route.params.title,
+                    })}
                 />
 
             </Stack.Group>

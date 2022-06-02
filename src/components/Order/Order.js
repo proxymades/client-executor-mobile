@@ -23,7 +23,7 @@ import { IMAGES_URI } from '@utils/uri'
 import { MenuIcon, UrgentIcon } from '@components/Common/Svg/Svg'
 
 //colors
-import { blueColor, lightblueColor, lightgrayColor } from '@utils/colors'
+import { blueColor, grayColor, lightblueColor, lightgrayColor } from '@utils/colors'
 
 export const Order = ({ route }) => {
 
@@ -31,9 +31,13 @@ export const Order = ({ route }) => {
     const navigation = useNavigation()
 
     //states
-    const [orderMenuShow, setOrderMenuShow] = useState(false)
+    const [clientMenuShow, setClientMenuShow] = useState(false)
     const [deleteMenuShow, setDeleteMenuShow] = useState(false)
     const [deleting, setDeleting] = useState(false)
+
+    const [executorMenuShow, setExecutorMenuShow] = useState(false)
+    const [cancelMenuShow, setCancelMenuShow] = useState(false)
+    const [sending, setSending] = useState(false)
 
     //hooks
     const { orderLoading, orderData } = useOrder(route.params.orderId)
@@ -65,26 +69,38 @@ export const Order = ({ route }) => {
                                 <MenuIcon width={22} height={22} fill={blackColor} />
                             }
                         </>
-                        : null
+                        :
+                        <>
+                            {sending ?
+                                <ActivityIndicator size='small' color={lightblueColor} />
+                                :
+                                <MenuIcon width={22} height={22} fill={blackColor} />
+                            }
+                        </>
                     }
                 </TouchableOpacity>
             ),
         })
-    }, [navigation, whiteColor, blackColor, locale, deleting])
+    }, [navigation, whiteColor, blackColor, locale, deleting, sending])
 
     //handles
     const handleOpenOrderMenu = () => {
-        setOrderMenuShow(true)
+        isUserTypeVar() === 'client' &&
+            setClientMenuShow(true)
+        isUserTypeVar() === 'executor' &&
+            setExecutorMenuShow(true)
     }
 
     const handleDeleteOrder = () => {
-        setDeleting(true)
-        deleteOrder()
-        setOrderMenuShow(false)
+        if (isUserTypeVar() === 'client') {
+            setDeleting(true)
+            deleteOrder()
+            setClientMenuShow(false)
+        }
     }
 
     const handleEditOrder = () => {
-        setOrderMenuShow(false)
+        setClientMenuShow(false)
         navigation.push('EditOrder', { orderId: route.params.orderId })
     }
 
@@ -92,110 +108,123 @@ export const Order = ({ route }) => {
 
     return (
 
-        <ScrollView
-            keyboardShouldPersistTaps='handler'
-            style={styles.container}
-            contentContainerStyle={{ paddingBottom: 80, paddingHorizontal: 10 }}
-            showsVerticalScrollIndicator={false}
-        >
+        <>
 
-            <View style={styles.item}>
+            <ScrollView
+                keyboardShouldPersistTaps='handler'
+                style={styles.container}
+                contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 10 }}
+                showsVerticalScrollIndicator={false}
+            >
+
+                {orderData.urgent ?
+                    <View style={styles.urgentWrap}>
+                        <UrgentIcon width={30} height={15} fill={blueColor} />
+                        <Text style={styles.urgentText}>{locale.urgent}</Text>
+                    </View>
+                    : null
+                }
+
+                <View style={styles.item}>
+                    <Text style={styles.label}>{locale.category}</Text>
+                    <Text style={styles.text}>
+                        {orderData.category === 'polygraphy' ?
+                            locale.polygraphy :
+                            orderData.category === 'outad' ?
+                                locale.outad
+                                : locale.souvenir
+                        }
+                    </Text>
+                </View>
+
+                <View style={styles.item}>
+                    <Text style={styles.label}>{locale.quantity}</Text>
+                    <Text style={styles.text}>
+                        {orderData.count}
+                    </Text>
+                </View>
+
+                <View style={styles.item}>
+                    <Text style={styles.label}>{locale.text}</Text>
+                    <Text style={styles.text}>
+                        {orderData.text}
+                    </Text>
+                </View>
+
+                <View style={styles.item}>
+                    <Text style={styles.label}>{locale.location}</Text>
+                    <Text style={styles.text}>
+                        {orderData.city === 'nursultan' ?
+                            locale.nursultan :
+                            orderData.city === 'karaganda' ?
+                                locale.karaganda
+                                : locale.almaty
+                        }
+                    </Text>
+                </View>
+
+                {orderData.image ?
+                    <View style={styles.item}>
+                        <Text style={styles.label}>{locale.photo}</Text>
+                        <Image
+                            style={styles.image}
+                            source={{
+                                uri: `${IMAGES_URI}${orderData.image}`,
+                            }}
+                        />
+                    </View>
+                    : null
+                }
+
+                <ExtraModal
+                    modalVisible={clientMenuShow}
+                    setModalVisible={setClientMenuShow}
+                >
+                    <OrderClientMenuForm
+                        setModalVisible={setClientMenuShow}
+                        setDeleteMenuShow={setDeleteMenuShow}
+                        editOrder={handleEditOrder}
+                    />
+                </ExtraModal>
+
+                <ExtraModal
+                    modalVisible={executorMenuShow}
+                    setModalVisible={setExecutorMenuShow}
+                >
+                    <OrderClientMenuForm
+                        setModalVisible={setExecutorMenuShow}
+                        setCancelMenuShow={setCancelMenuShow}
+                        editOrder={handleEditOrder}
+                    />
+                </ExtraModal>
+
+                <ExtraModal
+                    modalVisible={deleteMenuShow}
+                    setModalVisible={setDeleteMenuShow}
+                    isSubmenu={true}
+                >
+                    <DeleteMenuForm
+                        setModalVisible={setDeleteMenuShow}
+                        label={locale.confirmOrderDeletion}
+                        deleteAction={handleDeleteOrder}
+                    />
+                </ExtraModal>
+
+                <ExtraModal
+                    modalVisible={deleting}
+                    isEditing={true}
+                >
+                    <View style={styles.blackWrap} />
+                </ExtraModal>
+
+            </ScrollView>
+
+            <View style={styles.itemFixedBottom}>
                 <Text style={styles.orderDate}>
                     {locale.orderDate} {dayjs(orderData.createdAt).format('DD.MM.YYYY')}
                 </Text>
             </View>
-
-            {orderData.urgent ?
-                <View style={styles.urgentWrap}>
-                    <UrgentIcon width={30} height={15} fill={blueColor} />
-                    <Text style={styles.urgentText}>{locale.urgent}</Text>
-                </View>
-                : null
-            }
-
-            <View style={styles.item}>
-                <Text style={styles.label}>{locale.category}</Text>
-                <Text style={styles.text}>
-                    {orderData.category === 'polygraphy' ?
-                        locale.polygraphy :
-                        orderData.category === 'outad' ?
-                            locale.outad
-                            : locale.souvenir
-                    }
-                </Text>
-            </View>
-
-            <View style={styles.item}>
-                <Text style={styles.label}>{locale.quantity}</Text>
-                <Text style={styles.text}>
-                    {orderData.count}
-                </Text>
-            </View>
-
-            <View style={styles.item}>
-                <Text style={styles.label}>{locale.text}</Text>
-                <Text style={styles.text}>
-                    {orderData.text}
-                </Text>
-            </View>
-
-            <View style={styles.item}>
-                <Text style={styles.label}>{locale.location}</Text>
-                <Text style={styles.text}>
-                    {orderData.city === 'nursultan' ?
-                        locale.nursultan :
-                        orderData.city === 'karaganda' ?
-                            locale.karaganda
-                            : locale.almaty
-                    }
-                </Text>
-            </View>
-
-            {orderData.image ?
-                <View style={styles.item}>
-                    <Text style={styles.label}>{locale.photo}</Text>
-                    <Image
-                        style={styles.image}
-                        source={{
-                            uri: `${IMAGES_URI}${orderData.image}`,
-                        }}
-                    />
-
-                </View>
-                : null
-            }
-
-            <ExtraModal
-                modalVisible={orderMenuShow}
-                setModalVisible={setOrderMenuShow}
-            >
-                <OrderClientMenuForm
-                    setModalVisible={setOrderMenuShow}
-                    setDeleteMenuShow={setDeleteMenuShow}
-                    editOrder={handleEditOrder}
-                />
-            </ExtraModal>
-
-            <ExtraModal
-                modalVisible={deleteMenuShow}
-                setModalVisible={setDeleteMenuShow}
-                isSubmenu={true}
-            >
-                <DeleteMenuForm
-                    setModalVisible={setDeleteMenuShow}
-                    label={locale.confirmOrderDeletion}
-                    deleteAction={handleDeleteOrder}
-                />
-            </ExtraModal>
-
-            <ExtraModal
-                modalVisible={deleting}
-                isEditing={true}
-            >
-                <View style={styles.blackWrap} />
-            </ExtraModal>
-
-        </ScrollView>
+        </>
     )
 }
 
@@ -221,9 +250,9 @@ const getStyles = (whiteColor, blackColor) => ({
     },
     image: {
         width: windowWidth - 20,
-        aspectRatio: 1.5,
-        resizeMode: 'contain',
+        aspectRatio: 1,
         marginTop: 5,
+        borderRadius: 10
     },
     item: {
         marginVertical: 10,
@@ -242,5 +271,16 @@ const getStyles = (whiteColor, blackColor) => ({
         textAlign: 'center',
         fontSize: 12,
         color: lightgrayColor,
+    },
+    itemFixedBottom: {
+        position: 'absolute',
+        bottom: 15,
+        alignSelf: 'center',
+        borderRadius: 20,
+        elevation: 8,
+        shadowColor: lightgrayColor,
+        backgroundColor: whiteColor,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
     },
 })

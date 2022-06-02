@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //components
-// import { EditExecutorProfile } from '@components/executor/ExecutorProfile/EditExecutorProfile/EditExecutorProfile'
+import { EditExecutorProfile } from '@components/executor/ExecutorProfile/EditExecutorProfile/EditExecutorProfile'
 
 //screens
 import { ExecutorNavigationScreen } from '@screens/executor/ExecutorNavigationScreen/ExecutorNavigationScreen'
@@ -55,7 +55,7 @@ export const ExecutorScreens = () => {
                         }}
                     />
 
-                    {/* <Stack.Group>
+                    <Stack.Group>
 
                         <Stack.Screen
                             name='EditExecutorProfile'
@@ -65,7 +65,7 @@ export const ExecutorScreens = () => {
                             }}
                         />
 
-                    </Stack.Group> */}
+                    </Stack.Group>
 
                 </Stack.Navigator>
 

@@ -12,8 +12,6 @@ import {
     whiteColorVar
 } from '@utils/cache'
 
-//hooks
-
 //components
 import { OrderButton } from '../Buttons/OrderButton'
 
@@ -54,6 +52,7 @@ export const OrderCardPreview = ({ item }) => {
                 <View style={styles.wrap}>
 
                     <View style={styles.items}>
+
                         <View style={styles.item}>
                             <Text style={styles.small}>
                                 {item.category === 'polygraphy' ?
@@ -64,16 +63,20 @@ export const OrderCardPreview = ({ item }) => {
                                 }
                             </Text>
                         </View>
+
                         {item.urgent ?
                             <UrgentIcon width={25} height={15} fill={blueColor} />
                             : null
                         }
+
                     </View>
 
                     <View style={styles.items}>
+
                         <View style={styles.item}>
                             <Text style={styles.normal}>{item.header}</Text>
                         </View>
+
                         <View style={styles.item}>
                             <Text style={styles.small}>
                                 {item.city === 'nursultan' ?
@@ -84,15 +87,19 @@ export const OrderCardPreview = ({ item }) => {
                                 }
                             </Text>
                         </View>
+
                     </View>
 
                     <View style={styles.items}>
+
                         <View style={styles.item}>
-                            <Text style={styles.small}>{locale.quantity} - {item.count}</Text>
+                            <Text style={styles.medium}>{locale.quantity} - {item.count}</Text>
                         </View>
+
                         <View style={styles.item}>
                             <Text style={styles.small}>{dayjs(item.createdAt).format('DD.MM.YYYY')}</Text>
                         </View>
+
                     </View>
 
                 </View>
@@ -111,7 +118,7 @@ const getStyles = (whiteColor, blackColor) => ({
         marginTop: 10,
     },
     wrap: {
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         height: 70
     },
     items: {
@@ -122,6 +129,10 @@ const getStyles = (whiteColor, blackColor) => ({
     },
     small: {
         fontSize: 12,
+        color: lightgrayColor,
+    },
+    medium: {
+        fontSize: 13,
         color: lightgrayColor,
     },
     normal: {

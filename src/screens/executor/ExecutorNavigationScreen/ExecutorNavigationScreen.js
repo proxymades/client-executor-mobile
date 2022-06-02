@@ -6,7 +6,7 @@ import { Dimensions } from 'react-native'
 
 //screens
 import { ExecutorProfileScreen } from '../ExecutorProfileScreen/ExecutorProfileScreen'
-import { ClientActivityScreen } from '@screens/client/ClientActivityScreen/ClientActivityScreen'
+import { ExecutorNewOrdersScreen } from '../ExecutorNewOrdersScreen/ExecutorNewOrdersScreen'
 
 //utils
 import { blackColorVar, whiteColorVar } from '@utils/cache'
@@ -59,8 +59,8 @@ export const ExecutorNavigationScreen = () => {
             />
 
             <Tab.Screen
-                name='ExecutorFeedScreen'
-                component={ExecutorProfileScreen}
+                name='ExecutorNewOrdersScreen'
+                component={ExecutorNewOrdersScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <OrdersIcon width={size} height={size} fill={color} />

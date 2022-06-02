@@ -44,6 +44,7 @@ export const App = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // setToken('')
     if (token) {
       setLoading(false)
       isLoggedInVar(true)

@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //hooks
-import { useClientProfile } from '@hooks_query/client/useClientProfile'
+import { useExecutorProfile } from '@hooks_query/executor/useExecutorProfile'
 
 //utils
 import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -28,7 +28,7 @@ export const ExecutorProfile = ({ navigation }) => {
     const [extraShow, setExtraShow] = useState(false)
 
     //hooks
-    const { clientProfileLoading, clientProfileData } = useClientProfile(isUserPhoneVar())
+    const { executorProfileLoading, executorProfileData } = useExecutorProfile(isUserPhoneVar())
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -62,50 +62,38 @@ export const ExecutorProfile = ({ navigation }) => {
 
     const handleEditProfile = () => {
         setExtraShow(false)
-        navigation.push('EditClientProfile')
-    }
-
-    const handleCreateOrder = () => {
-        navigation.push('CreateOrder')
+        navigation.push('EditExecutorProfile')
     }
 
     const handleOpenOrders = () => {
-        navigation.push('ClientOrders')
+        navigation.push('ExecutorOrders')
     }
 
-    if (clientProfileLoading) return <Loader />
+    if (executorProfileLoading) return <Loader />
 
     return (
         <View style={styles.container}>
 
             <ProfilePhoto
                 size={80}
-                avatar={clientProfileData.avatar}
+                avatar={executorProfileData.avatar}
             />
 
             <ProfileData
-                name={clientProfileData.name}
-                verified={clientProfileData.verified}
+                name={executorProfileData.name}
+                verified={executorProfileData.verified}
             />
 
             <ProfileMenu
-                ordersCount={clientProfileData.order.length}
+                ordersCount={0}
+                // ordersCount={executorProfileData.order.length}
                 ratingCount={5}
                 reviewsCount={77}
                 type={isUserTypeVar()}
                 openOrders={handleOpenOrders}
             />
 
-            {isUserTypeVar() === 'client' ?
-                <View style={styles.orderButton}>
-                    <WhiteButton handleAction={handleCreateOrder}>
-                        <Text style={styles.orderText}>{locale.newOrder}</Text>
-                    </WhiteButton>
-                </View>
-                : null
-            }
-
-            <ProfileRegisterDate createdAt={clientProfileData.createdAt} />
+            <ProfileRegisterDate createdAt={executorProfileData.createdAt} />
 
             <ExtraModal
                 modalVisible={extraShow}

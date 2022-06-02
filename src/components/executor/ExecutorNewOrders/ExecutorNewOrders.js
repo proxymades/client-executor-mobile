@@ -1,17 +1,16 @@
 //core
-import React from 'react'
+import React, { useState } from 'react'
 import { View, FlatList } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
 import {
     blackColorVar,
-    isUserPhoneVar,
     whiteColorVar
 } from '@utils/cache'
 
 //hooks
-import { useClientNewOrders } from '@hooks_query/client/useClientNewOrders'
+import { useExecutorNewOrders } from '@hooks_query/executor/useExecutorNewOrders'
 
 //common components
 import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'
@@ -20,10 +19,17 @@ import { Loader } from '@common_components/Loaders/Loader'
 const renderCardPreviewItem = (item) =>
     <OrderCardPreview item={item} />
 
-export const ClientNewOrders = () => {
+export const ExecutorNewOrders = () => {
+
+    //states
+    const [city, setCity] = useState(['nursultan'])
+    const [category, setCategory] = useState(['polygraphy'])
 
     //hooks
-    const { clientNewOrdersLoading, clientNewOrdersData } = useClientNewOrders(isUserPhoneVar())
+    const {
+        executorNewOrdersLoading,
+        executorNewOrdersData
+    } = useExecutorNewOrders(city, category)
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -32,7 +38,7 @@ export const ClientNewOrders = () => {
     //styles
     const styles = getStyles(whiteColor, blackColor)
 
-    if (clientNewOrdersLoading) return <Loader />
+    if (executorNewOrdersLoading) return <Loader />
 
     return (
 
@@ -40,7 +46,7 @@ export const ClientNewOrders = () => {
 
             <FlatList
                 contentContainerStyle={{ paddingTop: 30 }}
-                data={clientNewOrdersData}
+                data={executorNewOrdersData}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item, index }) => renderCardPreviewItem(item)}
