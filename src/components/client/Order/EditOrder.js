@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
 //hooks
-import { useOrderCache } from '@hooks_query/order/useOrderCache'
+import { useClientOrderCache } from '@hooks_query/order/useClientOrderCache'
 import { useUpdateOrder } from '@hooks_mutation/order/useUpdateOrder'
 import { useDeleteOrderImage } from '@hooks_mutation/order/useDeleteOrderImage'
 
@@ -51,7 +51,7 @@ export const EditOrder = ({ route }) => {
     const [updating, setUpdating] = useState(false)
 
     //hooks
-    const { orderQuery } = useOrderCache(route.params.orderId)
+    const { orderQuery } = useClientOrderCache(route.params.orderId)
     const { setOpenImagePicker, preview, setPreview } = useImagePicker(false, pickerType)
     const { deleteOrderImage } = useDeleteOrderImage(route.params.orderId)
     const { updateOrder } = useUpdateOrder(formState, preview, route.params.orderId)

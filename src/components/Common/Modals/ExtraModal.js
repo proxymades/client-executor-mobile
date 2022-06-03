@@ -63,6 +63,6 @@ const getStyles = (whiteColor, blackColor, isSubmenu) => ({
         elevation: 5,
         zIndex: 2,
         position: 'absolute',
-        top: isSubmenu ? 180 : 80
+        top: isSubmenu ? 180 : 80,
     },
 })

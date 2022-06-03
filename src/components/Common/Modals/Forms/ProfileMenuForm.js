@@ -9,7 +9,6 @@ import { blackColorVar, localeVar } from '@utils/cache'
 //icons
 import { BackIcon, EditProfileIcon, SettingsIcon } from '@common_components/Svg/Svg'
 
-
 export const ProfileMenuForm = ({
     setModalVisible,
     editProfile

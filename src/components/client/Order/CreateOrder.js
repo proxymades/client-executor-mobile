@@ -171,6 +171,8 @@ export const CreateOrder = () => {
             <SwitchLine
                 input={formState.urgent}
                 inputChange={e => handleInputFormChange(e, 'urgent')}
+                positive={locale.urgentOrderYes}
+                negative={locale.urgentOrderNo}
             />
 
             <OrderImage

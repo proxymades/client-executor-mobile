@@ -53,11 +53,13 @@ export const locale = {
     bookmarksEmptyShort: 'Post saves are visible only to you and not available to other users',
 
     //c
+    cancel: 'Cancel',
     category: 'Category',
     checkField_notify: 'Check field',
     client: 'Client',
     company_placeholder: 'enter company name',
     confirmOrderDeletion: 'Confirm order deletion?',
+    confirmRequestCanceling: 'Are you confirming the cancellation?',
 
     camera: 'Camera',
     camera_description: 'Use your camera to take a picture',
@@ -148,6 +150,7 @@ export const locale = {
     drafts: 'Drafts',
 
     //e
+    enterAmount_placeholder: 'enter amount',
     error_notify: 'Error, please try again later',
     executor: 'Executor',
 
@@ -275,10 +278,12 @@ export const locale = {
     numberProfiles: 'Number of profiles',
 
     //o
+    offerPrice: 'Offer price',
     orderCreated_notify: 'Order created',
     orderDeleted_notify: 'Order deleted',
     orderImageDeleted_notify: 'Order image deleted',
     orderUpdated_notify: 'Order updated',
+    orderUAccepted_notify: 'Unfortunately, the order has already been accepted',
     orderDate: 'Order placement date',
     orders: 'Orders',
     outad: 'Outdoor advertising',
@@ -290,6 +295,7 @@ export const locale = {
 
     //p
     polygraphy: 'Polygraphy',
+    profile: 'Profile',
 
     paidBlocks: 'Paid blocks',
     password_placeholder: 'password',
@@ -312,7 +318,6 @@ export const locale = {
     political: 'Political views',
     position: 'Position',
     proficiencyLevel: 'Proficiency level',
-    profile: 'Profile',
     profileEmpty: 'User with this name not found',
     profileVisits: 'Profile visits',
     publications: 'Publications',
@@ -340,6 +345,9 @@ export const locale = {
     registration: 'registration',
     reviews: 'Reviews',
     requests: 'Requests',
+    requestCanceled_notify: 'Request canceled',
+    requestSended_notify: 'Request sended',
+    requestSendedError_notify: 'You have already submitted a request',
 
     rankType: 'Rank type',
     rankType_placeholder: 'military or special',
@@ -380,7 +388,9 @@ export const locale = {
     resentSearch: 'Recent Search',
 
     //s
+    selectCities: 'Select cities to show orders',
     select_placeholder: 'select from the list',
+    sendRequest: 'Request',
     souvenir: 'Souvenir products',
 
     save: 'Save',

@@ -21,7 +21,7 @@ export const ProfileData = ({ name, verified }) => {
     const styles = getStyles(blackColor)
 
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.name}>{name.replace(/\n/g, ' ')}</Text>
             {verified ?
                 <VerifiedIcon width={12} height={12} fill={lightblueColor} />
@@ -32,10 +32,15 @@ export const ProfileData = ({ name, verified }) => {
 }
 
 const getStyles = (blackColor) => ({
+    container: {
+        marginTop: 10,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     name: {
         fontSize: 16,
         color: blackColor,
         textAlign: 'center',
-        marginTop: 10,
+        marginRight: 5
     },
 })

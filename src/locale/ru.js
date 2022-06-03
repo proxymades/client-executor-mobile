@@ -29,7 +29,7 @@ export const locale = {
     archiveEmptyLong: 'Здесь пока ничего нет, если вы хотите скрыть публикацию в ленте профиля или ленте новостей ваших подписчиков - это можно сделать нажав на значок Архива в меню внутри цитаты, статьи или биографии',
     archiveEmptyShort: 'Архивные публикации видны только вам и недоступны для других пользователей',
     armyman: 'Звание',
-    assistApplied_notify: 'Вы уже подавали заявку на соредакцию',
+    assistApplied_notify: ' отправляли заявку подавали заявку на соредакцию',
     assistClosed_notify: 'Заявки на соредакцию закрыты',
     attachedFile: 'Прикрепленный файл',
     attachments: 'Приложения',
@@ -53,11 +53,13 @@ export const locale = {
     bookmarksEmptyShort: 'Сохранения публикаций видны только вам и недоступны для других пользователей',
 
     //c
+    cancel: 'Отменить',
     category: 'Категория',
     checkField_notify: 'Проверьте поле',
     client: 'Клиент',
     company_placeholder: 'введите название компании',
     confirmOrderDeletion: 'Подтверждаете удаление заказа?',
+    confirmRequestCanceling: 'Подтверждаете отмену заявки?',
 
     camera: 'Камера',
     camera_description: 'Использовать вашу камеру для снимка',
@@ -89,7 +91,7 @@ export const locale = {
     commentsOff_notify: 'Комментарии отключены',
     comments: 'Комментарии',
     complaintSended_notify: 'Жалоба отправлена',
-    complaintNotSended_notify: 'Вы уже отправляли жалобу',
+    complaintNotSended_notify: ' отправляли заявку отправляли жалобу',
     confirmRequest: 'подтвердил(-а) ваш запрос на предоставление дополнительного материала к',
     connections: 'Связи',
     content: 'Контент',
@@ -148,6 +150,7 @@ export const locale = {
     drafts: 'Черновики',
 
     //e
+    enterAmount_placeholder: 'введите сумму',
     error_notify: 'Ошибка, попробуйте позже',
     executor: 'Исполнитель',
 
@@ -276,10 +279,12 @@ export const locale = {
     numberProfiles: 'Количество пользователей',
 
     //o
+    offerPrice: 'Предложить цену',
     orderCreated_notify: 'Заказ создан',
     orderDeleted_notify: 'Заказ удален',
     orderImageDeleted_notify: 'Фотография удалена',
     orderUpdated_notify: 'Заказ обновлен',
+    orderUAccepted_notify: 'К сожалению заказ уже принят',
     orderDate: 'Дата размещения заказа',
     orders: 'Заказы',
     outad: 'Наружная реклама',
@@ -292,6 +297,7 @@ export const locale = {
 
     //p
     polygraphy: 'Полиграфия',
+    profile: 'Профиль',
 
     paidBlocks: 'Оплаченные блоки',
     password_placeholder: 'пароль',
@@ -314,7 +320,6 @@ export const locale = {
     political: 'Политические взгляды',
     position: 'Должность',
     proficiencyLevel: 'Уровень владения',
-    profile: 'Профиль',
     profileEmpty: 'Пользователь с таким именем не найден',
     profileVisits: 'Посещения профиля',
     publications: 'Публикации',
@@ -342,6 +347,9 @@ export const locale = {
     registerText: 'регистрация',
     reviews: 'Отзывы',
     requests: 'Заявки',
+    requestCanceled_notify: 'Заявка отменена',
+    requestSended_notify: 'Заявка отправлена',
+    requestSendedError_notify: 'Вы уже отправляли заявку',
 
     rankType: 'Тип звания',
     rankType_placeholder: 'воинское или специальное',
@@ -381,7 +389,9 @@ export const locale = {
     resentSearch: 'Недавний поиск',
 
     //s
+    selectCities: 'Выберите города для показа заказов',
     select_placeholder: 'выберите из списка',
+    sendRequest: 'Заявка',
     souvenir: 'Сувенирная продукция',
 
     save: 'Сохранить',

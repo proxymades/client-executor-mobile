@@ -13,6 +13,9 @@ export const EXECUTOR_PROFILE = gql`
                 phone
                 verified
                 createdAt
+                orderRequest{
+                    id
+                }
             }
         }
 `

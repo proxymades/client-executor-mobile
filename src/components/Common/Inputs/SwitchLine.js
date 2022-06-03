@@ -4,7 +4,7 @@ import { Text, View, Switch } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
-import { lightengrayColorVar, localeVar } from '@utils/cache'
+import { lightengrayColorVar } from '@utils/cache'
 
 //colors
 import { blueColor, grayColor, lightblueColor, lightgrayColor } from '@utils/colors'
@@ -12,10 +12,9 @@ import { blueColor, grayColor, lightblueColor, lightgrayColor } from '@utils/col
 export const SwitchLine = ({
     inputChange,
     input,
+    positive,
+    negative
 }) => {
-
-    //lang hooks
-    const locale = useReactiveVar(localeVar)
 
     //color hooks
     const lightengrayColor = useReactiveVar(lightengrayColorVar)
@@ -30,8 +29,8 @@ export const SwitchLine = ({
             <View style={styles.switchContainer}>
                 <View style={styles.switchText}>
                     {input ?
-                        <Text style={styles.switchLabel}>{locale.urgentOrderYes}</Text>
-                        : <Text style={styles.switchLabel}>{locale.urgentOrderNo}</Text>
+                        <Text style={styles.switchLabel}>{positive}</Text>
+                        : <Text style={styles.switchLabel}>{negative}</Text>
                     }
                 </View>
                 <Switch

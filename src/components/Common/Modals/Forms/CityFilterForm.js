@@ -7,11 +7,13 @@ import { useReactiveVar } from '@apollo/client'
 import { blackColorVar, localeVar } from '@utils/cache'
 
 //common components
-import { WhiteRoundButton } from '@components/Common/Buttons/WhiteRoundButton'
+import { WhiteButton } from '@components/Common/Buttons/WhiteButton'
+import { SwitchLine } from '@components/Common/Inputs/SwitchLine'
 
-export const DeleteMenuForm = ({
+export const CityFilterForm = ({
     setModalVisible,
-    deleteAction,
+    input,
+    inputChange,
     label
 }) => {
 
@@ -25,11 +27,6 @@ export const DeleteMenuForm = ({
     const styles = getStyles(blackColor)
 
     //handles
-    const handleDelete = () => {
-        setModalVisible(false)
-        deleteAction()
-    }
-
     const handleCloseModal = () => {
         setModalVisible(false)
     }
@@ -39,21 +36,27 @@ export const DeleteMenuForm = ({
 
             <Text style={styles.label}>{label}</Text>
 
+            <SwitchLine
+                input={input.nursultan}
+                inputChange={e => inputChange(e, 'nursultan')}
+                positive={`${locale.nursultan}${locale.toggleOn}`}
+                negative={`${locale.nursultan}${locale.toggleOff}`}
+            />
+
+            <SwitchLine
+                input={input.karaganda}
+                inputChange={e => inputChange(e, 'karaganda')}
+                positive={`${locale.karaganda}${locale.toggleOn}`}
+                negative={`${locale.karaganda}${locale.toggleOff}`}
+            />
 
             <View style={styles.items}>
 
-
-                <WhiteRoundButton
-                    handleAction={handleDelete}
-                >
-                    <Text style={styles.text}>{locale.yes}</Text>
-                </WhiteRoundButton>
-
-                <WhiteRoundButton
+                <WhiteButton
                     handleAction={handleCloseModal}
                 >
-                    <Text style={styles.text}>{locale.no}</Text>
-                </WhiteRoundButton>
+                    <Text style={styles.text}>{locale.closeWindow}</Text>
+                </WhiteButton>
 
             </View>
 
@@ -78,8 +81,9 @@ const getStyles = (blackColor) => ({
         fontSize: 14,
     },
     text: {
-        fontSize: 10,
+        fontSize: 12,
         color: blackColor,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginHorizontal: 10
     },
 })

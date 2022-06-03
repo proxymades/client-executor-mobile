@@ -16,6 +16,7 @@ export const useExecutorProfile = (phone) => {
 
     return {
         executorProfileLoading: loading,
-        executorProfileData: data?.executorProfile
+        executorProfileData: data?.executorProfile,
+        worksCount: data?.executorProfile.orderRequest.length,
     }
 }

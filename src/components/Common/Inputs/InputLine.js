@@ -32,14 +32,17 @@ export const InputLine = ({
 
         <View style={styles.container}>
 
-            <Text style={styles.label}>{label} *</Text>
+            {label ?
+                <Text style={styles.label}>{label} *</Text>
+                : null
+            }
             <TextInput
                 style={styles.input}
                 onChangeText={inputChange}
                 value={input}
                 placeholder={placeholder}
                 placeholderTextColor={lightgrayColor}
-                maxLength={isNumeric ? 6 : symbols}
+                maxLength={isNumeric ? 7 : symbols}
                 keyboardType={isNumeric ? 'phone-pad' : 'default'}
             />
             {symbols ?

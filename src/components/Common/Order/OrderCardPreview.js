@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 //utils
 import {
     blackColorVar,
+    isUserTypeVar,
     localeVar,
     whiteColorVar
 } from '@utils/cache'
@@ -38,7 +39,7 @@ export const OrderCardPreview = ({ item }) => {
 
     //handles
     const handleOpenOrder = () => {
-        navigation.push('Order', { orderId: item.id, title: item.header })
+        navigation.push(isUserTypeVar() === 'client' ? 'ClientOrder' : 'ExecutorOrder', { orderId: item.id, title: item.header })
     }
 
     return (

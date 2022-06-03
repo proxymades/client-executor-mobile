@@ -2,16 +2,16 @@
 import { useApolloClient } from '@apollo/client'
 
 //gql
-import { GET_ORDER } from '@gql_query/order/GetOrder'
+import { GET_CLIENT_ORDER } from '@gql_query/order/GetClientOrder'
 
-export const useOrderCache = (id) => {
+export const useClientOrderCache = (id) => {
 
     //global hooks
     const client = useApolloClient()
 
     //cache
     const orderQuery = client.readQuery({
-        query: GET_ORDER,
+        query: GET_CLIENT_ORDER,
         variables: {
             id: id
         }

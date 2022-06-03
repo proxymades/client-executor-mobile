@@ -83,5 +83,6 @@ const getStyles = (blackColor, whiteColor) => ({
     typeCheckerText: {
         textAlign: 'center',
         color: blackColor,
+        fontSize: 14,
     },
 })

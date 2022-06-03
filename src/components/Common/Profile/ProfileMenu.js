@@ -15,7 +15,8 @@ export const ProfileMenu = ({
     ratingCount,
     reviewsCount,
     type,
-    openOrders
+    openOrders,
+    openWorks,
 }) => {
 
     //lang hooks
@@ -37,7 +38,7 @@ export const ProfileMenu = ({
                         <TouchableOpacity
                             style={styles.button}
                             onPress={openOrders}
-                            disabled={ordersCount === 0}
+                            disabled={!openOrders || ordersCount === 0}
                         >
                             <OrdersIcon width={40} height={40} fill={blackColor} />
                             <Text style={styles.text}>{locale.orders}</Text>
@@ -76,7 +77,8 @@ const getStyles = (whiteColor, blackColor) => ({
     container: {
         alignItems: 'center',
         width: '100%',
-        marginTop: 40,
+        paddingTop: 20,
+        paddingBottom: 50,
     },
     items: {
         display: 'flex',

@@ -28,7 +28,7 @@ export const ExecutorProfile = ({ navigation }) => {
     const [extraShow, setExtraShow] = useState(false)
 
     //hooks
-    const { executorProfileLoading, executorProfileData } = useExecutorProfile(isUserPhoneVar())
+    const { executorProfileLoading, executorProfileData, worksCount } = useExecutorProfile(isUserPhoneVar())
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -65,8 +65,8 @@ export const ExecutorProfile = ({ navigation }) => {
         navigation.push('EditExecutorProfile')
     }
 
-    const handleOpenOrders = () => {
-        navigation.push('ExecutorOrders')
+    const handleOpenWorks = () => {
+        navigation.push('ExecutorWorks')
     }
 
     if (executorProfileLoading) return <Loader />
@@ -85,12 +85,11 @@ export const ExecutorProfile = ({ navigation }) => {
             />
 
             <ProfileMenu
-                ordersCount={0}
-                // ordersCount={executorProfileData.order.length}
+                worksCount={worksCount}
                 ratingCount={5}
                 reviewsCount={77}
                 type={isUserTypeVar()}
-                openOrders={handleOpenOrders}
+                openWorks={handleOpenWorks}
             />
 
             <ProfileRegisterDate createdAt={executorProfileData.createdAt} />

@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client'
 
 //components
 import { ExecutorNewOrders } from '@components/executor/ExecutorNewOrders/ExecutorNewOrders'
-import { Order } from '@components/Order/Order'
+import { ExecutorOrder } from '@components/executor/Order/ExecutorOrder'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -41,8 +41,8 @@ export const ExecutorNewOrdersScreen = () => {
                 />
 
                 <Stack.Screen
-                    name='Order'
-                    component={Order}
+                    name='ExecutorOrder'
+                    component={ExecutorOrder}
                     options={({ route }) => ({
                         title: route.params.title,
                     })}
