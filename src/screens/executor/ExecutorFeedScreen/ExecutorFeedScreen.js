@@ -4,13 +4,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useReactiveVar } from '@apollo/client'
 
 //components
-import { ExecutorNewOrders } from '@components/executor/ExecutorNewOrders/ExecutorNewOrders'
+import { ExecutorFeed } from '@components/executor/ExecutorFeed/ExecutorFeed'
 import { ExecutorOrder } from '@components/executor/Order/ExecutorOrder'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 
-export const ExecutorNewOrdersScreen = () => {
+export const ExecutorFeedScreen = () => {
 
     //stack
     const Stack = createNativeStackNavigator()
@@ -33,8 +33,8 @@ export const ExecutorNewOrdersScreen = () => {
             >
 
                 <Stack.Screen
-                    name='ExecutorNewOrders'
-                    component={ExecutorNewOrders}
+                    name='ExecutorFeed'
+                    component={ExecutorFeed}
                     options={{
                         title: locale.orders,
                     }}

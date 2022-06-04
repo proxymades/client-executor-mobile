@@ -21,7 +21,7 @@ export const useCancelOrderRequest = (orderId) => {
         variables: {
             orderId: orderId
         },
-        refetchQueries: ['ExecutorProfile', 'ExecutorNewOrders', 'GetExecutorOrder'],
+        refetchQueries: ['ExecutorProfile', 'ExecutorFeed', 'GetExecutorOrder', 'ExecutorOrderRequests'],
         onCompleted: () => {
             setTimeout(() => {
                 isNotifedVar(locale.requestCanceled_notify)

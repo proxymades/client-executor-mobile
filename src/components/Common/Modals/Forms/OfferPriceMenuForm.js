@@ -35,8 +35,9 @@ export const OfferPriceMenuForm = ({
         setModalVisible(false)
         action()
     }
-
+    console.log(input);
     return (
+
         <View style={styles.container}>
 
             <Text style={styles.label}>{label}</Text>
@@ -47,7 +48,7 @@ export const OfferPriceMenuForm = ({
                 <InputLine
                     inputChange={inputChange}
                     input={input}
-                    placeholder={locale.enterAmount_placeholder}
+                    placeholder={`${locale.enterAmount_placeholder} ${locale.tenge}`}
                     isNumeric={true}
                 />
 

@@ -50,6 +50,20 @@ export const CityFilterForm = ({
                 negative={`${locale.karaganda}${locale.toggleOff}`}
             />
 
+            <SwitchLine
+                input={input.almaty}
+                inputChange={e => inputChange(e, 'almaty')}
+                positive={`${locale.almaty}${locale.toggleOn}`}
+                negative={`${locale.almaty}${locale.toggleOff}`}
+            />
+
+            <SwitchLine
+                input={input.atyrau}
+                inputChange={e => inputChange(e, 'atyrau')}
+                positive={`${locale.atyrau}${locale.toggleOn}`}
+                negative={`${locale.atyrau}${locale.toggleOff}`}
+            />
+
             <View style={styles.items}>
 
                 <WhiteButton

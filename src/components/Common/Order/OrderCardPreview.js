@@ -83,8 +83,12 @@ export const OrderCardPreview = ({ item }) => {
                                 {item.city === 'nursultan' ?
                                     locale.nursultan :
                                     item.city === 'karaganda' ?
-                                        locale.karaganda
-                                        : locale.almaty
+                                        locale.karaganda :
+                                        item.city === 'almaty' ?
+                                            locale.almaty :
+                                            item.city === 'atyrau' ?
+                                                locale.atyrau
+                                                : null
                                 }
                             </Text>
                         </View>

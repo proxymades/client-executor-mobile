@@ -145,6 +145,7 @@ export const ExecutorOrder = ({ route }) => {
                     setModalVisible={setRequestMenuShow}
                     label={locale.offerPrice}
                     action={handleSendRequest}
+                    input={formState.offer}
                     inputChange={e => handleInputFormChange(e, 'offer')}
                 />
             </ExtraModal>

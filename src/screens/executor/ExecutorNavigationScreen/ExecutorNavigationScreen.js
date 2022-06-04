@@ -2,14 +2,15 @@
 import React from 'react'
 import { useReactiveVar } from '@apollo/client'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Dimensions } from 'react-native'
+import { Dimensions, Text } from 'react-native'
 
 //screens
 import { ExecutorProfileScreen } from '../ExecutorProfileScreen/ExecutorProfileScreen'
-import { ExecutorNewOrdersScreen } from '../ExecutorNewOrdersScreen/ExecutorNewOrdersScreen'
+import { ExecutorFeedScreen } from '../ExecutorFeedScreen/ExecutorFeedScreen'
+import { ExecutorActivityScreen } from '../ExecutorActivityScreen/ExecutorActivityScreen'
 
 //utils
-import { blackColorVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //icons
 import {
@@ -25,6 +26,9 @@ export const ExecutorNavigationScreen = () => {
 
     //tabs
     const Tab = createBottomTabNavigator()
+
+    //lang hooks
+    const locale = useReactiveVar(localeVar)
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -42,7 +46,7 @@ export const ExecutorNavigationScreen = () => {
                     backgroundColor: whiteColor
                 },
                 tabBarActiveTintColor: blackColor,
-                tabBarShowLabel: false,
+                // tabBarShowLabel: false,
                 tabBarHideOnKeyboard: true,
             }}
         >
@@ -54,28 +58,31 @@ export const ExecutorNavigationScreen = () => {
                     tabBarIcon: ({ color, size }) => (
                         <AvatarIcon width={size} height={size} fill={color} />
                     ),
+                    tabBarLabel: locale.profile,
                     headerShown: false,
                 }}
             />
 
             <Tab.Screen
-                name='ExecutorNewOrdersScreen'
-                component={ExecutorNewOrdersScreen}
+                name='ExecutorFeedScreen'
+                component={ExecutorFeedScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
-                        <OrdersIcon width={size} height={size} fill={color} />
+                        <OrdersIcon width={size + 5} height={size + 5} fill={color} />
                     ),
+                    tabBarLabel: locale.orders,
                     headerShown: false,
                 }}
             />
 
             <Tab.Screen
                 name='ExecutorActivityScreen'
-                component={ExecutorProfileScreen}
+                component={ExecutorActivityScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <ActivityIcon width={size} height={size} fill={color} />
                     ),
+                    tabBarLabel: locale.notifications,
                     headerShown: false,
                 }}
             />

@@ -11,7 +11,7 @@ import {
 } from '@utils/cache'
 
 //hooks
-import { useExecutorNewOrders } from '@hooks_query/executor/useExecutorNewOrders'
+import { useExecutorFeed } from '@hooks_query/executor/useExecutorFeed'
 
 //common components
 import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'
@@ -29,7 +29,7 @@ import { blueColor } from '@utils/colors'
 const renderCardPreviewItem = (item) =>
     <OrderCardPreview item={item} />
 
-export const ExecutorNewOrders = ({ navigation }) => {
+export const ExecutorFeed = ({ navigation }) => {
 
     //states
     const [city, setCity] = useState({
@@ -37,16 +37,16 @@ export const ExecutorNewOrders = ({ navigation }) => {
         karaganda: false,
         almaty: false
     })
-    const [category, setCategory] = useState(['polygraphy', 'souvenir'])
+    const [category, setCategory] = useState(['polygraphy', 'souvenir', 'outad'])
     const [refreshing, setRefreshing] = useState(false)
     const [cityModalShow, setCityModalShow] = useState(false)
 
     //hooks
     const {
-        executorNewOrdersLoading,
-        executorNewOrdersData,
-        executorNewOrdersRefetch
-    } = useExecutorNewOrders(city, category)
+        executorFeedLoading,
+        executorFeedData,
+        executorFeedRefetch
+    } = useExecutorFeed(city, category)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -77,7 +77,7 @@ export const ExecutorNewOrders = ({ navigation }) => {
     const handleRefresh = () => {
         setRefreshing(true)
         setTimeout(() => {
-            executorNewOrdersRefetch()
+            executorFeedRefetch()
             setRefreshing(false)
         }, 2000)
     }
@@ -92,7 +92,7 @@ export const ExecutorNewOrders = ({ navigation }) => {
         setCity(list)
     }
 
-    if (executorNewOrdersLoading) return <Loader />
+    if (executorFeedLoading) return <Loader />
 
     return (
 
@@ -100,7 +100,7 @@ export const ExecutorNewOrders = ({ navigation }) => {
 
             <FlatList
                 contentContainerStyle={{ paddingTop: 30 }}
-                data={executorNewOrdersData}
+                data={executorFeedData}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item, index }) => renderCardPreviewItem(item)}

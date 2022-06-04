@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useReactiveVar } from '@apollo/client'
 
 //components
-import { ExecutorProfile } from '@components/client/ExecutorProfile/ExecutorProfile'
+import { ExecutorActivity } from '@components/executor/ExecutorActivity/ExecutorActivity'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -25,8 +25,8 @@ export const ExecutorActivityScreen = () => {
         <Stack.Navigator>
 
             <Stack.Screen
-                name='ExecutorProfile'
-                component={ExecutorProfile}
+                name='ExecutorActivity'
+                component={ExecutorActivity}
                 options={{
                     title: locale.notifications,
                     headerStyle: { backgroundColor: whiteColor },

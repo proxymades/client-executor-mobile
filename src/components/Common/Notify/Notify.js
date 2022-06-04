@@ -41,15 +41,15 @@ const getStyles = (whiteColor, blackColor, insets) => ({
         position: 'absolute',
         marginHorizontal: '3%',
         top: 10,
-        backgroundColor: whiteColor,
+        backgroundColor: blackColor,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: blackColor,
+        shadowColor: whiteColor,
         elevation: 9,
         borderRadius: 10,
         opacity: 0.98
     },
     text: {
-        color: blackColor
+        color: whiteColor
     }
 })

@@ -47,8 +47,8 @@ export const ProfileMenu = ({
                         :
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={openOrders}
-                            disabled={worksCount === 0}
+                            onPress={openWorks}
+                            disabled={!openWorks || worksCount === 0}
                         >
                             <WorksIcon width={40} height={40} fill={blackColor} />
                             <Text style={styles.text}>{locale.works}</Text>

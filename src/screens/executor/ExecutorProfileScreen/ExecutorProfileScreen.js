@@ -5,9 +5,11 @@ import { useReactiveVar } from '@apollo/client'
 
 //components
 import { ExecutorProfile } from '@components/executor/ExecutorProfile/ExecutorProfile'
+import { ExecutorWorks } from '@components/executor/ExecutorWorks/ExecutorWorks'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
+import { ExecutorOrder } from '@components/executor/Order/ExecutorOrder'
 
 export const ExecutorProfileScreen = () => {
 
@@ -38,6 +40,24 @@ export const ExecutorProfileScreen = () => {
                         title: locale.profile,
                     }}
                 />
+
+                <Stack.Screen
+                    name='ExecutorWorks'
+                    component={ExecutorWorks}
+                    options={{
+                        title: locale.works,
+                    }}
+                />
+
+
+                <Stack.Screen
+                    name='ExecutorOrder'
+                    component={ExecutorOrder}
+                    options={({ route }) => ({
+                        title: route.params.title,
+                    })}
+                />
+
 
             </Stack.Group>
 

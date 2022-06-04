@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 
 //gql
-import { EXECUTOR_NEW_ORDERS } from '@gql_query/executor/ExecutorNewOrders'
+import { EXECUTOR_FEED } from '@gql_query/executor/ExecutorFeed'
 
-export const useExecutorNewOrders = (city, category) => {
+export const useExecutorFeed = (city, category) => {
 
     //states
     const [cityArray, setCityArray] = useState([])
 
     //queries
-    const { data, loading, refetch } = useQuery(EXECUTOR_NEW_ORDERS, {
+    const { data, loading, refetch } = useQuery(EXECUTOR_FEED, {
         fetchPolicy: 'network-only',
         variables: {
             city: cityArray,
@@ -27,11 +27,17 @@ export const useExecutorNewOrders = (city, category) => {
         city.karaganda ?
             setCityArray(actual => [...actual, 'karaganda']) :
             setCityArray(actual => actual.filter(el => el !== 'karaganda'))
+        city.almaty ?
+            setCityArray(actual => [...actual, 'almaty']) :
+            setCityArray(actual => actual.filter(el => el !== 'almaty'))
+        city.atyrau ?
+            setCityArray(actual => [...actual, 'atyrau']) :
+            setCityArray(actual => actual.filter(el => el !== 'atyrau'))
     }, [city])
 
     return {
-        executorNewOrdersLoading: loading,
-        executorNewOrdersData: data?.executorNewOrders,
-        executorNewOrdersRefetch: refetch,
+        executorFeedLoading: loading,
+        executorFeedData: data?.executorFeed,
+        executorFeedRefetch: refetch,
     }
 }

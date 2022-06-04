@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client'
 
-export const EXECUTOR_NEW_ORDERS = gql`
-    query ExecutorNewOrders(
+export const EXECUTOR_FEED = gql`
+    query ExecutorFeed(
             $city: [String!]
             $category: [String!]
         ){
-            executorNewOrders(
+            executorFeed(
                 city: $city
                 category: $category
             ){
