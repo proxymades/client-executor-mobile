@@ -1,6 +1,6 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { TouchableOpacity, ActivityIndicator } from 'react-native'
+import { TouchableOpacity, ActivityIndicator, View } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
@@ -22,7 +22,7 @@ import { blackColorVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/c
 import { MenuIcon } from '@components/Common/Svg/Svg'
 
 //colors
-import { lightblueColor } from '@utils/colors'
+import { lightblueColor, lightredColor } from '@utils/colors'
 
 export const ClientOrder = ({ route }) => {
 
@@ -33,6 +33,7 @@ export const ClientOrder = ({ route }) => {
     const [clientMenuShow, setClientMenuShow] = useState(false)
     const [deleteMenuShow, setDeleteMenuShow] = useState(false)
     const [deleting, setDeleting] = useState(false)
+    const [newRequests, setNewRequests] = useState(true)
 
     //hooks
     const { orderLoading, orderData } = useClientOrder(route.params.orderId)
@@ -57,7 +58,22 @@ export const ClientOrder = ({ route }) => {
                             {deleting ?
                                 <ActivityIndicator size='small' color={lightblueColor} />
                                 :
-                                <MenuIcon width={22} height={22} fill={blackColor} />
+                                <View style={{ position: 'relative' }}>
+                                    <MenuIcon width={22} height={22} fill={blackColor} />
+                                    {route.params.fromRequest &&
+                                        newRequests ?
+                                        <View style={{
+                                            position: 'absolute',
+                                            width: 10,
+                                            height: 10,
+                                            backgroundColor: lightredColor,
+                                            right: -10,
+                                            top: -5,
+                                            borderRadius: 10
+                                        }} />
+                                        : null
+                                    }
+                                </View>
                             }
                         </>
                         :
@@ -66,7 +82,7 @@ export const ClientOrder = ({ route }) => {
                 </TouchableOpacity>
             ),
         })
-    }, [navigation, whiteColor, blackColor, locale, deleting])
+    }, [navigation, route, whiteColor, blackColor, locale, deleting, newRequests])
 
     //handles
     const handleOpenOrderMenu = () => {
@@ -101,6 +117,8 @@ export const ClientOrder = ({ route }) => {
                     setModalVisible={setClientMenuShow}
                     setDeleteMenuShow={setDeleteMenuShow}
                     editOrder={handleEditOrder}
+                    newRequests={newRequests}
+                    setNewRequests={setNewRequests}
                 />
             </ExtraModal>
 

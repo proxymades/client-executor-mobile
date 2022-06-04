@@ -8,11 +8,14 @@ import { blackColorVar, localeVar } from '@utils/cache'
 
 //icons
 import { BackIcon, EditOrderIcon, RequestsIcon, TrashIcon } from '@common_components/Svg/Svg'
+import { lightredColor } from '@utils/colors'
 
 export const OrderClientMenuForm = ({
     setModalVisible,
     editOrder,
     setDeleteMenuShow,
+    newRequests,
+    setNewRequests,
 }) => {
 
     //lang hooks
@@ -31,6 +34,7 @@ export const OrderClientMenuForm = ({
     }
 
     const handleOpenRequests = () => {
+        setNewRequests(false)
         setModalVisible(false)
     }
 
@@ -53,6 +57,10 @@ export const OrderClientMenuForm = ({
                 >
                     <RequestsIcon width='30' height='25' fill={blackColor} />
                     <Text style={styles.text}>{locale.requests}</Text>
+                    {newRequests ?
+                        <View style={styles.newRequestsBadge} />
+                        : null
+                    }
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -105,5 +113,14 @@ const getStyles = (blackColor) => ({
         marginTop: 5,
         color: blackColor,
         textAlign: 'center'
+    },
+    newRequestsBadge: {
+        position: 'absolute',
+        width: 10,
+        height: 10,
+        backgroundColor: lightredColor,
+        right: 20,
+        top: -5,
+        borderRadius: 10,
     },
 })

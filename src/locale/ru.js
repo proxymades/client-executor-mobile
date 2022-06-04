@@ -392,6 +392,7 @@ export const locale = {
     selectCities: 'Выберите города для показа заказов',
     select_placeholder: 'выберите из списка',
     sendRequest: 'Заявка',
+    sendedRequest: 'Заявка на выполнение вашего заказа',
     souvenir: 'Сувенирная продукция',
 
     save: 'Сохранить',

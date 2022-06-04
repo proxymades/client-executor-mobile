@@ -11,7 +11,8 @@ import { BackIcon, EditProfileIcon, SettingsIcon } from '@common_components/Svg/
 
 export const ProfileMenuForm = ({
     setModalVisible,
-    editProfile
+    editProfile,
+    openSettings
 }) => {
 
     //lang hooks
@@ -31,6 +32,7 @@ export const ProfileMenuForm = ({
 
     const handleOpenSettings = () => {
         setModalVisible(false)
+        openSettings()
     }
 
     const handleCloseModal = () => {

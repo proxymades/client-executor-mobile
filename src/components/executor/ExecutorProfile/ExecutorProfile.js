@@ -21,6 +21,7 @@ import { ProfileMenuForm } from '@common_components/Modals/Forms/ProfileMenuForm
 
 //icons
 import { MenuIcon } from '@common_components/Svg/Svg'
+import { useMMKVString } from 'react-native-mmkv'
 
 export const ExecutorProfile = ({ navigation }) => {
 
@@ -68,6 +69,11 @@ export const ExecutorProfile = ({ navigation }) => {
     const handleOpenWorks = () => {
         navigation.push('ExecutorWorks')
     }
+    const [token, setToken] = useMMKVString('token')
+
+    const handleOpenSettings = () => {
+        setToken('')
+    }
 
     if (executorProfileLoading) return <Loader />
 
@@ -101,6 +107,7 @@ export const ExecutorProfile = ({ navigation }) => {
                 <ProfileMenuForm
                     setModalVisible={setExtraShow}
                     editProfile={handleEditProfile}
+                    openSettings={handleOpenSettings}
                 />
             </ExtraModal>
 

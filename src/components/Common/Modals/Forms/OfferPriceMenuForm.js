@@ -35,7 +35,7 @@ export const OfferPriceMenuForm = ({
         setModalVisible(false)
         action()
     }
-    console.log(input);
+
     return (
 
         <View style={styles.container}>

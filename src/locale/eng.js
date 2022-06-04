@@ -391,6 +391,7 @@ export const locale = {
     selectCities: 'Select cities to show orders',
     select_placeholder: 'select from the list',
     sendRequest: 'Request',
+    sendedRequest: 'Request to fulfill your order',
     souvenir: 'Souvenir products',
 
     save: 'Save',
