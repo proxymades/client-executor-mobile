@@ -1,6 +1,6 @@
 //core
 import React, { useState } from 'react'
-import { View, Text, Image, Pressable, Linking } from 'react-native'
+import { View, Text, Image, Pressable } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
@@ -11,20 +11,16 @@ dayjs.extend(relativeTime)
 import { IMAGES_URI } from '@utils/uri'
 import { blackColorVar, whiteColorVar, localeVar } from '@utils/cache'
 
-//common components
-import { Avatar } from '@common_components/Avatar/Avatar'
-
-//icons
-import { VerifiedIcon } from '@components/Common/Svg/Svg'
+//common conponents
+import { ExtraModal } from '@common_components/Modals/ExtraModal'
+import { ProfileData } from '@common_components/Profile/ProfileData'
+import { ProfileMenu } from '@common_components/Profile/ProfileMenu'
+import { ProfileRegisterDate } from '@common_components/Profile/ProfileRegisterDate'
+import { WhiteButton } from '@common_components/Buttons/WhiteButton'
+import { ProfileLineData } from '@common_components/Profile/ProfileLineData'
 
 //colors
-import { blueColor, grayColor, lightblueColor, lightgrayColor } from '@utils/colors'
-import { ExtraModal } from '@components/Common/Modals/ExtraModal'
-import { ProfileData } from '@components/Common/Profile/ProfileData'
-import { ProfileMenu } from '@components/Common/Profile/ProfileMenu'
-import { ProfileRegisterDate } from '@components/Common/Profile/ProfileRegisterDate'
-import { WhiteButton } from '@components/Common/Buttons/WhiteButton'
-import { ProfileLineData } from '@components/Common/Profile/ProfileLineData'
+import { grayColor, lightgrayColor } from '@utils/colors'
 
 export const ClientActivityBlock = ({ executor, order, offer, createdAt }) => {
 
@@ -50,15 +46,7 @@ export const ClientActivityBlock = ({ executor, order, offer, createdAt }) => {
     }
 
     const handleLinkRequests = () => {
-        navigation.push('ClientOrderRequests')
-    }
-
-    const handleCall = async () => {
-        Linking.openURL(`tel:+7${executor.phone}`)
-    }
-
-    const handleMessage = async () => {
-        Linking.openURL(`whatsapp://send?phone=7${executor.phone}`)
+        navigation.push('ClientOrderRequests', { orderId: order.id })
     }
 
     const handleProfileMenuShow = () => {
@@ -116,28 +104,14 @@ export const ClientActivityBlock = ({ executor, order, offer, createdAt }) => {
                 <Text style={styles.createdAt}>{dayjs(createdAt).fromNow()}</Text>
 
                 <View style={styles.offerContainer}>
-                    <Text style={styles.offerText}>{locale.suggestedPrice} </Text>
-                    <Text style={styles.offerPrice}>{offer.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {locale.tenge}</Text>
-                </View>
 
-                <View style={styles.buttonsContainer}>
+                    <View>
+                        <Text style={styles.offerText}>{locale.suggestedPrice} </Text>
+                        <Text style={styles.offerPrice}>{offer.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {locale.tenge}</Text>
+                    </View>
 
-                    <WhiteButton
-                        handleAction={handleLinkRequests}
-                    >
+                    <WhiteButton handleAction={handleLinkRequests}>
                         <Text style={styles.buttonText}>{locale.toRequests}</Text>
-                    </WhiteButton>
-
-                    <WhiteButton
-                        handleAction={handleCall}
-                    >
-                        <Text style={styles.buttonText}>{locale.toCall}</Text>
-                    </WhiteButton>
-
-                    <WhiteButton
-                        handleAction={handleMessage}
-                    >
-                        <Text style={styles.buttonText}>{locale.toWhatsapp}</Text>
                     </WhiteButton>
 
                 </View>
@@ -175,7 +149,7 @@ const getStyles = (whiteColor, blackColor) => ({
         paddingHorizontal: 16,
     },
     itemsContainer: {
-        marginVertical: 15,
+        marginVertical: 20,
     },
     items: {
         flexDirection: 'row',
@@ -204,17 +178,9 @@ const getStyles = (whiteColor, blackColor) => ({
         marginTop: 5,
         fontSize: 10,
     },
-    buttonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 10,
-    },
-    buttonText: {
-        fontSize: 11,
-        color: grayColor
-    },
     offerContainer: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 10,
     },
@@ -226,5 +192,9 @@ const getStyles = (whiteColor, blackColor) => ({
         fontSize: 14,
         color: blackColor,
         fontWeight: 'bold'
+    },
+    buttonText: {
+        fontSize: 11,
+        color: grayColor
     },
 })

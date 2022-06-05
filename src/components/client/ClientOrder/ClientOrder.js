@@ -5,8 +5,8 @@ import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
 //hooks
-import { useClientOrder } from '@hooks_query/order/useClientOrder'
-import { useDeleteOrder } from '@hooks_mutation/order/useDeleteOrder'
+import { useClientOrder } from '@hooks_query/client/order/useClientOrder'
+import { useDeleteOrder } from '@hooks_mutation/client/order/useDeleteOrder'
 
 //common components
 import { Loader } from '@components/Common/Loaders/Loader'
@@ -103,6 +103,10 @@ export const ClientOrder = ({ route }) => {
         navigation.push('EditOrder', { orderId: route.params.orderId })
     }
 
+    const handleLinkRequests = () => {
+        navigation.push('ClientOrderRequests', { orderId: route.params.orderId })
+    }
+
     if (orderLoading) return <Loader />
 
     return (
@@ -117,7 +121,8 @@ export const ClientOrder = ({ route }) => {
                     setModalVisible={setClientMenuShow}
                     setDeleteMenuShow={setDeleteMenuShow}
                     editOrder={handleEditOrder}
-                    newRequests={newRequests}
+                    linkRequests={handleLinkRequests}
+                    newRequests={route.params.fromRequest && newRequests}
                     setNewRequests={setNewRequests}
                 />
             </ExtraModal>

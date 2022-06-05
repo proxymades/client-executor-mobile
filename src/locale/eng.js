@@ -288,6 +288,8 @@ export const locale = {
     orderUpdated_notify: 'Order updated',
     orderUAccepted_notify: 'Unfortunately, the order has already been accepted',
     orderDate: 'Order placement date',
+    orderCompleted: 'Order completed',
+    orderNotCompleted: 'Order not completed',
     orders: 'Orders',
     outad: 'Outdoor advertising',
 
@@ -347,7 +349,10 @@ export const locale = {
     registerDate: 'Date of registration',
     registration: 'registration',
     reviews: 'Reviews',
+    requestAccepted: 'Accepted request',
+    requestAccepted_notify: 'Request accepted',
     requests: 'Requests',
+    requestsEmpty: 'No requests',
     requestCanceled_notify: 'Request canceled',
     requestSended_notify: 'Request sended',
     requestSendedError_notify: 'You have already submitted a request',
@@ -423,7 +428,8 @@ export const locale = {
     statistics: 'Statistics',
 
     //t
-    toCall: 'Call',
+    toClientCall: 'Call to client',
+    toExecutorCall: 'Call to executor',
     toRequests: 'Go to requests',
     toWhatsapp: 'Write to WhatsApp',
 

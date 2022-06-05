@@ -11,7 +11,7 @@ import {
 } from '@utils/cache'
 
 //hooks
-import { useClientNewOrders } from '@hooks_query/client/useClientNewOrders'
+import { useClientNewOrders } from '@hooks_query/client/order/useClientNewOrders'
 
 //common components
 import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'

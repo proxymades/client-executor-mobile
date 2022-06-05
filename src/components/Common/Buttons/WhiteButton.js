@@ -34,7 +34,6 @@ const getStyles = (whiteColor) => ({
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20,
         paddingHorizontal: 10,
         backgroundColor: whiteColor,
         shadowColor: grayColor,

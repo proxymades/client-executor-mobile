@@ -12,6 +12,7 @@ import { lightredColor } from '@utils/colors'
 
 export const OrderClientMenuForm = ({
     setModalVisible,
+    linkRequests,
     editOrder,
     setDeleteMenuShow,
     newRequests,
@@ -36,6 +37,7 @@ export const OrderClientMenuForm = ({
     const handleOpenRequests = () => {
         setNewRequests(false)
         setModalVisible(false)
+        linkRequests()
     }
 
     const handleDeleteOrder = () => {

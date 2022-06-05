@@ -1,49 +1,53 @@
 //core
 import React, { useState } from 'react'
-import { View, ScrollView, Text, Switch, FlatList, RefreshControl } from 'react-native'
+import { View, Text, FlatList, RefreshControl, Linking } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
 import {
     blackColorVar,
-    isUserPhoneVar,
-    lightengrayColorVar,
     localeVar,
     whiteColorVar
 } from '@utils/cache'
 
 //hooks
-import { useExecutorOrderRequests } from '@hooks_query/executor/useExecutorOrderRequests'
+import { useClientOrderRequests } from '@hooks_query/client/order/useClientOrderRequests'
+import { useAcceptOrderRequest } from '@hooks_mutation/client/order/useAcceptOrderRequest'
+import { useRepulseOrderRequest } from '@hooks_mutation/client/order/useRepulseOrderRequest'
+
+//components
+import { ClientOrderRequestsBlock } from './ClientOrderRequestsBlock'
 
 //common components
-import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'
 import { Loader } from '@common_components/Loaders/Loader'
+import { WhiteButton } from '@components/Common/Buttons/WhiteButton'
+
+//icons
+import { AcceptIcon, CancelIcon } from '@components/Common/Svg/Svg'
 
 //colors
 import { blueColor, grayColor, lightblueColor, lightgrayColor, lightredColor } from '@utils/colors'
-import { WhiteButton } from '@components/Common/Buttons/WhiteButton'
-import { AcceptIcon, NotIcon } from '@components/Common/Svg/Svg'
-import { ProfileLineData } from '@components/Common/Profile/ProfileLineData'
-import { SwitchLine } from '@components/Common/Inputs/SwitchLine'
 
-// const renderCardPreviewItem = (item) =>
-//     <OrderCardPreview item={item.order} />
+const renderClientOrderRequestBlock = (item, acceptOrderRequest) =>
+    <ClientOrderRequestsBlock item={item} acceptOrderRequest={acceptOrderRequest} />
 
-export const ClientOrderRequests = ({ navigation }) => {
+export const ClientOrderRequests = ({ navigation, route }) => {
 
     //states
     const [refreshing, setRefreshing] = useState(false)
-    const [formState, setFormState] = useState({
-        phone: '',
-        accepted: false
-    })
 
     //hooks
-    // const {
-    //     executorOrderRequestsLoading,
-    //     executorOrderRequestsData,
-    //     executorOrderRequestsRefetch
-    // } = useExecutorOrderRequests(isUserPhoneVar())
+    const {
+        clientOrderRequestsLoading,
+        clientOrderRequestsData,
+        clientOrderRequestsRefetch
+    } = useClientOrderRequests(route.params.orderId)
+
+    const {
+        acceptOrderRequest
+    } = useAcceptOrderRequest(route.params.orderId, clientOrderRequestsData?.filter(el => el.accepted).map(el => el.id)[0])
+
+    const { repulseOrderRequest } = useRepulseOrderRequest(route.params.orderId)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -51,7 +55,6 @@ export const ClientOrderRequests = ({ navigation }) => {
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
     const blackColor = useReactiveVar(blackColorVar)
-    const lightengrayColor = useReactiveVar(lightengrayColorVar)
 
     //styles
     const styles = getStyles(whiteColor, blackColor)
@@ -62,98 +65,104 @@ export const ClientOrderRequests = ({ navigation }) => {
     const handleRefresh = () => {
         setRefreshing(true)
         setTimeout(() => {
-            executorOrderRequestsRefetch()
+            clientOrderRequestsRefetch()
             setRefreshing(false)
         }, 2000)
     }
 
-    const handleInputFormChange = (value, name, phone) => {
-        const list = { ...formState }
-        list[name] = value
-        list['phone'] = phone
-        setFormState(list)
+    const handleCall = async (phone) => {
+        Linking.openURL(`tel:+7${phone}`)
     }
 
-    // if (executorOrderRequestsLoading) return <Loader />
+    const handleMessage = async (phone) => {
+        Linking.openURL(`whatsapp://send?phone=7${phone}`)
+    }
+
+    if (clientOrderRequestsLoading) return <Loader />
 
     return (
 
-        <ScrollView
-            keyboardShouldPersistTaps='handler'
-            style={styles.container}
-            contentContainerStyle={{ paddingBottom: 80 }}
-            nestedScrollEnabled={true}
-        >
+        <View style={styles.container}>
 
-            <Text style={styles.important}>{locale.deleteOrderImportant}</Text>
+            {clientOrderRequestsData.length > 0 ?
 
-            <View style={styles.orderButtons}>
+                <>
 
-                <WhiteButton>
+                    <Text style={styles.important}>{locale.deleteOrderImportant}</Text>
 
-                    <View style={styles.buttonItems}>
+                    <View style={styles.orderButtons}>
 
-                        <AcceptIcon width={25} height={25} fill={lightblueColor} />
+                        <WhiteButton>
+                            <View style={styles.buttonItems}>
+                                <AcceptIcon width={25} height={25} fill={lightblueColor} />
+                                <Text style={styles.buttonText}>{locale.orderCompleted}</Text>
+                            </View>
+                        </WhiteButton>
 
-                        <Text style={styles.buttonText}>Заказ выполнен</Text>
-
-                    </View>
-
-                </WhiteButton>
-
-                <WhiteButton>
-
-                    <View style={styles.buttonItems}>
-
-                        <NotIcon width={15} height={15} fill={lightredColor} />
-
-                        <Text style={styles.buttonText}>Заказ не выполнен</Text>
+                        <WhiteButton>
+                            <View style={styles.buttonItems}>
+                                <CancelIcon width={15} height={15} fill={lightredColor} />
+                                <Text style={styles.buttonText}>{locale.orderNotCompleted}</Text>
+                            </View>
+                        </WhiteButton>
 
                     </View>
 
-                </WhiteButton>
+                    {clientOrderRequestsData.filter(el => el.accepted).map(el =>
+                        <View key={el.id}>
 
-            </View>
+                            <Text style={styles.text}>{locale.requestAccepted}</Text>
 
-            <Text style={styles.text}>{locale.requests}</Text>
+                            <ClientOrderRequestsBlock
+                                item={el}
+                                repulseOrderRequest={repulseOrderRequest}
+                            />
 
-            <View style={styles.request}>
+                            <View style={styles.executorButtons}>
 
-                <ProfileLineData
-                    // avatar={executor.avatar}
-                    // name={executor.name}
-                    // verified={executor.verified}
-                    name='RINA'
-                    size={35}
-                />
+                                <WhiteButton handleAction={() => handleCall(el.executor.phone)}>
+                                    <Text style={styles.executorButtonText}>{locale.toExecutorCall}</Text>
+                                </WhiteButton>
 
-                <Switch
-                    trackColor={{ false: lightgrayColor, true: lightblueColor }}
-                    thumbColor={formState.accepted ? blueColor : lightengrayColor}
-                    ios_backgroundColor={grayColor}
-                    onValueChange={e => handleInputFormChange(e, 'accepted', 'rina')}
-                    value={formState.accepted}
-                />
+                                <WhiteButton handleAction={() => handleMessage(el.executor.phone)}>
+                                    <Text style={styles.executorButtonText}>{locale.toWhatsapp}</Text>
+                                </WhiteButton>
 
-            </View>
+                            </View>
 
-            {/* <FlatList
-                contentContainerStyle={{ paddingTop: 30 }}
-                data={executorOrderRequestsData}
-                keyExtractor={(item) => item.id}
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item, index }) => renderCardPreviewItem(item)}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={handleRefresh}
-                        colors={[blueColor]}
-                        progressBackgroundColor={whiteColor}
+                        </View>
+                    )}
+
+                    {clientOrderRequestsData.filter(el => el.accepted === false).length > 0 ?
+                        <Text style={styles.text}>{locale.requests}</Text>
+                        : null
+                    }
+
+
+                    <FlatList
+                        data={clientOrderRequestsData}
+                        keyExtractor={(item) => item.id}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={({ item, index }) => !item.accepted && renderClientOrderRequestBlock(item, acceptOrderRequest)}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={handleRefresh}
+                                colors={[blueColor]}
+                                progressBackgroundColor={whiteColor}
+                            />
+                        }
                     />
-                }
-            />*/}
 
-        </ScrollView>
+
+                </>
+
+                :
+
+                <Text style={styles.text}>{locale.requestsEmpty}</Text>
+
+            }
+        </View>
 
     )
 }
@@ -164,6 +173,7 @@ const getStyles = (whiteColor, blackColor) => ({
         backgroundColor: whiteColor,
         paddingHorizontal: 16,
         paddingTop: 30,
+        paddingBottom: 80,
     },
     important: {
         fontSize: 13,
@@ -173,7 +183,7 @@ const getStyles = (whiteColor, blackColor) => ({
     orderButtons: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginBottom: 20,
+        marginVertical: 20,
     },
     buttonItems: {
         flexDirection: 'row',
@@ -185,13 +195,19 @@ const getStyles = (whiteColor, blackColor) => ({
         color: blackColor,
         marginLeft: 5
     },
+    executorButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginVertical: 10,
+    },
+    executorButtonText: {
+        fontSize: 11,
+        color: grayColor,
+        paddingHorizontal: 5,
+    },
     text: {
         fontSize: 14,
         color: grayColor,
         marginVertical: 10,
-    },
-    request: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
     },
 })

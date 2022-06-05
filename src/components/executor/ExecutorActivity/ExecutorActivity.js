@@ -11,7 +11,7 @@ import {
 } from '@utils/cache'
 
 //hooks
-import { useExecutorFeed } from '@hooks_query/executor/useExecutorFeed'
+import { useExecutorFeed } from '@hooks_query/executor/feed/useExecutorFeed'
 
 //common components
 import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'

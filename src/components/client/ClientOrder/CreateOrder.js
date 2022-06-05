@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
 //hooks
-import { useCreateOrder } from '@hooks_mutation/order/useCreateOrder'
+import { useCreateOrder } from '@hooks_mutation/client/order/useCreateOrder'
 
 //common components
 import { ExtraModal } from '@components/Common/Modals/ExtraModal'

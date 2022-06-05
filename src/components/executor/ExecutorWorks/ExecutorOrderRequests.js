@@ -11,7 +11,7 @@ import {
 } from '@utils/cache'
 
 //hooks
-import { useExecutorOrderRequests } from '@hooks_query/executor/useExecutorOrderRequests'
+import { useExecutorOrderRequests } from '@hooks_query/executor/order/useExecutorOrderRequests'
 
 //common components
 import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'

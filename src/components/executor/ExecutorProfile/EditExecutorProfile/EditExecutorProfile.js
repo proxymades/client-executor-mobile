@@ -13,10 +13,10 @@ import { InputLine } from '@common_components/Inputs/InputLine'
 import { ProfilePhone } from '@common_components/Profile/ProfilePhone'
 
 //hooks
-import { useUploadExecutorAvatar } from '@hooks_mutation/executor/useUploadExecutorAvatar'
-import { useUpdateExecutorProfile } from '@hooks_mutation/executor/useUpdateExecutorProfile'
-import { useDeleteExecutorAvatar } from '@hooks_mutation/executor/useDeleteExecutorAvatar'
-import { useExecutorProfileCache } from '@hooks_query/executor/useExecutorProfileCache'
+import { useUploadExecutorAvatar } from '@hooks_mutation/executor/profile/useUploadExecutorAvatar'
+import { useUpdateExecutorProfile } from '@hooks_mutation/executor/profile/useUpdateExecutorProfile'
+import { useDeleteExecutorAvatar } from '@hooks_mutation/executor/profile/useDeleteExecutorAvatar'
+import { useExecutorProfileCache } from '@hooks_query/executor/profile/useExecutorProfileCache'
 
 //utils
 import { useImagePicker } from '@hooks_utils/useImagePicker'

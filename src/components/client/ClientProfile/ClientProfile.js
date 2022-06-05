@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //hooks
-import { useClientProfile } from '@hooks_query/client/useClientProfile'
+import { useClientProfile } from '@hooks_query/client/profile/useClientProfile'
 
 //utils
 import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'

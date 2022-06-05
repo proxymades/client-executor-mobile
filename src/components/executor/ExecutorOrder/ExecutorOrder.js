@@ -5,9 +5,9 @@ import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
 //hooks
-import { useExecutorOrder } from '@hooks_query/order/useExecutorOrder'
-import { useCreateOrderRequest } from '@hooks_mutation/order/useCreateOrderRequest'
-import { useCancelOrderRequest } from '@hooks_mutation/order/useCancelOrderRequest'
+import { useExecutorOrder } from '@hooks_query/executor/order/useExecutorOrder'
+import { useCreateOrderRequest } from '@hooks_mutation/executor/order/useCreateOrderRequest'
+import { useCancelOrderRequest } from '@hooks_mutation/executor/order/useCancelOrderRequest'
 
 //common components
 import { Loader } from '@components/Common/Loaders/Loader'

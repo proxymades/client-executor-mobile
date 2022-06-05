@@ -287,6 +287,8 @@ export const locale = {
     orderImageDeleted_notify: 'Фотография удалена',
     orderUpdated_notify: 'Заказ обновлен',
     orderUAccepted_notify: 'К сожалению заказ уже принят',
+    orderCompleted: 'Заказ выполнен',
+    orderNotCompleted: 'Заказ не выполнен',
     orderDate: 'Дата размещения заказа',
     orders: 'Заказы',
     outad: 'Наружная реклама',
@@ -348,7 +350,10 @@ export const locale = {
     registerDate: 'Дата регистрации',
     registerText: 'регистрация',
     reviews: 'Отзывы',
+    requestAccepted: 'Согласованная заявка',
+    requestAccepted_notify: 'Заявка согласована',
     requests: 'Заявки',
+    requestsEmpty: 'Заявки отсутствуют',
     requestCanceled_notify: 'Заявка отменена',
     requestSended_notify: 'Заявка отправлена',
     requestSendedError_notify: 'Вы уже отправляли заявку',
@@ -423,7 +428,8 @@ export const locale = {
     statistics: 'Статистика',
 
     //t
-    toCall: 'Позвонить',
+    toClientCall: 'Позвонить клиенту',
+    toExecutorCall: 'Позвонить исполнителю',
     toRequests: 'Перейти в заявки',
     toWhatsapp: 'Написать в WhatsApp',
 

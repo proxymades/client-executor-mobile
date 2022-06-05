@@ -5,9 +5,9 @@ import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
 //hooks
-import { useClientOrderCache } from '@hooks_query/order/useClientOrderCache'
-import { useUpdateOrder } from '@hooks_mutation/order/useUpdateOrder'
-import { useDeleteOrderImage } from '@hooks_mutation/order/useDeleteOrderImage'
+import { useClientOrderCache } from '@hooks_query/client/order/useClientOrderCache'
+import { useUpdateOrder } from '@hooks_mutation/client/order/useUpdateOrder'
+import { useDeleteOrderImage } from '@hooks_mutation/client/order/useDeleteOrderImage'
 
 //components
 
