@@ -5,7 +5,8 @@ import { useReactiveVar } from '@apollo/client'
 
 //components
 import { ClientActivityContainer } from '@components/client/ClientActivity/ClientActivityContainer'
-import { ClientOrder } from '@components/client/Order/ClientOrder'
+import { ClientOrder } from '@components/client/ClientOrder/ClientOrder'
+import { ClientOrderRequests } from '@components/client/ClientOrder/ClientOrderRequests'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -41,6 +42,14 @@ export const ClientActivityScreen = () => {
                 options={({ route }) => ({
                     title: route.params.title,
                 })}
+            />
+
+            <Stack.Screen
+                name='ClientOrderRequests'
+                component={ClientOrderRequests}
+                options={{
+                    title: locale.requests,
+                }}
             />
 
         </Stack.Navigator>

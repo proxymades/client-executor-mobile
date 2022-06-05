@@ -9,7 +9,7 @@ import { ExecutorWorks } from '@components/executor/ExecutorWorks/ExecutorWorks'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
-import { ExecutorOrder } from '@components/executor/Order/ExecutorOrder'
+import { ExecutorOrder } from '@components/executor/ExecutorOrder/ExecutorOrder'
 
 export const ExecutorProfileScreen = () => {
 

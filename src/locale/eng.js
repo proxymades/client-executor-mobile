@@ -124,6 +124,8 @@ export const locale = {
     credo_placeholder: 'add a life creed',
 
     //d
+    deleteOrderImportant: 'Important! To delete an order, you must disable agreed request',
+
     darkTheme: 'Dark',
     darkTheme_description: 'dark theme will be installed: dark background, white text',
     dataPolicy: 'Data Policy',
@@ -209,6 +211,7 @@ export const locale = {
     hashtag: 'Hashtag',
     header: 'Header',
     header_placeholder: 'add header',
+    hello: 'Hello',
     history: 'History',
     historySection: 'History section',
 
@@ -393,6 +396,7 @@ export const locale = {
     sendRequest: 'Request',
     sendedRequest: 'Request to fulfill your order',
     souvenir: 'Souvenir products',
+    suggestedPrice: 'Suggested price:',
 
     save: 'Save',
     saved_notify: 'Saved',
@@ -419,8 +423,12 @@ export const locale = {
     statistics: 'Statistics',
 
     //t
+    toCall: 'Call',
+    toRequests: 'Go to requests',
+    toWhatsapp: 'Write to WhatsApp',
+
     tariffInfo: 'Tariff Information',
-    tenge: 'KZT',
+    tenge: 'tg',
     termsOfUse: 'Terms of use',
     text: 'Text',
     text_placeholder: 'add text',

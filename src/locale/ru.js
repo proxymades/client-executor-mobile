@@ -123,6 +123,7 @@ export const locale = {
     credo_placeholder: 'добавьте жизненное кредо',
 
     //d
+    deleteOrderImportant: 'Важно! Для удаления заказа необходимо отключить согласованную заявку',
 
     darkTheme: 'Темная',
     darkTheme_description: 'будет установлена темная тема: темный фон, белый текст',
@@ -209,6 +210,7 @@ export const locale = {
     hashtag: 'Хэштег',
     header: 'Заголовок',
     header_placeholder: 'добавьте заголовок',
+    hello: 'Здравствуйте',
     history: 'История',
     historySection: 'Раздел истории',
 
@@ -394,6 +396,7 @@ export const locale = {
     sendRequest: 'Заявка',
     sendedRequest: 'Заявка на выполнение вашего заказа',
     souvenir: 'Сувенирная продукция',
+    suggestedPrice: 'Предложенная цена:',
 
     save: 'Сохранить',
     saved_notify: 'Сохранено',
@@ -420,8 +423,12 @@ export const locale = {
     statistics: 'Статистика',
 
     //t
+    toCall: 'Позвонить',
+    toRequests: 'Перейти в заявки',
+    toWhatsapp: 'Написать в WhatsApp',
+
     tariffInfo: 'Информация по тарифам',
-    tenge: 'KZT',
+    tenge: 'тг',
     termsOfUse: 'Пользовательское соглашение',
     text: 'Текст',
     text_placeholder: 'Слово, идущее от сердца, проникает в сердце (Низами Гянджеви)',

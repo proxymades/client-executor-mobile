@@ -4,6 +4,7 @@ export const CLIENT_ORDER_REQUESTS = gql`
     query ClientOrderRequests{
             clientOrderRequests{
                 id
+                offer
                 createdAt
                 order{
                     id

@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client'
 
 //components
 import { ExecutorFeed } from '@components/executor/ExecutorFeed/ExecutorFeed'
-import { ExecutorOrder } from '@components/executor/Order/ExecutorOrder'
+import { ExecutorOrder } from '@components/executor/ExecutorOrder/ExecutorOrder'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'

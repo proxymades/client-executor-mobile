@@ -211,6 +211,14 @@ export const AcceptIcon = (props) => {
     )
 }
 
+export const NotIcon = (props) => {
+    return (
+        <Svg width={props.width} height={props.height} viewBox="0 0 15 15" fill={props.fill}>
+            <Path d="M2.64493 0L7.42754 6.24023H7.57246L12.3551 0H15L9.16667 7.5L15 15H12.3551L7.57246 8.87695H7.42754L2.64493 15H0L5.97826 7.5L0 0H2.64493Z" />
+        </Svg>
+    )
+}
+
 export const TrashIcon = (props) => {
     return (
         <Svg width={props.width} height={props.height} viewBox="0 0 916.7 875.1" fill={props.fill}>

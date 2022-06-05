@@ -35,7 +35,7 @@ const getStyles = (whiteColor) => ({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
-        padding: 10,
+        paddingHorizontal: 10,
         backgroundColor: whiteColor,
         shadowColor: grayColor,
         shadowOpacity: 0.2,

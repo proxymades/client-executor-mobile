@@ -9,7 +9,7 @@ import { ClientProfileScreen } from '@screens/client/ClientProfileScreen/ClientP
 import { ClientActivityScreen } from '@screens/client/ClientActivityScreen/ClientActivityScreen'
 
 //utils
-import { blackColorVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //icons
 import {
@@ -24,6 +24,9 @@ export const ClientNavigationScreen = () => {
 
     //tabs
     const Tab = createBottomTabNavigator()
+
+    //lang hooks
+    const locale = useReactiveVar(localeVar)
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -41,7 +44,7 @@ export const ClientNavigationScreen = () => {
                     backgroundColor: whiteColor
                 },
                 tabBarActiveTintColor: blackColor,
-                tabBarShowLabel: false,
+                // tabBarShowLabel: false,
                 tabBarHideOnKeyboard: true,
             }}
         >
@@ -53,6 +56,8 @@ export const ClientNavigationScreen = () => {
                     tabBarIcon: ({ color, size }) => (
                         <AvatarIcon width={size} height={size} fill={color} />
                     ),
+                    tabBarLabel: locale.profile,
+                    tabBarLabelStyle: { paddingBottom: 3 },
                     headerShown: false,
                 }}
             />
@@ -64,6 +69,8 @@ export const ClientNavigationScreen = () => {
                     tabBarIcon: ({ color, size }) => (
                         <ActivityIcon width={size} height={size} fill={color} />
                     ),
+                    tabBarLabel: locale.notifications,
+                    tabBarLabelStyle: { paddingBottom: 3 },
                     headerShown: false,
                 }}
             />

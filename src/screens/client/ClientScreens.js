@@ -10,8 +10,8 @@ import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //components
 import { EditClientProfile } from '@components/client/ClientProfile/EditClientProfile/EditClientProfile'
-import { CreateOrder } from '@components/client/Order/CreateOrder'
-import { EditOrder } from '@components/client/Order/EditOrder'
+import { CreateOrder } from '@components/client/ClientOrder/CreateOrder'
+import { EditOrder } from '@components/client/ClientOrder/EditOrder'
 
 //screens
 import { ClientNavigationScreen } from '@screens/client/ClientNavigationScreen/ClientNavigationScreen'

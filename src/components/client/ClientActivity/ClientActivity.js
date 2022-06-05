@@ -19,6 +19,7 @@ export const ClientActivity = React.memo(({ item }) => {
                 <ClientActivityBlock
                     executor={item.executor}
                     order={item.order}
+                    offer={item.offer}
                     createdAt={item.createdAt}
                 />
                 : null

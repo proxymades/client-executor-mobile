@@ -59,6 +59,7 @@ export const ExecutorNavigationScreen = () => {
                         <AvatarIcon width={size} height={size} fill={color} />
                     ),
                     tabBarLabel: locale.profile,
+                    tabBarLabelStyle: { paddingBottom: 3 },
                     headerShown: false,
                 }}
             />
@@ -71,6 +72,7 @@ export const ExecutorNavigationScreen = () => {
                         <OrdersIcon width={size + 5} height={size + 5} fill={color} />
                     ),
                     tabBarLabel: locale.orders,
+                    tabBarLabelStyle: { paddingBottom: 3 },
                     headerShown: false,
                 }}
             />
@@ -83,6 +85,7 @@ export const ExecutorNavigationScreen = () => {
                         <ActivityIcon width={size} height={size} fill={color} />
                     ),
                     tabBarLabel: locale.notifications,
+                    tabBarLabelStyle: { paddingBottom: 3 },
                     headerShown: false,
                 }}
             />
