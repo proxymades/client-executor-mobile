@@ -16,7 +16,7 @@ export const useRepulseOrderRequest = (orderId) => {
     const [repulse] = useMutation(REPULSE_ORDER_REQUEST, {
         refetchQueries: ['ClientOrderRequests', 'ClientOrdersRequests'],
         onCompleted: () => {
-            isNotifedVar(locale.requestCanceled_notify)
+            isNotifedVar(locale.requestRepulsed_notify)
         }
     })
 

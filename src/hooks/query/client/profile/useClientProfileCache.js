@@ -20,7 +20,5 @@ export const useClientProfileCache = () => {
         }
     })
 
-    return {
-        profileQuery
-    }
+    return { profileQuery }
 }

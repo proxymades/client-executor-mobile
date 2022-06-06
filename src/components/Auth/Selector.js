@@ -79,6 +79,8 @@ const getStyles = (blackColor, whiteColor) => ({
     },
     typeChecker: {
         textAlign: 'center',
+        justifyContent: 'space-between',
+        height: 100
     },
     typeCheckerText: {
         textAlign: 'center',

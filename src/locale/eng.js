@@ -354,6 +354,7 @@ export const locale = {
     requests: 'Requests',
     requestsEmpty: 'No requests',
     requestCanceled_notify: 'Request canceled',
+    requestRepulsed_notify: 'Request repulsed',
     requestSended_notify: 'Request sended',
     requestSendedError_notify: 'You have already submitted a request',
 

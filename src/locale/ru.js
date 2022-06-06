@@ -355,6 +355,7 @@ export const locale = {
     requests: 'Заявки',
     requestsEmpty: 'Заявки отсутствуют',
     requestCanceled_notify: 'Заявка отменена',
+    requestRepulsed_notify: 'Заявка отклонена',
     requestSended_notify: 'Заявка отправлена',
     requestSendedError_notify: 'Вы уже отправляли заявку',
 

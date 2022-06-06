@@ -16,7 +16,5 @@ export const useDeleteClientAvatar = () => {
         }
     })
 
-    return {
-        deleteClientAvatar
-    }
+    return { deleteClientAvatar }
 }

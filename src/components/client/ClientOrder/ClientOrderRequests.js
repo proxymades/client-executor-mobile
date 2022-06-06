@@ -88,25 +88,30 @@ export const ClientOrderRequests = ({ navigation, route }) => {
 
                 <>
 
-                    <Text style={styles.important}>{locale.deleteOrderImportant}</Text>
+                    {clientOrderRequestsData.find(el => el.accepted) ?
+                        <>
+                            <Text style={styles.important}>{locale.deleteOrderImportant}</Text>
 
-                    <View style={styles.orderButtons}>
+                            <View style={styles.orderButtons}>
 
-                        <WhiteButton>
-                            <View style={styles.buttonItems}>
-                                <AcceptIcon width={25} height={25} fill={lightblueColor} />
-                                <Text style={styles.buttonText}>{locale.orderCompleted}</Text>
+                                <WhiteButton>
+                                    <View style={styles.buttonItems}>
+                                        <AcceptIcon width={25} height={25} fill={lightblueColor} />
+                                        <Text style={styles.buttonText}>{locale.orderCompleted}</Text>
+                                    </View>
+                                </WhiteButton>
+
+                                <WhiteButton>
+                                    <View style={styles.buttonItems}>
+                                        <CancelIcon width={15} height={15} fill={lightredColor} />
+                                        <Text style={styles.buttonText}>{locale.orderNotCompleted}</Text>
+                                    </View>
+                                </WhiteButton>
+
                             </View>
-                        </WhiteButton>
 
-                        <WhiteButton>
-                            <View style={styles.buttonItems}>
-                                <CancelIcon width={15} height={15} fill={lightredColor} />
-                                <Text style={styles.buttonText}>{locale.orderNotCompleted}</Text>
-                            </View>
-                        </WhiteButton>
-
-                    </View>
+                        </>
+                        : null}
 
                     {clientOrderRequestsData.filter(el => el.accepted).map(el =>
                         <View key={el.id}>

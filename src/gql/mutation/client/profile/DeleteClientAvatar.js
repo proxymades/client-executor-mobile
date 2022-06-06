@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
-export const DELETE_EXECUTOR_AVATAR = gql`
-        mutation DeleteExecutorAvatar($phone: String!) {
-            deleteExecutorAvatar(phone: $phone)
+export const DELETE_CLIENT_AVATAR = gql`
+        mutation DeleteClientAvatar($phone: String!) {
+            deleteClientAvatar(phone: $phone)
         }
 `

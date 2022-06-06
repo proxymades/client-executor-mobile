@@ -17,7 +17,5 @@ export const useClientOrderCache = (id) => {
         }
     })
 
-    return {
-        orderQuery
-    }
+    return { orderQuery }
 }
