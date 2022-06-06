@@ -1,6 +1,6 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { View, Text, Switch, ActivityIndicator } from 'react-native'
+import { View, Text, Switch, ActivityIndicator, Pressable } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
@@ -16,14 +16,20 @@ import { ProfileLineData } from '@components/Common/Profile/ProfileLineData'
 
 //colors
 import { blueColor, grayColor, lightblueColor, lightgrayColor } from '@utils/colors'
+import { ExtraModal } from '@components/Common/Modals/ExtraModal'
+import { ProfileData } from '@components/Common/Profile/ProfileData'
+import { ProfileMenu } from '@components/Common/Profile/ProfileMenu'
+import { ProfileRegisterDate } from '@components/Common/Profile/ProfileRegisterDate'
 
 export const ClientOrderRequestsBlock = ({
     item,
     acceptOrderRequest,
     repulseOrderRequest,
+    isFinished
 }) => {
 
     //states
+    const [profileMenuShow, setProfileMenuShow] = useState(false)
     const [formState, setFormState] = useState({
         accepted: item.accepted
     })
@@ -71,34 +77,64 @@ export const ClientOrderRequestsBlock = ({
         value ? setAccepting(true) : setRepulsing(true)
     }
 
+    const handleProfileMenuShow = () => {
+        setProfileMenuShow(true)
+    }
+
     return (
 
         <View style={styles.request}>
 
             <View style={styles.requestData}>
 
-                <ProfileLineData
-                    avatar={item.executor.avatar}
-                    name={item.executor.name}
-                    verified={item.executor.verified}
-                    size={35}
-                />
-
+                <Pressable onPress={handleProfileMenuShow}>
+                    <ProfileLineData
+                        avatar={item.executor.avatar}
+                        name={item.executor.name}
+                        verified={item.executor.verified}
+                        size={35}
+                    />
+                </Pressable>
                 <Text style={styles.requestOffer}>{item.offer} {locale.tenge}</Text>
 
             </View>
 
-            {(accepting || repulsing) ?
-                <ActivityIndicator size='small' color={lightblueColor} />
-                :
-                <Switch
-                    trackColor={{ false: lightgrayColor, true: lightblueColor }}
-                    thumbColor={formState.accepted ? blueColor : lightengrayColor}
-                    ios_backgroundColor={grayColor}
-                    onValueChange={e => handleInputFormChange(e, 'accepted')}
-                    value={formState.accepted}
-                />
+            {!isFinished ?
+                <>
+                    {(accepting || repulsing) ?
+                        <ActivityIndicator size='small' color={lightblueColor} />
+                        :
+                        <Switch
+                            trackColor={{ false: lightgrayColor, true: lightblueColor }}
+                            thumbColor={formState.accepted ? blueColor : lightengrayColor}
+                            ios_backgroundColor={grayColor}
+                            onValueChange={e => handleInputFormChange(e, 'accepted')}
+                            value={formState.accepted}
+                        />
+                    }
+                </>
+                : null
             }
+
+            <ExtraModal
+                modalVisible={profileMenuShow}
+                setModalVisible={setProfileMenuShow}
+            >
+                <ProfileData
+                    name={item.executor.name}
+                    verified={item.executor.verified}
+                />
+
+                <ProfileMenu
+                    worksCount={item.executor.orderRequest.length}
+                    ratingCount={5}
+                    reviewsCount={77}
+                    type='executor'
+                />
+
+                <ProfileRegisterDate createdAt={item.executor.createdAt} />
+
+            </ExtraModal>
 
         </View>
 

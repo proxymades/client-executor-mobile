@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
-export const CLIENT_ORDERS_REQUESTS = gql`
-    query ClientOrdersRequests{
-            clientOrdersRequests{
+export const CLIENT_ACTIVITY = gql`
+    query ClientActivity{
+            clientActivity{
                 id
                 offer
                 createdAt

@@ -124,6 +124,8 @@ export const ClientOrder = ({ route }) => {
                     linkRequests={handleLinkRequests}
                     newRequests={route.params.fromRequest && newRequests}
                     setNewRequests={setNewRequests}
+                    isWork={orderData.isWork}
+                    isReady={orderData.isReady}
                 />
             </ExtraModal>
 

@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
-export const CLIENT_NEW_ORDERS = gql`
-    query ClientNewOrders{
-            clientNewOrders{
+export const CLIENT_READY_ORDERS = gql`
+    query ClientReadyOrders{
+            clientReadyOrders{
                 id
                 header
                 category

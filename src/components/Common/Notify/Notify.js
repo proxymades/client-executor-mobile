@@ -50,6 +50,8 @@ const getStyles = (whiteColor, blackColor, insets) => ({
         opacity: 0.98
     },
     text: {
-        color: whiteColor
+        color: whiteColor,
+        fontSize: 14,
+        textAlign: 'center'
     }
 })

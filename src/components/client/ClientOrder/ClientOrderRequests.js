@@ -1,6 +1,6 @@
 //core
-import React, { useState } from 'react'
-import { View, Text, FlatList, RefreshControl, Linking } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, FlatList, RefreshControl, Linking, ActivityIndicator } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
@@ -14,19 +14,25 @@ import {
 import { useClientOrderRequests } from '@hooks_query/client/order/useClientOrderRequests'
 import { useAcceptOrderRequest } from '@hooks_mutation/client/order/useAcceptOrderRequest'
 import { useRepulseOrderRequest } from '@hooks_mutation/client/order/useRepulseOrderRequest'
+import { useAcceptOrderWork } from '@hooks_mutation/client/order/useAcceptOrderWork'
+import { useRepulseOrderWork } from '@hooks_mutation/client/order/useRepulseOrderWork'
 
 //components
 import { ClientOrderRequestsBlock } from './ClientOrderRequestsBlock'
 
 //common components
 import { Loader } from '@common_components/Loaders/Loader'
-import { WhiteButton } from '@components/Common/Buttons/WhiteButton'
+import { WhiteButton } from '@common_components/Buttons/WhiteButton'
+import { BlueButton } from '@common_components/Buttons/BlueButton'
+import { ExtraModal } from '@common_components/Modals/ExtraModal'
+import { RatingMenuForm } from '@common_components/Modals/Forms/RatingMenuForm'
 
 //icons
-import { AcceptIcon, CancelIcon } from '@components/Common/Svg/Svg'
+import { AcceptIcon, CancelIcon } from '@common_components/Svg/Svg'
 
 //colors
 import { blueColor, grayColor, lightblueColor, lightgrayColor, lightredColor } from '@utils/colors'
+
 
 const renderClientOrderRequestBlock = (item, acceptOrderRequest) =>
     <ClientOrderRequestsBlock item={item} acceptOrderRequest={acceptOrderRequest} />
@@ -35,19 +41,29 @@ export const ClientOrderRequests = ({ navigation, route }) => {
 
     //states
     const [refreshing, setRefreshing] = useState(false)
+    const [rating, setRating] = useState(false)
+    const [accepting, setAccepting] = useState(false)
+    const [badRating, setBadRating] = useState(false)
+    const [repulsing, setRepulsing] = useState(false)
+    const [formState, setFormState] = useState({
+        rating: 0,
+        message: '',
+        executorPhone: ''
+    })
 
     //hooks
     const {
         clientOrderRequestsLoading,
         clientOrderRequestsData,
-        clientOrderRequestsRefetch
+        clientOrderRequestsRefetch,
+        acceptedRequestId,
+        isFinished
     } = useClientOrderRequests(route.params.orderId)
 
-    const {
-        acceptOrderRequest
-    } = useAcceptOrderRequest(route.params.orderId, clientOrderRequestsData?.filter(el => el.accepted).map(el => el.id)[0])
-
+    const { acceptOrderRequest } = useAcceptOrderRequest(route.params.orderId, acceptedRequestId)
     const { repulseOrderRequest } = useRepulseOrderRequest(route.params.orderId)
+    const { acceptOrderWork } = useAcceptOrderWork(route.params.orderId, acceptedRequestId, formState)
+    const { repulseOrderWork } = useRepulseOrderWork(route.params.orderId, acceptedRequestId, formState)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -60,6 +76,26 @@ export const ClientOrderRequests = ({ navigation, route }) => {
     const styles = getStyles(whiteColor, blackColor)
 
     //effects
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <>
+                    {(accepting || repulsing) ?
+                        <ActivityIndicator size='small' color={lightblueColor} />
+                        : null
+                    }
+                </>
+            ),
+        })
+    }, [navigation, accepting, repulsing])
+
+    useEffect(() => {
+        accepting && acceptOrderWork()
+    }, [accepting])
+
+    useEffect(() => {
+        repulsing && repulseOrderWork()
+    }, [repulsing])
 
     //handles
     const handleRefresh = () => {
@@ -78,6 +114,20 @@ export const ClientOrderRequests = ({ navigation, route }) => {
         Linking.openURL(`whatsapp://send?phone=7${phone}`)
     }
 
+    const handleAcceptOrder = () => {
+        setAccepting(true)
+    }
+
+    const handleRepulseOrder = () => {
+        setRepulsing(true)
+    }
+
+    const handleInputFormChange = (value, name) => {
+        const list = { ...formState }
+        list[name] = value
+        setFormState(list)
+    }
+
     if (clientOrderRequestsLoading) return <Loader />
 
     return (
@@ -88,20 +138,21 @@ export const ClientOrderRequests = ({ navigation, route }) => {
 
                 <>
 
-                    {clientOrderRequestsData.find(el => el.accepted) ?
+                    {!isFinished &&
+                        clientOrderRequestsData.find(el => el.accepted) ?
                         <>
                             <Text style={styles.important}>{locale.deleteOrderImportant}</Text>
 
                             <View style={styles.orderButtons}>
 
-                                <WhiteButton>
+                                <WhiteButton handleAction={() => setRating(true)}>
                                     <View style={styles.buttonItems}>
                                         <AcceptIcon width={25} height={25} fill={lightblueColor} />
                                         <Text style={styles.buttonText}>{locale.orderCompleted}</Text>
                                     </View>
                                 </WhiteButton>
 
-                                <WhiteButton>
+                                <WhiteButton handleAction={() => setBadRating(true)}>
                                     <View style={styles.buttonItems}>
                                         <CancelIcon width={15} height={15} fill={lightredColor} />
                                         <Text style={styles.buttonText}>{locale.orderNotCompleted}</Text>
@@ -111,54 +162,65 @@ export const ClientOrderRequests = ({ navigation, route }) => {
                             </View>
 
                         </>
-                        : null}
+                        : null
+                    }
 
                     {clientOrderRequestsData.filter(el => el.accepted).map(el =>
                         <View key={el.id}>
 
-                            <Text style={styles.text}>{locale.requestAccepted}</Text>
+                            {!isFinished ?
+                                <Text style={styles.text}>{locale.requestAccepted}</Text>
+                                :
+                                <Text style={styles.text}>{locale.finishedWork}</Text>
+                            }
 
                             <ClientOrderRequestsBlock
                                 item={el}
                                 repulseOrderRequest={repulseOrderRequest}
+                                isFinished={isFinished}
                             />
 
-                            <View style={styles.executorButtons}>
+                            {!isFinished ?
+                                <View style={styles.executorButtons}>
 
-                                <WhiteButton handleAction={() => handleCall(el.executor.phone)}>
-                                    <Text style={styles.executorButtonText}>{locale.toExecutorCall}</Text>
-                                </WhiteButton>
+                                    <BlueButton handleAction={() => handleCall(el.executor.phone)}>
+                                        <Text style={styles.executorButtonText}>{locale.toExecutorCall}</Text>
+                                    </BlueButton>
 
-                                <WhiteButton handleAction={() => handleMessage(el.executor.phone)}>
-                                    <Text style={styles.executorButtonText}>{locale.toWhatsapp}</Text>
-                                </WhiteButton>
+                                    <BlueButton handleAction={() => handleMessage(el.executor.phone)}>
+                                        <Text style={styles.executorButtonText}>{locale.toWhatsapp}</Text>
+                                    </BlueButton>
 
-                            </View>
+                                </View>
+                                : null
+                            }
 
                         </View>
                     )}
 
-                    {clientOrderRequestsData.filter(el => el.accepted === false).length > 0 ?
+                    {!isFinished &&
+                        clientOrderRequestsData.filter(el => el.accepted === false).length > 0 ?
                         <Text style={styles.text}>{locale.requests}</Text>
                         : null
                     }
 
-
-                    <FlatList
-                        data={clientOrderRequestsData}
-                        keyExtractor={(item) => item.id}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({ item, index }) => !item.accepted && renderClientOrderRequestBlock(item, acceptOrderRequest)}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={handleRefresh}
-                                colors={[blueColor]}
-                                progressBackgroundColor={whiteColor}
-                            />
-                        }
-                    />
-
+                    {!isFinished ?
+                        <FlatList
+                            data={clientOrderRequestsData}
+                            keyExtractor={(item) => item.id}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({ item, index }) => !item.accepted && renderClientOrderRequestBlock(item, acceptOrderRequest)}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={handleRefresh}
+                                    colors={[blueColor]}
+                                    progressBackgroundColor={whiteColor}
+                                />
+                            }
+                        />
+                        : null
+                    }
 
                 </>
 
@@ -167,6 +229,38 @@ export const ClientOrderRequests = ({ navigation, route }) => {
                 <Text style={styles.text}>{locale.requestsEmpty}</Text>
 
             }
+
+            <ExtraModal
+                modalVisible={rating}
+                setModalVisible={setRating}
+            >
+                <RatingMenuForm
+                    setModalVisible={setRating}
+                    action={handleAcceptOrder}
+                    input={formState}
+                    inputChange={handleInputFormChange}
+                    requestData={clientOrderRequestsData.find(el => el.accepted)}
+                />
+            </ExtraModal>
+
+            <ExtraModal
+                modalVisible={badRating}
+                setModalVisible={setBadRating}
+            >
+                <RatingMenuForm
+                    setModalVisible={setBadRating}
+                    action={handleRepulseOrder}
+                    input={formState}
+                    inputChange={handleInputFormChange}
+                    requestData={clientOrderRequestsData.find(el => el.accepted)}
+                />
+            </ExtraModal>
+
+            <ExtraModal
+                modalVisible={accepting || repulsing}
+                isEditing={true}
+            />
+
         </View>
 
     )
@@ -207,7 +301,7 @@ const getStyles = (whiteColor, blackColor) => ({
     },
     executorButtonText: {
         fontSize: 11,
-        color: grayColor,
+        color: whiteColor,
         paddingHorizontal: 5,
     },
     text: {
@@ -215,4 +309,5 @@ const getStyles = (whiteColor, blackColor) => ({
         color: grayColor,
         marginVertical: 10,
     },
+
 })

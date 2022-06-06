@@ -17,6 +17,8 @@ export const OrderClientMenuForm = ({
     setDeleteMenuShow,
     newRequests,
     setNewRequests,
+    isWork,
+    isReady,
 }) => {
 
     //lang hooks
@@ -65,21 +67,26 @@ export const OrderClientMenuForm = ({
                     }
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.item}
-                    onPress={handleEditOrder}
-                >
-                    <EditOrderIcon width='30' height='25' fill={blackColor} />
-                    <Text style={styles.text}>{locale.edit}</Text>
-                </TouchableOpacity>
+                {(isWork || isReady) ?
+                    null :
+                    <>
+                        <TouchableOpacity
+                            style={styles.item}
+                            onPress={handleEditOrder}
+                        >
+                            <EditOrderIcon width='30' height='25' fill={blackColor} />
+                            <Text style={styles.text}>{locale.edit}</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.item}
-                    onPress={handleDeleteOrder}
-                >
-                    <TrashIcon width='30' height='25' fill={blackColor} />
-                    <Text style={styles.text}>{locale.delete}</Text>
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.item}
+                            onPress={handleDeleteOrder}
+                        >
+                            <TrashIcon width='30' height='25' fill={blackColor} />
+                            <Text style={styles.text}>{locale.delete}</Text>
+                        </TouchableOpacity>
+                    </>
+                }
 
                 <TouchableOpacity
                     style={styles.item}

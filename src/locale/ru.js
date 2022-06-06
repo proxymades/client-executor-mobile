@@ -58,6 +58,7 @@ export const locale = {
     checkField_notify: 'Проверьте поле',
     client: 'Клиент',
     company_placeholder: 'введите название компании',
+    confirm: 'Подтвердить',
     confirmOrderDeletion: 'Подтверждаете удаление заказа?',
     confirmRequestCanceling: 'Подтверждаете отмену заявки?',
 
@@ -178,7 +179,11 @@ export const locale = {
     expects: 'ожидает',
 
     //f
+    feedbackExist_notify: 'Вы уже оставляли отзыв исполнителю по данному заказу',
+    feedbackToExecutor: 'Отзыв об исполнителе',
+    feedbackToExecutor_placeholder: 'напишите что вам понравилось или не понравилось при выполнении вашего заказа',
     field_warning: 'Введите данные',
+    finishedWork: 'Выполненная работа',
 
     feedOwnerProfileEmpty: 'Здесь пока ничего нет, попробуйте создать Цитату, Статью или Биографию нажав значок + в профиле',
     feedGuestProfileEmpty: 'Здесь пока ничего нет, пользователь еще ничего не создал',
@@ -282,6 +287,7 @@ export const locale = {
 
     //o
     offerPrice: 'Предложить цену',
+    orderCompletion: 'Завершение заказа',
     orderCreated_notify: 'Заказ создан',
     orderDeleted_notify: 'Заказ удален',
     orderImageDeleted_notify: 'Фотография удалена',
@@ -344,7 +350,9 @@ export const locale = {
     quoteTo: 'Цитату',
 
     //r
+    rateExecutor: 'Оцените исполнителя',
     rating: 'Рейтинг',
+
     readyText: 'Готовые',
     register: 'нет аккаунта? зарегистрируйтесь',
     registerDate: 'Дата регистрации',
@@ -483,6 +491,8 @@ export const locale = {
     videoAlbum: 'Видеоальбом',
 
     //w
+    workAccepted_notify: 'Работа принята',
+    workNotAccepted_notify: 'Работа не принята',
     works: 'Работы',
     workText: 'В работе',
 

@@ -16,6 +16,8 @@ export const GET_CLIENT_ORDER = gql`
                 urgent
                 image
                 createdAt
+                isWork
+                isReady
             }
         }
 `

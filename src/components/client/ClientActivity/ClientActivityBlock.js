@@ -62,25 +62,21 @@ export const ClientActivityBlock = ({ executor, order, offer, createdAt }) => {
                 <View style={styles.items}>
 
                     <View style={styles.data}>
+
                         <View>
 
                             <Pressable onPress={handleProfileMenuShow}>
-
                                 <ProfileLineData
                                     avatar={executor.avatar}
                                     name={executor.name}
                                     verified={executor.verified}
                                     size={35}
                                 />
-
                             </Pressable>
 
                             <Pressable onPress={handleLinkOrder}>
-
                                 <Text style={styles.actionText}>{locale.sendedRequest}</Text>
-
                                 <Text style={styles.orderText}>{order.header}</Text>
-
                             </Pressable>
 
                         </View>

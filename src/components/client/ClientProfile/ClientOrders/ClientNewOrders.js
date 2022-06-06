@@ -4,11 +4,7 @@ import { View, FlatList } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
-import {
-    blackColorVar,
-    isUserPhoneVar,
-    whiteColorVar
-} from '@utils/cache'
+import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //hooks
 import { useClientNewOrders } from '@hooks_query/client/order/useClientNewOrders'
@@ -23,7 +19,7 @@ const renderCardPreviewItem = (item) =>
 export const ClientNewOrders = () => {
 
     //hooks
-    const { clientNewOrdersLoading, clientNewOrdersData } = useClientNewOrders(isUserPhoneVar())
+    const { clientNewOrdersLoading, clientNewOrdersData } = useClientNewOrders()
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)

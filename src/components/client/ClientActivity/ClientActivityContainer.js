@@ -7,7 +7,7 @@ import { useReactiveVar } from '@apollo/client'
 import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //hooks
-import { useClientOrdersRequests } from '@hooks_query/client/order/useClientOrdersRequests'
+import { useClientActivity } from '@hooks_query/client/order/useClientActivity'
 
 //components
 import { ClientActivity } from './ClientActivity'
@@ -28,10 +28,10 @@ export const ClientActivityContainer = () => {
 
     //hooks
     const {
-        clientOrdersRequestsLoading,
-        clientOrdersRequestsData,
-        clientOrdersRequestsRefetch
-    } = useClientOrdersRequests()
+        clientActivityLoading,
+        clientActivityData,
+        clientActivityRefetch
+    } = useClientActivity()
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -44,12 +44,12 @@ export const ClientActivityContainer = () => {
     const handleRefresh = () => {
         setRefreshing(true)
         setTimeout(() => {
-            clientOrdersRequestsRefetch()
+            clientActivityRefetch()
             setRefreshing(false)
         }, 2000)
     }
 
-    if (clientOrdersRequestsLoading) return <Loader />
+    if (clientActivityLoading) return <Loader />
 
     return (
 
@@ -57,7 +57,7 @@ export const ClientActivityContainer = () => {
 
             <FlatList
                 contentContainerStyle={{ paddingTop: 30 }}
-                data={clientOrdersRequestsData}
+                data={clientActivityData}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item, index }) => renderActivity(item)}

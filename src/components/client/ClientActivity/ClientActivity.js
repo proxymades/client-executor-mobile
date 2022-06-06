@@ -4,6 +4,8 @@ import { useReactiveVar } from '@apollo/client'
 
 //utils
 import { localeVar } from '@utils/cache'
+
+//components
 import { ClientActivityBlock } from './ClientActivityBlock'
 
 export const ClientActivity = React.memo(({ item }) => {
@@ -23,7 +25,6 @@ export const ClientActivity = React.memo(({ item }) => {
                     createdAt={item.createdAt}
                 />
                 : null
-
             }
 
         </>

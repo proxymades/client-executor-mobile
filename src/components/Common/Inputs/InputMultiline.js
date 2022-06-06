@@ -17,7 +17,8 @@ export const InputMultiline = ({
     input,
     placeholder,
     label,
-    symbols
+    symbols,
+    isRequired
 }) => {
 
     //color hooks
@@ -30,7 +31,7 @@ export const InputMultiline = ({
 
         <View style={styles.container}>
 
-            <Text style={styles.label}>{label} *</Text>
+            <Text style={styles.label}>{label} {isRequired ? '*' : ''}</Text>
             <TextInput
                 style={styles.multiline}
                 multiline
@@ -42,7 +43,11 @@ export const InputMultiline = ({
                 placeholderTextColor={lightgrayColor}
                 maxLength={symbols}
             />
-            <Counter counter={input.length} max={symbols} />
+
+            {symbols ?
+                <Counter counter={input.length} max={symbols} />
+                : null
+            }
 
         </View>
 

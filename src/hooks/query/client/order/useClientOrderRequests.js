@@ -18,5 +18,7 @@ export const useClientOrderRequests = (orderId) => {
         clientOrderRequestsLoading: loading,
         clientOrderRequestsData: data?.clientOrderRequests,
         clientOrderRequestsRefetch: refetch,
+        acceptedRequestId: data?.clientOrderRequests.filter(el => el.accepted).map(el => el.id)[0],
+        isFinished: data?.clientOrderRequests.find(el => el.finished)
     }
 }

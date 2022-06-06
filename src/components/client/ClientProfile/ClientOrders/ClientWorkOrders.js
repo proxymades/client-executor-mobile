@@ -1,55 +1,55 @@
 //core
 import React from 'react'
-import { View, Text } from 'react-native'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { View, FlatList } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
-import {
-    blackColorVar,
-    localeVar,
-    whiteColorVar
-} from '@utils/cache'
+import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //hooks
+import { useClientWorkOrders } from '@hooks_query/client/order/useClientWorkOrders'
 
-//components
+//common components
+import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'
+import { Loader } from '@common_components/Loaders/Loader'
 
-//colors
-import { blueColor, lightgrayColor } from '@utils/colors'
-
+const renderCardPreviewItem = (item) =>
+    <OrderCardPreview item={item} />
 
 export const ClientWorkOrders = () => {
 
-    //tabs
-    const Tab = createMaterialTopTabNavigator()
-
     //hooks
-
-    //lang hooks
-    const locale = useReactiveVar(localeVar)
+    const { clientWorkOrdersLoading, clientWorkOrdersData } = useClientWorkOrders()
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
     const blackColor = useReactiveVar(blackColorVar)
 
     //styles
-    const styles = getStyles()
+    const styles = getStyles(whiteColor, blackColor)
+
+    if (clientWorkOrdersLoading) return <Loader />
 
     return (
-        <>
-            <Text>WORK orders</Text>
-        </>
+
+        <View style={styles.container}>
+
+            <FlatList
+                contentContainerStyle={{ paddingTop: 30 }}
+                data={clientWorkOrdersData}
+                keyExtractor={(item) => item.id}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item, index }) => renderCardPreviewItem(item)}
+            />
+
+        </View>
+
     )
 }
 
-const getStyles = () => ({
-    badge: {
-        backgroundColor: blueColor,
-        marginRight: '25%',
-        height: 10,
-        width: 10,
-        borderRadius: 20,
-        marginTop: 10
-    }
+const getStyles = (whiteColor, blackColor) => ({
+    container: {
+        flex: 1,
+        backgroundColor: whiteColor,
+    },
 })

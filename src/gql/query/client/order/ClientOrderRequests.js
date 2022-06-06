@@ -6,6 +6,7 @@ export const CLIENT_ORDER_REQUESTS = gql`
                 id
                 offer
                 accepted
+                finished
                 createdAt
                 order{
                     id

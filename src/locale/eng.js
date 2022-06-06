@@ -58,6 +58,7 @@ export const locale = {
     checkField_notify: 'Check field',
     client: 'Client',
     company_placeholder: 'enter company name',
+    confirm: 'Confirm',
     confirmOrderDeletion: 'Confirm order deletion?',
     confirmRequestCanceling: 'Are you confirming the cancellation?',
 
@@ -179,7 +180,11 @@ export const locale = {
     expects: 'expects',
 
     //f
+    feedbackExist_notify: 'You have already left a review for this order',
+    feedbackToExecutor: 'Feedback about the executor',
+    feedbackToExecutor_placeholder: 'write what you liked or do not like about your order',
     field_warning: 'Enter data',
+    finishedWork: 'Finished work',
 
     feedOwnerProfileEmpty: 'There is nothing here yet, try to create a Quote, Article or Biography by clicking the + icon in the profile',
     feedGuestProfileEmpty: 'Nothing here yet, user hasn’t created anything yet',
@@ -282,6 +287,7 @@ export const locale = {
 
     //o
     offerPrice: 'Offer price',
+    orderCompletion: 'Order completion',
     orderCreated_notify: 'Order created',
     orderDeleted_notify: 'Order deleted',
     orderImageDeleted_notify: 'Order image deleted',
@@ -343,6 +349,8 @@ export const locale = {
     quoteTo: 'Quote',
 
     //r
+    rateExecutor: 'Rate the executor',
+
     rating: 'Rating',
     readyText: 'Ready',
     register: 'no account? register',
@@ -482,6 +490,8 @@ export const locale = {
     videoAlbum: 'Video album',
 
     //w
+    workAccepted_notify: 'Work accepted',
+    workNotAccepted_notify: 'Work not accepted',
     works: 'Works',
     workText: 'In work',
 
