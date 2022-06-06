@@ -4,11 +4,7 @@ import { View, FlatList, RefreshControl } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
-import {
-    blackColorVar,
-    isUserPhoneVar,
-    whiteColorVar
-} from '@utils/cache'
+import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //hooks
 import { useExecutorOrderRequests } from '@hooks_query/executor/order/useExecutorOrderRequests'
@@ -33,7 +29,7 @@ export const ExecutorOrderRequests = () => {
         executorOrderRequestsLoading,
         executorOrderRequestsData,
         executorOrderRequestsRefetch
-    } = useExecutorOrderRequests(isUserPhoneVar())
+    } = useExecutorOrderRequests()
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)

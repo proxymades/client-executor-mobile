@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client'
 //gql
 import { EXECUTOR_FEED } from '@gql_query/executor/feed/ExecutorFeed'
 
-export const useExecutorFeed = (city, category) => {
+export const useExecutorFeed = (city, category, selectedCity) => {
 
     //states
     const [cityArray, setCityArray] = useState([])
@@ -33,7 +33,7 @@ export const useExecutorFeed = (city, category) => {
         city.atyrau ?
             setCityArray(actual => [...actual, 'atyrau']) :
             setCityArray(actual => actual.filter(el => el !== 'atyrau'))
-    }, [city])
+    }, [selectedCity])
 
     return {
         executorFeedLoading: loading,

@@ -4,7 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useReactiveVar } from '@apollo/client'
 
 //components
-import { ExecutorActivity } from '@components/executor/ExecutorActivity/ExecutorActivity'
+import { ExecutorActivityContainer } from '@components/executor/ExecutorActivity/ExecutorActivityContainer'
+import { ExecutorOrder } from '@components/executor/ExecutorOrder/ExecutorOrder'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
@@ -25,13 +26,21 @@ export const ExecutorActivityScreen = () => {
         <Stack.Navigator>
 
             <Stack.Screen
-                name='ExecutorActivity'
-                component={ExecutorActivity}
+                name='ExecutorActivityContainer'
+                component={ExecutorActivityContainer}
                 options={{
                     title: locale.notifications,
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
                 }}
+            />
+
+            <Stack.Screen
+                name='ExecutorOrder'
+                component={ExecutorOrder}
+                options={({ route }) => ({
+                    title: route.params.title,
+                })}
             />
 
         </Stack.Navigator>

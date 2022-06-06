@@ -75,7 +75,7 @@ const getStyles = (blackColor, whiteColor) => ({
     logoContainer: {
         width: 70,
         height: 20,
-        marginBottom: 20,
+        marginBottom: 40,
     },
     typeChecker: {
         textAlign: 'center',

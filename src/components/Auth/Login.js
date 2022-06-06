@@ -97,12 +97,14 @@ export const Login = ({ loginState, setLoginState, type }) => {
                     </Pressable>
                 </View>
 
-                <WhiteButton
-                    handleAction={handleAuth}
-                    isDisabled={loginDisabled}
-                >
-                    <Text style={loginDisabled ? styles.inactiveButtonText : styles.activeButtonText}>{locale.signinText}</Text>
-                </WhiteButton>
+                <View style={styles.buttonContainer}>
+                    <WhiteButton
+                        handleAction={handleAuth}
+                        isDisabled={loginDisabled}
+                    >
+                        <Text style={loginDisabled ? styles.inactiveButtonText : styles.activeButtonText}>{locale.signinText}</Text>
+                    </WhiteButton>
+                </View>
 
             </View>
 
@@ -133,7 +135,7 @@ const getStyles = (blackColor) => ({
     template: {
         color: blackColor,
         position: 'absolute',
-        left: -10,
+        left: -5,
     },
     input: {
         width: '100%',
@@ -144,6 +146,9 @@ const getStyles = (blackColor) => ({
         padding: 10,
         paddingRight: 35,
         color: blackColor,
+    },
+    buttonContainer: {
+        marginTop: 30,
     },
     activeButtonText: {
         color: blackColor,

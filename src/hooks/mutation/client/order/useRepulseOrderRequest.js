@@ -3,7 +3,7 @@ import { useApolloClient, useMutation, useReactiveVar } from '@apollo/client'
 
 //gql
 import { REPULSE_ORDER_REQUEST } from '@gql_mutation/client/order/RepulseOrderRequest'
-import { CLIENT_ACTIVITY } from '@gql_query/client/order/ClientActivity'
+import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 
 //utils
 import { isNotifedVar, localeVar } from '@utils/cache'

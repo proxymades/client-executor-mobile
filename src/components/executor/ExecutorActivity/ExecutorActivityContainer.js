@@ -7,10 +7,10 @@ import { useReactiveVar } from '@apollo/client'
 import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //hooks
-import { useClientActivity } from '@hooks_query/client/activity/useClientActivity'
+import { useExecutorActivity } from '@hooks_query/executor/activity/useExecutorActivity'
 
 //components
-import { ClientActivity } from './ClientActivity'
+import { ExecutorActivity } from './ExecutorActivity'
 
 //common components
 import { Loader } from '@common_components/Loaders/Loader'
@@ -19,19 +19,19 @@ import { Loader } from '@common_components/Loaders/Loader'
 import { blueColor } from '@utils/colors'
 
 const renderActivity = (item) =>
-    <ClientActivity item={item} />
+    <ExecutorActivity item={item} />
 
-export const ClientActivityContainer = () => {
+export const ExecutorActivityContainer = () => {
 
     //states
     const [refreshing, setRefreshing] = useState(false)
 
     //hooks
     const {
-        clientActivityLoading,
-        clientActivityData,
-        clientActivityRefetch
-    } = useClientActivity()
+        executorActivityLoading,
+        executorActivityData,
+        executorActivityRefetch
+    } = useExecutorActivity()
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -44,12 +44,12 @@ export const ClientActivityContainer = () => {
     const handleRefresh = () => {
         setRefreshing(true)
         setTimeout(() => {
-            clientActivityRefetch()
+            executorActivityRefetch()
             setRefreshing(false)
         }, 2000)
     }
 
-    if (clientActivityLoading) return <Loader />
+    if (executorActivityLoading) return <Loader />
 
     return (
 
@@ -57,7 +57,7 @@ export const ClientActivityContainer = () => {
 
             <FlatList
                 contentContainerStyle={{ paddingTop: 30 }}
-                data={clientActivityData}
+                data={executorActivityData}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item, index }) => renderActivity(item)}

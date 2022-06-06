@@ -1,19 +1,18 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //hooks
 import { useExecutorProfile } from '@hooks_query/executor/profile/useExecutorProfile'
 
 //utils
-import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, isUserTypeVar, whiteColorVar } from '@utils/cache'
 
 //common components
 import { ProfileData } from '@common_components/Profile/ProfileData'
 import { ProfilePhoto } from '@common_components/Profile/ProfilePhoto'
 import { ProfileMenu } from '@common_components/Profile/ProfileMenu'
-import { WhiteButton } from '@common_components/Buttons/WhiteButton'
 import { ProfileRegisterDate } from '@common_components/Profile/ProfileRegisterDate'
 import { Loader } from '@common_components/Loaders/Loader'
 import { ExtraModal } from '@common_components/Modals/ExtraModal'
@@ -29,10 +28,11 @@ export const ExecutorProfile = ({ navigation }) => {
     const [extraShow, setExtraShow] = useState(false)
 
     //hooks
-    const { executorProfileLoading, executorProfileData, worksCount } = useExecutorProfile(isUserPhoneVar())
+    const { executorProfileLoading, executorProfileData, worksCount } = useExecutorProfile()
 
-    //lang hooks
-    const locale = useReactiveVar(localeVar)
+    //constants
+    const rating = executorProfileData?.feedbackExecutor.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / executorProfileData?.feedbackExecutor.length
+    const reviews = executorProfileData?.feedbackExecutor.filter(el => el.message !== '').length
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -92,8 +92,8 @@ export const ExecutorProfile = ({ navigation }) => {
 
             <ProfileMenu
                 worksCount={worksCount}
-                ratingCount={5}
-                reviewsCount={77}
+                ratingCount={rating}
+                reviewsCount={reviews}
                 type={isUserTypeVar()}
                 openWorks={handleOpenWorks}
             />

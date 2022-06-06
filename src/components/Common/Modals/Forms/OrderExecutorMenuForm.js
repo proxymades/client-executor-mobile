@@ -73,7 +73,8 @@ export const OrderExecutorMenuForm = ({
                     <Text style={styles.text}>{locale.profile}</Text>
                 </TouchableOpacity>
 
-                {isExistRequest ?
+                {isExistRequest &&
+                    !isWorked ?
                     <TouchableOpacity
                         style={styles.item}
                         onPress={handlCancelOrder}

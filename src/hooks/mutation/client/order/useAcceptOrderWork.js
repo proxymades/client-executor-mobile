@@ -6,7 +6,7 @@ import cuid from 'cuid'
 //gql
 import { ACCEPT_ORDER_WORK } from '@gql_mutation/client/order/AcceptOrderWork'
 import { WRITE_FEEDBACK_EXECUTOR } from '@gql_mutation/client/order/WriteFeedbackExecutor'
-import { CLIENT_ACTIVITY } from '@gql_query/client/order/ClientActivity'
+import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 
 //utils
 import { isNotifedVar, localeVar } from '@utils/cache'
@@ -44,7 +44,7 @@ export const useAcceptOrderWork = (orderId, requestId, formState) => {
             toUser: formState.executorPhone,
             orderId: orderId,
         },
-        refetchQueries: activityQuery === null ? ['GetClientOrder', 'ClientWorkOrders', 'ClientReadyOrders'] : false,
+        refetchQueries: activityQuery === null ? ['ClientOrder', 'ClientWorkOrders', 'ClientReadyOrders'] : false,
         onCompleted: () => {
             setTimeout(() => {
                 isNotifedVar(locale.workAccepted_notify)

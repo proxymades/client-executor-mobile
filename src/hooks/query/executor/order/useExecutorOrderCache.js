@@ -2,7 +2,7 @@
 import { useApolloClient } from '@apollo/client'
 
 //gql
-import { GET_EXECUTOR_ORDER } from '@gql_query/executor/order/GetExecutorOrder'
+import { EXECUTOR_ORDER } from '@gql_query/executor/order/ExecutorOrder'
 
 export const useExecutorOrderCache = (id) => {
 
@@ -11,7 +11,7 @@ export const useExecutorOrderCache = (id) => {
 
     //cache
     const orderQuery = client.readQuery({
-        query: GET_EXECUTOR_ORDER,
+        query: EXECUTOR_ORDER,
         variables: {
             id: id
         }

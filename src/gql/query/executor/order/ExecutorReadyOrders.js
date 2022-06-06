@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
-export const EXECUTOR_ORDER_REQUESTS = gql`
-    query ExecutorOrderRequests{
-            executorOrderRequests{
+export const EXECUTOR_READY_ORDERS = gql`
+    query ExecutorReadyOrders{
+            executorReadyOrders{
                 id
                 order{
                     id

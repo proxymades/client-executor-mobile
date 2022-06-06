@@ -88,13 +88,13 @@ export const EditOrder = ({ route }) => {
     useEffect(() => {
         setFormState({
             ...formState,
-            header: orderQuery.getClientOrder.header,
-            category: orderQuery.getClientOrder.category,
-            count: orderQuery.getClientOrder.count,
-            text: orderQuery.getClientOrder.text,
-            city: orderQuery.getClientOrder.city,
-            urgent: orderQuery.getClientOrder.urgent,
-            image: orderQuery.getClientOrder.image,
+            header: orderQuery.clientOrder.header,
+            category: orderQuery.clientOrder.category,
+            count: orderQuery.clientOrder.count,
+            text: orderQuery.clientOrder.text,
+            city: orderQuery.clientOrder.city,
+            urgent: orderQuery.clientOrder.urgent,
+            image: orderQuery.clientOrder.image,
         })
     }, [orderQuery])
 
@@ -213,7 +213,7 @@ export const EditOrder = ({ route }) => {
                 setModalVisible={setExtraImageShow}
             >
                 <EditImageForm
-                    existImage={orderQuery.getClientOrder.image}
+                    existImage={orderQuery.clientOrder.image}
                     deleteImage={handleDeleteImage}
                     openImagePicker={setOpenImagePicker}
                     setPickerType={setPickerType}

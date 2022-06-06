@@ -214,12 +214,14 @@ export const Signup = ({ signupState, setSignupState, type }) => {
 
                 </View>
 
-                <WhiteButton
-                    handleAction={handleAuth}
-                    isDisabled={signupDisabled}
-                >
-                    <Text style={signupDisabled ? styles.inactiveButtonText : styles.activeButtonText}>{locale.registerText}</Text>
-                </WhiteButton>
+                <View style={styles.buttonContainer}>
+                    <WhiteButton
+                        handleAction={handleAuth}
+                        isDisabled={signupDisabled}
+                    >
+                        <Text style={signupDisabled ? styles.inactiveButtonText : styles.activeButtonText}>{locale.registerText}</Text>
+                    </WhiteButton>
+                </View>
 
             </View>
 
@@ -250,11 +252,14 @@ const getStyles = (blackColor) => ({
     template: {
         color: blackColor,
         position: 'absolute',
-        left: -10,
+        left: -5,
     },
     inputContainer: {
         width: '100%',
         justifyContent: 'center',
+    },
+    buttonContainer: {
+        marginTop: 30,
     },
     inputAcceptContainer: {
         width: '100%',

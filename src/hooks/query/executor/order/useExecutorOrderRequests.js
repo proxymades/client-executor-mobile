@@ -4,14 +4,11 @@ import { useQuery } from '@apollo/client'
 //gql
 import { EXECUTOR_ORDER_REQUESTS } from '@gql_query/executor/order/ExecutorOrderRequests'
 
-export const useExecutorOrderRequests = (phone) => {
+export const useExecutorOrderRequests = () => {
 
     //queries
     const { data, loading, refetch } = useQuery(EXECUTOR_ORDER_REQUESTS, {
         fetchPolicy: 'network-only',
-        variables: {
-            phone: phone,
-        }
     })
 
     return {

@@ -3,7 +3,7 @@ import { useApolloClient, useMutation, useReactiveVar } from '@apollo/client'
 
 //gql
 import { ACCEPT_ORDER_REQUEST } from '@gql_mutation/client/order/AcceptOrderRequest'
-import { CLIENT_ACTIVITY } from '@gql_query/client/order/ClientActivity'
+import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 
 //utils
 import { isNotifedVar, localeVar } from '@utils/cache'
@@ -26,7 +26,7 @@ export const useAcceptOrderRequest = (orderId, previousRequestId) => {
         refetchQueries:
             activityQuery !== null ?
                 ['ClientOrderRequests', 'ClientActivity'] :
-                activityQuery === null ? ['ClientOrderRequests', 'ClientNewOrders', 'ClientWorkOrders', 'GetClientOrder'] :
+                activityQuery === null ? ['ClientOrderRequests', 'ClientNewOrders', 'ClientWorkOrders', 'ClientOrder'] :
                     false,
         onCompleted: () => {
             isNotifedVar(locale.requestAccepted_notify)

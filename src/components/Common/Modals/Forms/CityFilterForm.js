@@ -14,7 +14,8 @@ export const CityFilterForm = ({
     setModalVisible,
     input,
     inputChange,
-    label
+    label,
+    setSelectedCity
 }) => {
 
     //lang hooks
@@ -29,6 +30,7 @@ export const CityFilterForm = ({
     //handles
     const handleCloseModal = () => {
         setModalVisible(false)
+        setSelectedCity(actual => !actual)
     }
 
     return (

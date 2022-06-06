@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client'
 
-export const GET_EXECUTOR_ORDER = gql`
-    query GetExecutorOrder(
+export const EXECUTOR_ORDER = gql`
+    query ExecutorOrder(
             $id: ID!
         ){
-            getExecutorOrder(
+            executorOrder(
                 id: $id
             ){
                 id

@@ -34,19 +34,21 @@ export const ExecutorFeed = ({ navigation }) => {
     //states
     const [city, setCity] = useState({
         nursultan: true,
-        karaganda: false,
-        almaty: false
+        karaganda: true,
+        almaty: true,
+        atyrau: true,
     })
     const [category, setCategory] = useState(['polygraphy', 'souvenir', 'outad'])
     const [refreshing, setRefreshing] = useState(false)
     const [cityModalShow, setCityModalShow] = useState(false)
+    const [selectedCity, setSelectedCity] = useState(true)
 
     //hooks
     const {
         executorFeedLoading,
         executorFeedData,
         executorFeedRefetch
-    } = useExecutorFeed(city, category)
+    } = useExecutorFeed(city, category, selectedCity)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -123,6 +125,7 @@ export const ExecutorFeed = ({ navigation }) => {
                     label={locale.selectCities}
                     input={city}
                     inputChange={handleSetCity}
+                    setSelectedCity={setSelectedCity}
                 />
             </ExtraModal>
 

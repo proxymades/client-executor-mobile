@@ -1,12 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const EXECUTOR_PROFILE = gql`
-    query ExecutorProfile(
-            $phone: String!
-        ){
-            executorProfile(
-                phone: $phone
-            ){
+    query ExecutorProfile{
+            executorProfile{
                 id
                 avatar
                 name
@@ -15,6 +11,10 @@ export const EXECUTOR_PROFILE = gql`
                 createdAt
                 orderRequest{
                     id
+                }
+                feedbackExecutor{
+                    rating
+                    message
                 }
             }
         }

@@ -1,6 +1,7 @@
 export const locale = {
 
     //a
+    acceptRequest: 'Принял вашу заявку на выполнение заказа',
     addCount_placeholder: 'добавьте количество',
 
     about: 'Информация',
@@ -184,6 +185,7 @@ export const locale = {
     feedbackToExecutor_placeholder: 'напишите что вам понравилось или не понравилось при выполнении вашего заказа',
     field_warning: 'Введите данные',
     finishedWork: 'Выполненная работа',
+    finishRequest: 'Подтвердил вашу работу',
 
     feedOwnerProfileEmpty: 'Здесь пока ничего нет, попробуйте создать Цитату, Статью или Биографию нажав значок + в профиле',
     feedGuestProfileEmpty: 'Здесь пока ничего нет, пользователь еще ничего не создал',

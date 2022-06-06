@@ -24,7 +24,7 @@ export const useCreateOrderRequest = (orderId, offer) => {
             orderId: orderId,
             offer: offer,
         },
-        refetchQueries: ['GetExecutorOrder', 'ExecutorProfile', 'ExecutorFeed'],
+        refetchQueries: ['ExecutorOrder', 'ExecutorProfile', 'ExecutorFeed'],
         onCompleted: (data) => {
             if (data.createOrderRequest === 'ok') {
                 setTimeout(() => {

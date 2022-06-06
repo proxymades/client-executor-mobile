@@ -1,51 +1,82 @@
 //core
-import React from 'react'
-import { View, Text } from 'react-native'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import React, { useState } from 'react'
+import { View, FlatList, RefreshControl } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
-import {
-    blackColorVar,
-    localeVar,
-    whiteColorVar
-} from '@utils/cache'
+import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //hooks
+import { useExecutorWorkOrders } from '@hooks_query/executor/order/useExecutorWorkOrders'
 
-//components
+//common components
+import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'
+import { Loader } from '@common_components/Loaders/Loader'
 
 //colors
-import { blueColor, lightgrayColor } from '@utils/colors'
+import { blueColor } from '@utils/colors'
 
+const renderCardPreviewItem = (item) =>
+    <OrderCardPreview item={item.order} />
 
 export const ExecutorWorkOrders = () => {
 
+    //states
+    const [refreshing, setRefreshing] = useState(false)
 
-    //lang hooks
-    const locale = useReactiveVar(localeVar)
+    //hooks
+    const {
+        executorWorkOrdersLoading,
+        executorWorkOrdersData,
+        executorWorkOrdersRefetch
+    } = useExecutorWorkOrders()
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
     const blackColor = useReactiveVar(blackColorVar)
 
     //styles
-    const styles = getStyles()
+    const styles = getStyles(whiteColor, blackColor)
+
+    //handles
+    const handleRefresh = () => {
+        setRefreshing(true)
+        setTimeout(() => {
+            executorWorkOrdersRefetch()
+            setRefreshing(false)
+        }, 2000)
+    }
+
+    if (executorWorkOrdersLoading) return <Loader />
 
     return (
-        <>
-            <Text>WORK orders</Text>
-        </>
+
+        <View style={styles.container}>
+
+            <FlatList
+                contentContainerStyle={{ paddingTop: 30 }}
+                data={executorWorkOrdersData}
+                keyExtractor={(item) => item.id}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item, index }) => renderCardPreviewItem(item)}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={handleRefresh}
+                        colors={[blueColor]}
+                        progressBackgroundColor={whiteColor}
+                    />
+                }
+            />
+
+        </View>
+
     )
 }
 
-const getStyles = () => ({
-    badge: {
-        backgroundColor: blueColor,
-        marginRight: '25%',
-        height: 10,
-        width: 10,
-        borderRadius: 20,
-        marginTop: 10
-    }
+const getStyles = (whiteColor, blackColor) => ({
+    container: {
+        flex: 1,
+        backgroundColor: whiteColor,
+    },
 })

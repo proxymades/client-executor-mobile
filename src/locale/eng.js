@@ -1,6 +1,7 @@
 export const locale = {
 
     //a
+    acceptRequest: 'Accepted your request for an order',
     addCount_placeholder: 'add quantity',
 
     about: 'About',
@@ -185,6 +186,7 @@ export const locale = {
     feedbackToExecutor_placeholder: 'write what you liked or do not like about your order',
     field_warning: 'Enter data',
     finishedWork: 'Finished work',
+    finishRequest: 'Confirmed your work',
 
     feedOwnerProfileEmpty: 'There is nothing here yet, try to create a Quote, Article or Biography by clicking the + icon in the profile',
     feedGuestProfileEmpty: 'Nothing here yet, user hasn’t created anything yet',

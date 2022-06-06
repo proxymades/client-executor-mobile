@@ -65,15 +65,10 @@ export const ExecutorOrder = ({ route }) => {
                 <TouchableOpacity
                     onPress={handleOpenOrderMenu}
                 >
-                    {isUserTypeVar() === 'executor' ?
-                        <>
-                            {(sending || canceling) ?
-                                <ActivityIndicator size='small' color={lightblueColor} />
-                                :
-                                <MenuIcon width={22} height={22} fill={blackColor} />
-                            }
-                        </>
-                        : null
+                    {(sending || canceling) ?
+                        <ActivityIndicator size='small' color={lightblueColor} />
+                        :
+                        <MenuIcon width={22} height={22} fill={blackColor} />
                     }
                 </TouchableOpacity>
             ),
@@ -102,14 +97,11 @@ export const ExecutorOrder = ({ route }) => {
     }
 
     const handleOpenOrderMenu = () => {
-        isUserTypeVar() === 'executor' &&
-            setExecutorMenuShow(true)
+        setExecutorMenuShow(true)
     }
 
     const handleCancelOrder = () => {
-        if (isUserTypeVar() === 'executor') {
-            setCanceling(true)
-        }
+        setCanceling(true)
     }
 
     const handleSendRequest = () => {

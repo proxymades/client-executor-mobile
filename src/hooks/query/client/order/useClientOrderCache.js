@@ -2,7 +2,7 @@
 import { useApolloClient } from '@apollo/client'
 
 //gql
-import { GET_CLIENT_ORDER } from '@gql_query/client/order/GetClientOrder'
+import { CLIENT_ORDER } from '@gql_query/client/order/ClientOrder'
 
 export const useClientOrderCache = (id) => {
 
@@ -11,7 +11,7 @@ export const useClientOrderCache = (id) => {
 
     //cache
     const orderQuery = client.readQuery({
-        query: GET_CLIENT_ORDER,
+        query: CLIENT_ORDER,
         variables: {
             id: id
         }

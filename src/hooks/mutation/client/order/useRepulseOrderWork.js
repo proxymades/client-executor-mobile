@@ -5,7 +5,7 @@ import cuid from 'cuid'
 
 //gql
 import { WRITE_FEEDBACK_EXECUTOR } from '@gql_mutation/client/order/WriteFeedbackExecutor'
-import { CLIENT_ACTIVITY } from '@gql_query/client/order/ClientActivity'
+import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 import { REPULSE_ORDER_WORK } from '@gql_mutation/client/order/RepulseOrderWork'
 
 //utils
@@ -44,7 +44,7 @@ export const useRepulseOrderWork = (orderId, requestId, formState) => {
             toUser: formState.executorPhone,
             orderId: orderId,
         },
-        refetchQueries: activityQuery === null ? ['GetClientOrder', 'ClientWorkOrders', 'ClientNewOrders', 'ClientOrderRequests'] : false,
+        refetchQueries: activityQuery === null ? ['ClientOrder', 'ClientWorkOrders', 'ClientNewOrders', 'ClientOrderRequests'] : false,
         onCompleted: (data) => {
             if (data.feedbackExecutor) {
                 setTimeout(() => {

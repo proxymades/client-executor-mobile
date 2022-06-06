@@ -2,7 +2,7 @@
 import { useQuery } from '@apollo/client'
 
 //gql
-import { CLIENT_ACTIVITY } from '@gql_query/client/order/ClientActivity'
+import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 
 export const useClientActivity = () => {
 

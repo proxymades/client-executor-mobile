@@ -4,14 +4,11 @@ import { useQuery } from '@apollo/client'
 //gql
 import { EXECUTOR_PROFILE } from '@gql_query/executor/profile/ExecutorProfile'
 
-export const useExecutorProfile = (phone) => {
+export const useExecutorProfile = () => {
 
     //queries
     const { data, loading } = useQuery(EXECUTOR_PROFILE, {
         fetchPolicy: 'network-only',
-        variables: {
-            phone: phone
-        }
     })
 
     return {

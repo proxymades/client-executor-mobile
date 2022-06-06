@@ -2,12 +2,12 @@
 import { useQuery } from '@apollo/client'
 
 //gql
-import { GET_EXECUTOR_ORDER } from '@gql_query/executor/order/GetExecutorOrder'
+import { EXECUTOR_ORDER } from '@gql_query/executor/order/ExecutorOrder'
 
 export const useExecutorOrder = (id) => {
 
     //queries
-    const { data, loading } = useQuery(GET_EXECUTOR_ORDER, {
+    const { data, loading } = useQuery(EXECUTOR_ORDER, {
         fetchPolicy: 'network-only',
         variables: {
             id: id
@@ -16,6 +16,6 @@ export const useExecutorOrder = (id) => {
 
     return {
         orderLoading: loading,
-        orderData: data?.getExecutorOrder,
+        orderData: data?.executorOrder,
     }
 }
