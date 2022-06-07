@@ -1,4 +1,4 @@
-package com.clex.newarchitecture;
+package kz.clex.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;

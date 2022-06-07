@@ -5,6 +5,10 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import android.os.Bundle;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -14,7 +18,20 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      NotificationChannel notificationChannel = new NotificationChannel("activity", "Activity", NotificationManager.IMPORTANCE_HIGH);
+      notificationChannel.setShowBadge(true);
+      notificationChannel.setDescription("Notifications");
+      notificationChannel.enableVibration(true);
+      notificationChannel.enableLights(true);
+      notificationChannel.setVibrationPattern(new long[] { 400, 200, 400 });
+      NotificationManager manager = getSystemService(NotificationManager.class);
+      manager.createNotificationChannel(notificationChannel);
+
+    }
   }
+
 
   @Override
   protected String getMainComponentName() {

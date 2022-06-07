@@ -1,10 +1,11 @@
 //core
 import React, { useEffect, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { useReactiveVar } from '@apollo/client'
+import { useApolloClient, useReactiveVar } from '@apollo/client'
 import { useColorScheme, Keyboard } from 'react-native'
 import { useMMKVString } from 'react-native-mmkv'
 import jwt_decode from 'jwt-decode'
+import messaging from '@react-native-firebase/messaging'
 
 //screens
 import { ClientScreens } from '@screens/client/ClientScreens'
@@ -13,6 +14,9 @@ import { AuthScreen } from '@screens/AuthScreen'
 
 //hooks_utils
 import { useLanguage } from '@hooks_utils/useLanguage'
+
+//gql
+import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 
 //utils
 import {
@@ -27,6 +31,7 @@ import {
   lightengrayColorVar,
   isKeyboardHeightVar,
   localeVar,
+  isNotifedVar,
 } from '@utils/cache'
 
 export const App = () => {
@@ -39,9 +44,47 @@ export const App = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
   const isUserType = useReactiveVar(isUserTypeVar)
   const { lang } = useLanguage()
+  const client = useApolloClient()
 
   //states
   const [loading, setLoading] = useState(true)
+
+  //effects
+  useEffect(() => {
+    return messaging().onTokenRefresh(token => {
+      saveTokenToDatabase(token);
+    })
+  }, [])
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      isNotifedVar(remoteMessage.notification.body)
+      if (remoteMessage.data.type === 'request') {
+        const query = client.readQuery({
+          query: CLIENT_ACTIVITY
+        })
+        query !== null &&
+          client.refetchQueries({
+            include: ['ClientActivity']
+          })
+      }
+    })
+    return unsubscribe
+  }, [])
+
+  useEffect(() => {
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      if (remoteMessage.data.type === 'request') {
+        const query = client.readQuery({
+          query: CLIENT_ACTIVITY
+        })
+        query !== null &&
+          client.refetchQueries({
+            include: ['ClientActivity']
+          })
+      }
+    })
+  }, [])
 
   useEffect(() => {
     if (token) {
@@ -102,6 +145,13 @@ export const App = () => {
     })
     return () => keyboardClosed.remove()
   }, [Keyboard])
+
+  //handles
+  const saveTokenToDatabase = (token) => {
+    // Assume user is already signed in
+
+    console.log(token)
+  }
 
   return (
     <SafeAreaProvider>
