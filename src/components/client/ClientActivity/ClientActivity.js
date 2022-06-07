@@ -1,17 +1,10 @@
 //core
 import React from 'react'
-import { useReactiveVar } from '@apollo/client'
-
-//utils
-import { localeVar } from '@utils/cache'
 
 //components
 import { ClientActivityBlock } from './ClientActivityBlock'
 
 export const ClientActivity = React.memo(({ item }) => {
-
-    //lang hooks
-    const locale = useReactiveVar(localeVar)
 
     return (
 

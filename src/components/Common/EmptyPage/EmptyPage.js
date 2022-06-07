@@ -1,15 +1,18 @@
 //core
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { ScrollView, Text, RefreshControl } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
 import { blackColorVar, whiteColorVar } from '@utils/cache'
 
 //colors
-import { grayColor } from '@utils/colors'
+import { blueColor, grayColor } from '@utils/colors'
 
-export const EmptyPage = ({ text }) => {
+export const EmptyPage = ({ text, refresh }) => {
+
+    //states
+    const [refreshing, setRefreshing] = useState(false)
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -18,13 +21,32 @@ export const EmptyPage = ({ text }) => {
     //styles
     const styles = getStyles(whiteColor, blackColor)
 
+    //handles
+    const handleRefresh = () => {
+        setRefreshing(true)
+        setTimeout(() => {
+            refresh()
+            setRefreshing(false)
+        }, 2000)
+    }
+
     return (
 
-        <View style={styles.container}>
+        <ScrollView
+            style={styles.container}
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={handleRefresh}
+                    colors={[blueColor]}
+                    progressBackgroundColor={whiteColor}
+                />
+            }
+        >
 
             <Text style={styles.text}>{text}</Text>
 
-        </View>
+        </ScrollView>
 
     )
 }
@@ -33,11 +55,11 @@ const getStyles = (whiteColor, blackColor) => ({
     container: {
         flex: 1,
         backgroundColor: whiteColor,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     text: {
         fontSize: 14,
-        color: grayColor
+        color: grayColor,
+        alignSelf: 'center',
+        marginTop: '40%',
     },
 })

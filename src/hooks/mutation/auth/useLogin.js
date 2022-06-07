@@ -2,10 +2,15 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { useMMKVString } from 'react-native-mmkv'
+import jwt_decode from 'jwt-decode'
 
 //gql
 import { CLIENT_LOGIN } from '@gql_mutation/auth/ClientLogin'
 import { EXECUTOR_LOGIN } from '@gql_mutation/auth/ExecutorLogin'
+
+//hooks
+import { useRegisterClientNotificationToken } from './useRegisterClientNotificationToken'
+import { useRegisterExecutorNotificationToken } from './useRegisterExecutorNotificationToken'
 
 //utils
 import { isNotifedVar } from '@utils/cache'
@@ -18,6 +23,10 @@ export const useLogin = (loginState, type) => {
     //states
     const [logining, setLogining] = useState(false)
 
+    //hooks
+    const { registerClientNotificationToken } = useRegisterClientNotificationToken()
+    const { registerExecutorNotificationToken } = useRegisterExecutorNotificationToken()
+
     //mutations
     const [clientLogin] = useMutation(CLIENT_LOGIN, {
         variables: {
@@ -26,6 +35,7 @@ export const useLogin = (loginState, type) => {
         },
         onCompleted: ({ clientLogin }) => {
             setToken(clientLogin.token)
+            registerClientNotificationToken(jwt_decode(clientLogin.token).phone)
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)
@@ -40,6 +50,7 @@ export const useLogin = (loginState, type) => {
         },
         onCompleted: ({ executorLogin }) => {
             setToken(executorLogin.token)
+            registerExecutorNotificationToken(jwt_decode(executorLogin.token).phone)
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)

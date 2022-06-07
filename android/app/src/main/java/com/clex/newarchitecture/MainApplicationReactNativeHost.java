@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.clex.BuildConfig;
-import com.clex.newarchitecture.components.MainComponentsRegistry;
-import com.clex.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import kz.clex.BuildConfig;
+import kz.clex.newarchitecture.components.MainComponentsRegistry;
+import kz.clex.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.clex;
+package kz.clex;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

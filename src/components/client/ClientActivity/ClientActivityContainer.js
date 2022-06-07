@@ -31,7 +31,7 @@ export const ClientActivityContainer = () => {
     const {
         clientActivityLoading,
         clientActivityData,
-        clientActivityRefetch
+        clientActivityRefetch,
     } = useClientActivity()
 
     //lang hooks
@@ -47,8 +47,8 @@ export const ClientActivityContainer = () => {
     //handles
     const handleRefresh = () => {
         setRefreshing(true)
+        clientActivityRefetch()
         setTimeout(() => {
-            clientActivityRefetch()
             setRefreshing(false)
         }, 2000)
     }
@@ -60,7 +60,7 @@ export const ClientActivityContainer = () => {
         <View style={styles.container}>
 
             {clientActivityData.length === 0 ?
-                <EmptyPage text={locale.emptyPage} />
+                <EmptyPage text={locale.emptyPage} refresh={handleRefresh} />
                 :
                 <FlatList
                     contentContainerStyle={{ paddingTop: 30 }}

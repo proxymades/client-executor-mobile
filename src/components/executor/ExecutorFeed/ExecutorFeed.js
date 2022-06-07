@@ -78,8 +78,8 @@ export const ExecutorFeed = ({ navigation }) => {
     //handles
     const handleRefresh = () => {
         setRefreshing(true)
+        executorFeedRefetch()
         setTimeout(() => {
-            executorFeedRefetch()
             setRefreshing(false)
         }, 2000)
     }
@@ -101,7 +101,7 @@ export const ExecutorFeed = ({ navigation }) => {
         <View style={styles.container}>
 
             {executorFeedData.length === 0 ?
-                <EmptyPage text={locale.emptyPage} />
+                <EmptyPage text={locale.emptyPage} refresh={handleRefresh} />
                 :
                 <FlatList
                     contentContainerStyle={{ paddingTop: 30 }}

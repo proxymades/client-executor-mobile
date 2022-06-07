@@ -47,8 +47,8 @@ export const ExecutorActivityContainer = () => {
     //handles
     const handleRefresh = () => {
         setRefreshing(true)
+        executorActivityRefetch()
         setTimeout(() => {
-            executorActivityRefetch()
             setRefreshing(false)
         }, 2000)
     }
@@ -60,7 +60,7 @@ export const ExecutorActivityContainer = () => {
         <View style={styles.container}>
 
             {executorActivityData.length === 0 ?
-                <EmptyPage text={locale.emptyPage} />
+                <EmptyPage text={locale.emptyPage} refresh={handleRefresh} />
                 :
                 <FlatList
                     contentContainerStyle={{ paddingVertical: 30 }}
