@@ -178,9 +178,7 @@ export const EditExecutorProfile = () => {
             <ExtraModal
                 modalVisible={updating}
                 isEditing={true}
-            >
-                <View style={styles.blackWrap} />
-            </ExtraModal>
+            />
 
         </View>
     )

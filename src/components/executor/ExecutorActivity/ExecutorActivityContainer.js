@@ -4,7 +4,7 @@ import { View, FlatList, RefreshControl } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //utils
-import { blackColorVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //hooks
 import { useExecutorActivity } from '@hooks_query/executor/activity/useExecutorActivity'
@@ -14,6 +14,7 @@ import { ExecutorActivity } from './ExecutorActivity'
 
 //common components
 import { Loader } from '@common_components/Loaders/Loader'
+import { EmptyPage } from '@common_components/EmptyPage/EmptyPage'
 
 //colors
 import { blueColor } from '@utils/colors'
@@ -32,6 +33,9 @@ export const ExecutorActivityContainer = () => {
         executorActivityData,
         executorActivityRefetch
     } = useExecutorActivity()
+
+    //lang hooks
+    const locale = useReactiveVar(localeVar)
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
@@ -55,21 +59,25 @@ export const ExecutorActivityContainer = () => {
 
         <View style={styles.container}>
 
-            <FlatList
-                contentContainerStyle={{ paddingTop: 30 }}
-                data={executorActivityData}
-                keyExtractor={(item) => item.id}
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item, index }) => renderActivity(item)}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={handleRefresh}
-                        colors={[blueColor]}
-                        progressBackgroundColor={whiteColor}
-                    />
-                }
-            />
+            {executorActivityData.length === 0 ?
+                <EmptyPage text={locale.emptyPage} />
+                :
+                <FlatList
+                    contentContainerStyle={{ paddingVertical: 30 }}
+                    data={executorActivityData}
+                    keyExtractor={(item) => item.id}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({ item, index }) => renderActivity(item)}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={handleRefresh}
+                            colors={[blueColor]}
+                            progressBackgroundColor={whiteColor}
+                        />
+                    }
+                />
+            }
 
         </View>
 

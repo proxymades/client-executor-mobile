@@ -4,18 +4,16 @@ import { useQuery } from '@apollo/client'
 //gql
 import { CLIENT_PROFILE } from '@gql_query/client/profile/ClientProfile'
 
-export const useClientProfile = (phone) => {
+export const useClientProfile = () => {
 
     //queries
-    const { data, loading } = useQuery(CLIENT_PROFILE, {
+    const { data, loading, refetch } = useQuery(CLIENT_PROFILE, {
         fetchPolicy: 'network-only',
-        variables: {
-            phone: phone
-        }
     })
 
     return {
         clientProfileLoading: loading,
-        clientProfileData: data?.clientProfile
+        clientProfileData: data?.clientProfile,
+        clientProfileRefetch: refetch,
     }
 }

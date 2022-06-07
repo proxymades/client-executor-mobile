@@ -36,6 +36,11 @@ export const ClientOrderRequestsBlock = ({
     const [accepting, setAccepting] = useState(false)
     const [repulsing, setRepulsing] = useState(false)
 
+    //constants
+    const feddbackLength = item.executor.feedbackExecutor.length !== 0 ? item.executor.feedbackExecutor.length : 1
+    const rating = item.executor.feedbackExecutor.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / feddbackLength
+    const reviews = item.executor.feedbackExecutor.filter(el => el.message !== '').length
+
     //lang hooks
     const locale = useReactiveVar(localeVar)
 
@@ -127,8 +132,8 @@ export const ClientOrderRequestsBlock = ({
 
                 <ProfileMenu
                     worksCount={item.executor.orderRequest.length}
-                    ratingCount={5}
-                    reviewsCount={77}
+                    ratingCount={rating}
+                    reviewsCount={reviews}
                     type='executor'
                 />
 

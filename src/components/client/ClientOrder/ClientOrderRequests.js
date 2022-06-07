@@ -48,7 +48,7 @@ export const ClientOrderRequests = ({ navigation, route }) => {
     const [formState, setFormState] = useState({
         rating: 0,
         message: '',
-        executorPhone: ''
+        phone: ''
     })
 
     //hooks
@@ -239,7 +239,10 @@ export const ClientOrderRequests = ({ navigation, route }) => {
                     action={handleAcceptOrder}
                     input={formState}
                     inputChange={handleInputFormChange}
-                    requestData={clientOrderRequestsData.find(el => el.accepted)}
+                    phone={clientOrderRequestsData?.find(el => el.accepted)?.executor.phone}
+                    avatar={clientOrderRequestsData?.find(el => el.accepted)?.executor.avatar}
+                    name={clientOrderRequestsData?.find(el => el.accepted)?.executor.name}
+                    verified={clientOrderRequestsData?.find(el => el.accepted)?.executor.verified}
                 />
             </ExtraModal>
 
@@ -252,7 +255,10 @@ export const ClientOrderRequests = ({ navigation, route }) => {
                     action={handleRepulseOrder}
                     input={formState}
                     inputChange={handleInputFormChange}
-                    requestData={clientOrderRequestsData.find(el => el.accepted)}
+                    phone={clientOrderRequestsData?.find(el => el.accepted)?.executor.phone}
+                    avatar={clientOrderRequestsData?.find(el => el.accepted)?.executor.avatar}
+                    name={clientOrderRequestsData?.find(el => el.accepted)?.executor.name}
+                    verified={clientOrderRequestsData?.find(el => el.accepted)?.executor.verified}
                 />
             </ExtraModal>
 

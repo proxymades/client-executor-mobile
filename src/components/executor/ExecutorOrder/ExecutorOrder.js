@@ -51,6 +51,11 @@ export const ExecutorOrder = ({ route }) => {
     const { createOrderRequest } = useCreateOrderRequest(route.params.orderId, formState.offer)
     const { cancelOrderRequest } = useCancelOrderRequest(route.params.orderId)
 
+    //constants
+    const feddbackLength = orderData?.client.feedbackClient.length !== 0 ? orderData?.client.feedbackClient.length : 1
+    const rating = orderData?.client.feedbackClient.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / feddbackLength
+    const reviews = orderData?.client.feedbackClient.filter(el => el.message !== '').length
+
     //lang hooks
     const locale = useReactiveVar(localeVar)
 
@@ -166,8 +171,8 @@ export const ExecutorOrder = ({ route }) => {
 
                 <ProfileMenu
                     ordersCount={orderData.client.order.length}
-                    ratingCount={5}
-                    reviewsCount={77}
+                    ratingCount={rating}
+                    reviewsCount={reviews}
                     type='client'
                 />
 

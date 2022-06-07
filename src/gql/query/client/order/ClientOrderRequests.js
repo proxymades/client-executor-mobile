@@ -23,6 +23,10 @@ export const CLIENT_ORDER_REQUESTS = gql`
                     orderRequest{
                         id
                     }
+                    feedbackExecutor{
+                        rating
+                        message
+                    }
                 }
             }
         }

@@ -41,7 +41,7 @@ export const useAcceptOrderWork = (orderId, requestId, formState) => {
             id: cuid(),
             rating: formState.rating,
             message: formState.message,
-            toUser: formState.executorPhone,
+            toUser: formState.phone,
             orderId: orderId,
         },
         refetchQueries: activityQuery === null ? ['ClientOrder', 'ClientWorkOrders', 'ClientReadyOrders'] : false,

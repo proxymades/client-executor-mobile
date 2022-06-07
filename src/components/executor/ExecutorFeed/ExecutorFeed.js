@@ -16,15 +16,15 @@ import { useExecutorFeed } from '@hooks_query/executor/feed/useExecutorFeed'
 //common components
 import { OrderCardPreview } from '@common_components/Order/OrderCardPreview'
 import { Loader } from '@common_components/Loaders/Loader'
-import { ExtraModal } from '@components/Common/Modals/ExtraModal'
-import { CityFilterForm } from '@components/Common/Modals/Forms/CityFilterForm'
+import { ExtraModal } from '@common_components/Modals/ExtraModal'
+import { CityFilterForm } from '@common_components/Modals/Forms/CityFilterForm'
+import { EmptyPage } from '@common_components/EmptyPage/EmptyPage'
 
 //icons
-import { LocationFilterIcon } from '@components/Common/Svg/Svg'
+import { LocationFilterIcon } from '@common_components/Svg/Svg'
 
 //colors
 import { blueColor } from '@utils/colors'
-
 
 const renderCardPreviewItem = (item) =>
     <OrderCardPreview item={item} />
@@ -100,21 +100,25 @@ export const ExecutorFeed = ({ navigation }) => {
 
         <View style={styles.container}>
 
-            <FlatList
-                contentContainerStyle={{ paddingTop: 30 }}
-                data={executorFeedData}
-                keyExtractor={(item) => item.id}
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item, index }) => renderCardPreviewItem(item)}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={handleRefresh}
-                        colors={[blueColor]}
-                        progressBackgroundColor={whiteColor}
-                    />
-                }
-            />
+            {executorFeedData.length === 0 ?
+                <EmptyPage text={locale.emptyPage} />
+                :
+                <FlatList
+                    contentContainerStyle={{ paddingTop: 30 }}
+                    data={executorFeedData}
+                    keyExtractor={(item) => item.id}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({ item, index }) => renderCardPreviewItem(item)}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={handleRefresh}
+                            colors={[blueColor]}
+                            progressBackgroundColor={whiteColor}
+                        />
+                    }
+                />
+            }
 
             <ExtraModal
                 modalVisible={cityModalShow}

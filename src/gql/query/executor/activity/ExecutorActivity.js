@@ -22,6 +22,11 @@ export const EXECUTOR_ACTIVITY = gql`
                         order{
                             id
                         }
+                        feedbackClient{
+                            rating
+                            message
+                            orderId
+                        }
                     }
                 }
             }

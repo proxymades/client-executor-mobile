@@ -59,7 +59,7 @@ export const ProfileMenu = ({
                 <View style={styles.item}>
                     <RatingIcon width={60} height={40} fill={blackColor} />
                     <Text style={styles.text}>{locale.rating}</Text>
-                    <Text style={styles.count}>{ratingCount}</Text>
+                    <Text style={styles.count}>{Math.round(ratingCount * 10) / 10}</Text>
                 </View>
                 <View style={styles.item}>
                     <ReviewsIcon width={40} height={40} fill={blackColor} />

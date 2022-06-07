@@ -20,7 +20,10 @@ export const RatingMenuForm = ({
     action,
     input,
     inputChange,
-    requestData,
+    phone,
+    avatar,
+    name,
+    verified,
 }) => {
 
     //lang hooks
@@ -34,7 +37,7 @@ export const RatingMenuForm = ({
 
     //handles
     const handleAction = () => {
-        inputChange(requestData.executor.phone, 'executorPhone')
+        inputChange(phone, 'phone')
         setModalVisible(false)
         action()
     }
@@ -43,13 +46,13 @@ export const RatingMenuForm = ({
         <View style={styles.container}>
 
             <ProfileLineData
-                avatar={requestData.executor.avatar}
-                name={requestData.executor.name}
-                verified={requestData.executor.verified}
+                avatar={avatar}
+                name={name}
+                verified={verified}
                 size={35}
             />
 
-            <Text style={styles.label}>{locale.rateExecutor}</Text>
+            <Text style={styles.label}>{locale.rating}</Text>
 
             <View style={styles.ratingItems}>
 
@@ -84,14 +87,17 @@ export const RatingMenuForm = ({
 
             <InputMultiline
                 isRequired={false}
-                label={locale.feedbackToExecutor}
-                placeholder={locale.feedbackToExecutor_placeholder}
+                label={locale.feedbackTo}
+                placeholder={locale.feedbackTo_placeholder}
+                input={input.message}
                 inputChange={(e) => inputChange(e, 'message')}
+                symbols={200}
             />
 
             <View style={styles.confirmButton}>
                 <WhiteButton
                     handleAction={handleAction}
+                    isDisabled={input.rating === 0}
                 >
                     <Text style={[styles.text, input.rating === 0 && { color: lightgrayColor }]}>{locale.confirm}</Text>
                 </WhiteButton>

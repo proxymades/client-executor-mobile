@@ -153,6 +153,7 @@ export const locale = {
     drafts: 'Черновики',
 
     //e
+    emptyPage: 'Здесь пока ничего нет',
     enterAmount_placeholder: 'введите сумму',
     error_notify: 'Ошибка, попробуйте позже',
     executor: 'Исполнитель',
@@ -180,9 +181,9 @@ export const locale = {
     expects: 'ожидает',
 
     //f
-    feedbackExist_notify: 'Вы уже оставляли отзыв исполнителю по данному заказу',
-    feedbackToExecutor: 'Отзыв об исполнителе',
-    feedbackToExecutor_placeholder: 'напишите что вам понравилось или не понравилось при выполнении вашего заказа',
+    feedbackTo: 'Отзыв',
+    feedbackTo_placeholder: 'напишите что вам понравилось или не понравилось при выполнении заказа',
+    feedbackExist_notify: 'Вы уже оставляли отзыв по данному заказу',
     field_warning: 'Введите данные',
     finishedWork: 'Выполненная работа',
     finishRequest: 'Подтвердил вашу работу',
@@ -352,8 +353,10 @@ export const locale = {
     quoteTo: 'Цитату',
 
     //r
+    rateClient: 'Оцените заказчика',
     rateExecutor: 'Оцените исполнителя',
     rating: 'Рейтинг',
+    reviewAdded_notify: 'Отзыв добавлен',
 
     readyText: 'Готовые',
     register: 'нет аккаунта? зарегистрируйтесь',

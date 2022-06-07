@@ -1,13 +1,13 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //hooks
 import { useClientProfile } from '@hooks_query/client/profile/useClientProfile'
 
 //utils
-import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //common components
 import { ProfileData } from '@common_components/Profile/ProfileData'
@@ -23,13 +23,26 @@ import { ProfileMenuForm } from '@common_components/Modals/Forms/ProfileMenuForm
 import { MenuIcon } from '@common_components/Svg/Svg'
 import { useMMKVString } from 'react-native-mmkv'
 
+//colors
+import { blueColor } from '@utils/colors'
+
 export const ClientProfile = ({ navigation }) => {
 
     //states
     const [extraShow, setExtraShow] = useState(false)
+    const [refreshing, setRefreshing] = useState(false)
 
     //hooks
-    const { clientProfileLoading, clientProfileData } = useClientProfile(isUserPhoneVar())
+    const {
+        clientProfileLoading,
+        clientProfileData,
+        clientProfileRefetch
+    } = useClientProfile()
+
+    //constants
+    const feddbackLength = clientProfileData?.feedbackClient.length !== 0 ? clientProfileData?.feedbackClient.length : 1
+    const rating = clientProfileData?.feedbackClient.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / feddbackLength
+    const reviews = clientProfileData?.feedbackClient.filter(el => el.message !== '').length
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -57,6 +70,14 @@ export const ClientProfile = ({ navigation }) => {
     }, [navigation, blackColor])
 
     //handles
+    const handleRefresh = () => {
+        setRefreshing(true)
+        setTimeout(() => {
+            clientProfileRefetch()
+            setRefreshing(false)
+        }, 2000)
+    }
+
     const handleOpenExtra = () => {
         setExtraShow(true)
     }
@@ -82,7 +103,21 @@ export const ClientProfile = ({ navigation }) => {
     if (clientProfileLoading) return <Loader />
 
     return (
-        <View style={styles.container}>
+
+        <ScrollView
+            keyboardShouldPersistTaps='handler'
+            style={styles.container}
+            contentContainerStyle={{ paddingVertical: 80, alignItems: 'center' }}
+            nestedScrollEnabled={true}
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={handleRefresh}
+                    colors={[blueColor]}
+                    progressBackgroundColor={whiteColor}
+                />
+            }
+        >
 
             <ProfilePhoto
                 size={80}
@@ -96,20 +131,17 @@ export const ClientProfile = ({ navigation }) => {
 
             <ProfileMenu
                 ordersCount={clientProfileData.order.length}
-                ratingCount={5}
-                reviewsCount={77}
+                ratingCount={rating}
+                reviewsCount={reviews}
                 type={isUserTypeVar()}
                 openOrders={handleOpenOrders}
             />
 
-            {isUserTypeVar() === 'client' ?
-                <View style={styles.orderButton}>
-                    <WhiteButton handleAction={handleCreateOrder}>
-                        <Text style={styles.orderText}>{locale.newOrder}</Text>
-                    </WhiteButton>
-                </View>
-                : null
-            }
+            <View style={styles.orderButton}>
+                <WhiteButton handleAction={handleCreateOrder}>
+                    <Text style={styles.orderText}>{locale.newOrder}</Text>
+                </WhiteButton>
+            </View>
 
             <ProfileRegisterDate createdAt={clientProfileData.createdAt} />
 
@@ -124,7 +156,7 @@ export const ClientProfile = ({ navigation }) => {
                 />
             </ExtraModal>
 
-        </View >
+        </ScrollView >
     )
 }
 
@@ -132,8 +164,7 @@ const getStyles = (whiteColor, blackColor) => ({
     container: {
         flex: 1,
         backgroundColor: whiteColor,
-        alignItems: 'center',
-        paddingTop: '30%'
+        paddingHorizontal: 16,
     },
     orderButton: {
         width: '60%',

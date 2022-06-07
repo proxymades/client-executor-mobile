@@ -10,7 +10,7 @@ import { blackColorVar } from '@utils/cache'
 import { Counter } from '@common_components/Counter/Counter'
 
 //colors
-import { lightblueColor, lightgrayColor } from '@utils/colors'
+import { lightgrayColor } from '@utils/colors'
 
 export const InputMultiline = ({
     inputChange,

@@ -154,6 +154,7 @@ export const locale = {
     drafts: 'Drafts',
 
     //e
+    emptyPage: 'There is nothing here yet',
     enterAmount_placeholder: 'enter amount',
     error_notify: 'Error, please try again later',
     executor: 'Executor',
@@ -181,9 +182,9 @@ export const locale = {
     expects: 'expects',
 
     //f
+    feedbackTo: 'Feedback',
     feedbackExist_notify: 'You have already left a review for this order',
-    feedbackToExecutor: 'Feedback about the executor',
-    feedbackToExecutor_placeholder: 'write what you liked or do not like about your order',
+    feedbackTo_placeholder: 'write what you liked or do not like about this order',
     field_warning: 'Enter data',
     finishedWork: 'Finished work',
     finishRequest: 'Confirmed your work',
@@ -351,9 +352,11 @@ export const locale = {
     quoteTo: 'Quote',
 
     //r
+    rateClient: 'Rate the client',
     rateExecutor: 'Rate the executor',
-
     rating: 'Rating',
+    reviewAdded_notify: 'Review added',
+
     readyText: 'Ready',
     register: 'no account? register',
     registerDate: 'Date of registration',

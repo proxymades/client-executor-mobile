@@ -1,6 +1,6 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //hooks
@@ -21,17 +21,25 @@ import { ProfileMenuForm } from '@common_components/Modals/Forms/ProfileMenuForm
 //icons
 import { MenuIcon } from '@common_components/Svg/Svg'
 import { useMMKVString } from 'react-native-mmkv'
+import { blueColor } from '@utils/colors'
 
 export const ExecutorProfile = ({ navigation }) => {
 
     //states
     const [extraShow, setExtraShow] = useState(false)
+    const [refreshing, setRefreshing] = useState(false)
 
     //hooks
-    const { executorProfileLoading, executorProfileData, worksCount } = useExecutorProfile()
+    const {
+        executorProfileLoading,
+        executorProfileData,
+        worksCount,
+        executorProfileRefetch
+    } = useExecutorProfile()
 
     //constants
-    const rating = executorProfileData?.feedbackExecutor.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / executorProfileData?.feedbackExecutor.length
+    const feddbackLength = executorProfileData?.feedbackExecutor.length !== 0 ? executorProfileData?.feedbackExecutor.length : 1
+    const rating = executorProfileData?.feedbackExecutor.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / feddbackLength
     const reviews = executorProfileData?.feedbackExecutor.filter(el => el.message !== '').length
 
     //color hooks
@@ -57,6 +65,14 @@ export const ExecutorProfile = ({ navigation }) => {
     }, [navigation, blackColor])
 
     //handles
+    const handleRefresh = () => {
+        setRefreshing(true)
+        setTimeout(() => {
+            executorProfileRefetch()
+            setRefreshing(false)
+        }, 2000)
+    }
+
     const handleOpenExtra = () => {
         setExtraShow(true)
     }
@@ -78,7 +94,21 @@ export const ExecutorProfile = ({ navigation }) => {
     if (executorProfileLoading) return <Loader />
 
     return (
-        <View style={styles.container}>
+
+        <ScrollView
+            keyboardShouldPersistTaps='handler'
+            style={styles.container}
+            contentContainerStyle={{ paddingVertical: 80, alignItems: 'center' }}
+            nestedScrollEnabled={true}
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={handleRefresh}
+                    colors={[blueColor]}
+                    progressBackgroundColor={whiteColor}
+                />
+            }
+        >
 
             <ProfilePhoto
                 size={80}
@@ -111,7 +141,7 @@ export const ExecutorProfile = ({ navigation }) => {
                 />
             </ExtraModal>
 
-        </View >
+        </ScrollView >
     )
 }
 
@@ -119,8 +149,7 @@ const getStyles = (whiteColor, blackColor) => ({
     container: {
         flex: 1,
         backgroundColor: whiteColor,
-        alignItems: 'center',
-        paddingTop: '30%'
+        paddingHorizontal: 16,
     },
     orderButton: {
         width: '60%',

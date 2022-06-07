@@ -30,6 +30,11 @@ export const ClientActivityBlock = ({ executor, order, offer, createdAt }) => {
     //states
     const [profileMenuShow, setProfileMenuShow] = useState(false)
 
+    //constants
+    const feddbackLength = executor.feedbackExecutor.length !== 0 ? executor.feedbackExecutor.length : 1
+    const rating = executor.feedbackExecutor.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / feddbackLength
+    const reviews = executor.feedbackExecutor.filter(el => el.message !== '').length
+
     //lang hooks
     const locale = useReactiveVar(localeVar)
 
@@ -125,8 +130,8 @@ export const ClientActivityBlock = ({ executor, order, offer, createdAt }) => {
 
                 <ProfileMenu
                     worksCount={executor.orderRequest.length}
-                    ratingCount={5}
-                    reviewsCount={77}
+                    ratingCount={rating}
+                    reviewsCount={reviews}
                     type='executor'
                 />
 

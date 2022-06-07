@@ -19,11 +19,16 @@ export const EXECUTOR_ORDER = gql`
                 isReady
                 isWork
                 client{
+                    id
                     name
                     verified
                     createdAt
                     order{
                         id
+                    }
+                    feedbackClient{
+                        rating
+                        message
                     }
                 }
                 orderRequest{

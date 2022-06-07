@@ -1,12 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const CLIENT_PROFILE = gql`
-    query ClientProfile(
-            $phone: String!
-        ){
-            clientProfile(
-                phone: $phone
-            ){
+    query ClientProfile{
+            clientProfile{
                 id
                 avatar
                 name
@@ -15,6 +11,10 @@ export const CLIENT_PROFILE = gql`
                 createdAt
                 order{
                     id
+                }
+                feedbackClient{
+                    rating
+                    message
                 }
             }
         }

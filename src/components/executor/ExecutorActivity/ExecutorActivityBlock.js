@@ -1,8 +1,11 @@
 //core
-import React, { useState } from 'react'
-import { View, Text, Image, Pressable, Linking } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, Image, Pressable, Linking, ActivityIndicator } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
+
+//hooks
+import { useWriteFeedbackClient } from '@hooks_mutation/executor/order/useWriteFeedbackClient'
 
 //utils
 import { IMAGES_URI } from '@utils/uri'
@@ -14,10 +17,12 @@ import { ProfileData } from '@common_components/Profile/ProfileData'
 import { ProfileMenu } from '@common_components/Profile/ProfileMenu'
 import { ProfileRegisterDate } from '@common_components/Profile/ProfileRegisterDate'
 import { ProfileLineData } from '@common_components/Profile/ProfileLineData'
-import { BlueButton } from '@components/Common/Buttons/BlueButton'
+import { BlueButton } from '@common_components/Buttons/BlueButton'
+import { WhiteButton } from '@common_components/Buttons/WhiteButton'
+import { RatingMenuForm } from '@common_components/Modals/Forms/RatingMenuForm'
 
 //colors
-import { blueColor, grayColor, lightgrayColor } from '@utils/colors'
+import { blueColor, grayColor, lightblueColor, lightgrayColor } from '@utils/colors'
 
 export const ExecutorActivityBlock = ({
     client,
@@ -32,6 +37,21 @@ export const ExecutorActivityBlock = ({
 
     //states
     const [profileMenuShow, setProfileMenuShow] = useState(false)
+    const [accepting, setAccepting] = useState(false)
+    const [ratingClient, setRatingClient] = useState(false)
+    const [formState, setFormState] = useState({
+        rating: 0,
+        message: '',
+        phone: ''
+    })
+
+    //hooks
+    const { writeFeedbackClient } = useWriteFeedbackClient(order.id, formState, setRatingClient, setAccepting)
+
+    //constants
+    const feddbackLength = client.feedbackClient.length !== 0 ? client.feedbackClient.length : 1
+    const rating = client.feedbackClient.map(item => item.rating).reduce((prev, curr) => prev + curr, 0) / feddbackLength
+    const reviews = client.feedbackClient.filter(el => el.message !== '').length
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -42,6 +62,24 @@ export const ExecutorActivityBlock = ({
 
     //styles
     const styles = getStyles(whiteColor, blackColor)
+
+    //effects
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <>
+                    {accepting ?
+                        <ActivityIndicator size='small' color={lightblueColor} />
+                        : null
+                    }
+                </>
+            ),
+        })
+    }, [navigation, accepting])
+
+    useEffect(() => {
+        accepting && writeFeedbackClient()
+    }, [accepting])
 
     //handles
     const handleLinkOrder = () => {
@@ -58,6 +96,16 @@ export const ExecutorActivityBlock = ({
 
     const handleProfileMenuShow = () => {
         setProfileMenuShow(true)
+    }
+
+    const handleRateClient = () => {
+        setAccepting(true)
+    }
+
+    const handleInputFormChange = (value, name) => {
+        const list = { ...formState }
+        list[name] = value
+        setFormState(list)
     }
 
     return (
@@ -110,8 +158,18 @@ export const ExecutorActivityBlock = ({
 
                 <View style={styles.offerContainer}>
 
-                    <Text style={styles.offerText}>{locale.suggestedPrice} </Text>
-                    <Text style={styles.offerPrice}>{offer.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {locale.tenge}</Text>
+                    <View>
+                        <Text style={styles.offerText}>{locale.suggestedPrice} </Text>
+                        <Text style={styles.offerPrice}>{offer.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {locale.tenge}</Text>
+                    </View>
+
+                    {isFinished &&
+                        !client.feedbackClient.find(el => el.orderId === order.id) ?
+                        <WhiteButton handleAction={() => setRatingClient(true)}>
+                            <Text style={styles.buttonText}>{locale.rateClient}</Text>
+                        </WhiteButton>
+                        : null
+                    }
 
                 </View>
 
@@ -130,7 +188,6 @@ export const ExecutorActivityBlock = ({
                     : null
                 }
 
-
             </View>
 
             <ExtraModal
@@ -141,17 +198,35 @@ export const ExecutorActivityBlock = ({
                     name={client.name}
                     verified={client.verified}
                 />
-
                 <ProfileMenu
-                    worksCount={client.order.length}
-                    ratingCount={5}
-                    reviewsCount={77}
+                    ordersCount={client.order.length}
+                    ratingCount={rating}
+                    reviewsCount={reviews}
                     type='client'
                 />
-
                 <ProfileRegisterDate createdAt={client.createdAt} />
-
             </ExtraModal>
+
+            <ExtraModal
+                modalVisible={ratingClient}
+                setModalVisible={setRatingClient}
+            >
+                <RatingMenuForm
+                    setModalVisible={setRatingClient}
+                    action={handleRateClient}
+                    input={formState}
+                    inputChange={handleInputFormChange}
+                    phone={client.phone}
+                    avatar={client.avatar}
+                    name={client.name}
+                    verified={client.verified}
+                />
+            </ExtraModal>
+
+            <ExtraModal
+                modalVisible={accepting}
+                isEditing={true}
+            />
 
         </View>
 
@@ -200,6 +275,7 @@ const getStyles = (whiteColor, blackColor) => ({
     },
     offerContainer: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 10,
     },
