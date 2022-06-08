@@ -2,22 +2,27 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import cuid from 'cuid'
-import { useMMKVString } from 'react-native-mmkv'
+import jwt_decode from 'jwt-decode'
 
 //gql
 import { CLIENT_SIGNUP } from '@gql_mutation/auth/ClientSignup'
 import { EXECUTOR_SIGNUP } from '@gql_mutation/auth/ExecutorSignup'
+
+//hooks
+import { useRegisterClientNotificationToken } from './useRegisterClientNotificationToken'
+import { useRegisterExecutorNotificationToken } from './useRegisterExecutorNotificationToken'
 
 //utils
 import { isNotifedVar } from '@utils/cache'
 
 export const useSignup = (signupState, type) => {
 
-    //global hooks
-    const [token, setToken] = useMMKVString('token')
-
     //states
     const [registering, setRegistering] = useState(false)
+
+    //hooks
+    const { registerClientNotificationToken } = useRegisterClientNotificationToken()
+    const { registerExecutorNotificationToken } = useRegisterExecutorNotificationToken()
 
     //mutations
     const [clientSignup] = useMutation(CLIENT_SIGNUP, {
@@ -28,12 +33,11 @@ export const useSignup = (signupState, type) => {
             name: signupState.name.trim(),
         },
         onCompleted: ({ clientSignup }) => {
-            setToken(clientSignup.token)
+            registerClientNotificationToken(jwt_decode(clientSignup.token).phone, clientSignup.token)
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)
             setRegistering(false)
-            console.log(err.message);
         }
     })
 
@@ -45,12 +49,11 @@ export const useSignup = (signupState, type) => {
             name: signupState.name.trim(),
         },
         onCompleted: ({ executorSignup }) => {
-            setToken(executorSignup.token)
+            registerExecutorNotificationToken(jwt_decode(executorSignup.token).phone, executorSignup.token)
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)
             setRegistering(false)
-            console.log(err.message);
         }
     })
 

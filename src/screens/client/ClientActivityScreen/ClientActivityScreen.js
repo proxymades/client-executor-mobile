@@ -26,31 +26,41 @@ export const ClientActivityScreen = () => {
     return (
         <Stack.Navigator>
 
-            <Stack.Screen
-                name='ClientActivityContainer'
-                component={ClientActivityContainer}
-                options={{
-                    title: locale.notifications,
+            <Stack.Group
+                screenOptions={{
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
+                    headerTintColor: blackColor,
                 }}
-            />
+            >
 
-            <Stack.Screen
-                name='ClientOrder'
-                component={ClientOrder}
-                options={({ route }) => ({
-                    title: route.params.title,
-                })}
-            />
+                <Stack.Screen
+                    name='ClientActivityContainer'
+                    component={ClientActivityContainer}
+                    options={{
+                        title: locale.notifications,
+                        headerStyle: { backgroundColor: whiteColor },
+                        headerTitleStyle: { color: blackColor },
+                    }}
+                />
 
-            <Stack.Screen
-                name='ClientOrderRequests'
-                component={ClientOrderRequests}
-                options={{
-                    title: locale.requests,
-                }}
-            />
+                <Stack.Screen
+                    name='ClientOrder'
+                    component={ClientOrder}
+                    options={({ route }) => ({
+                        title: route.params.title,
+                    })}
+                />
+
+                <Stack.Screen
+                    name='ClientOrderRequests'
+                    component={ClientOrderRequests}
+                    options={{
+                        title: locale.requests,
+                    }}
+                />
+
+            </Stack.Group>
 
         </Stack.Navigator>
     )

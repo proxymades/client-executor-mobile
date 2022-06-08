@@ -1,7 +1,7 @@
 //core
 import React, { useEffect, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { useApolloClient, useReactiveVar } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import { useColorScheme, Keyboard } from 'react-native'
 import { useMMKVString } from 'react-native-mmkv'
 import jwt_decode from 'jwt-decode'
@@ -14,9 +14,6 @@ import { AuthScreen } from '@screens/AuthScreen'
 
 //hooks_utils
 import { useLanguage } from '@hooks_utils/useLanguage'
-
-//gql
-import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 
 //utils
 import {
@@ -44,7 +41,6 @@ export const App = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
   const isUserType = useReactiveVar(isUserTypeVar)
   const { lang } = useLanguage()
-  const client = useApolloClient()
 
   //states
   const [loading, setLoading] = useState(true)
@@ -52,37 +48,20 @@ export const App = () => {
   //effects
   useEffect(() => {
     return messaging().onTokenRefresh(token => {
-      saveTokenToDatabase(token);
+      saveTokenToDatabase(token)
     })
   }, [])
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       isNotifedVar(remoteMessage.notification.body)
-      if (remoteMessage.data.type === 'request') {
-        const query = client.readQuery({
-          query: CLIENT_ACTIVITY
-        })
-        query !== null &&
-          client.refetchQueries({
-            include: ['ClientActivity']
-          })
-      }
     })
     return unsubscribe
   }, [])
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
-      if (remoteMessage.data.type === 'request') {
-        const query = client.readQuery({
-          query: CLIENT_ACTIVITY
-        })
-        query !== null &&
-          client.refetchQueries({
-            include: ['ClientActivity']
-          })
-      }
+      console.log('BACKGROUND!', remoteMessage)
     })
   }, [])
 

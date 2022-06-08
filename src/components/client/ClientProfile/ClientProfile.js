@@ -21,7 +21,6 @@ import { ProfileMenuForm } from '@common_components/Modals/Forms/ProfileMenuForm
 
 //icons
 import { MenuIcon } from '@common_components/Svg/Svg'
-import { useMMKVString } from 'react-native-mmkv'
 
 //colors
 import { blueColor } from '@utils/colors'
@@ -95,9 +94,8 @@ export const ClientProfile = ({ navigation }) => {
         navigation.push('ClientOrders')
     }
 
-    const [token, setToken] = useMMKVString('token')
     const handleOpenSettings = () => {
-        setToken('')
+        navigation.push('Settings')
     }
 
     if (clientProfileLoading) return <Loader />

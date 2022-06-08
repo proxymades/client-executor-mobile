@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 //utils
-import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //components
 import { EditExecutorProfile } from '@components/executor/ExecutorProfile/EditExecutorProfile/EditExecutorProfile'
@@ -30,6 +30,7 @@ export const ExecutorScreens = () => {
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
+    const blackColor = useReactiveVar(blackColorVar)
 
     //handles
     isNotifed !== '' && setTimeout(() => isNotifedVar(''), 3500)
@@ -55,7 +56,13 @@ export const ExecutorScreens = () => {
                         }}
                     />
 
-                    <Stack.Group>
+                    <Stack.Group
+                        screenOptions={{
+                            headerStyle: { backgroundColor: whiteColor },
+                            headerTitleStyle: { color: blackColor },
+                            headerTintColor: blackColor,
+                        }}
+                    >
 
                         <Stack.Screen
                             name='EditExecutorProfile'

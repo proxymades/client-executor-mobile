@@ -224,9 +224,7 @@ export const EditOrder = ({ route }) => {
             <ExtraModal
                 modalVisible={updating}
                 isEditing={true}
-            >
-                <View style={styles.blackWrap} />
-            </ExtraModal>
+            />
 
         </ScrollView>
     )

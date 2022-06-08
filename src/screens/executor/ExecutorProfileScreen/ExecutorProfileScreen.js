@@ -6,10 +6,14 @@ import { useReactiveVar } from '@apollo/client'
 //components
 import { ExecutorProfile } from '@components/executor/ExecutorProfile/ExecutorProfile'
 import { ExecutorWorks } from '@components/executor/ExecutorWorks/ExecutorWorks'
+import { ExecutorOrder } from '@components/executor/ExecutorOrder/ExecutorOrder'
+
+//common components
+import { Settings } from '@components/Common/Settings/Settings'
 
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
-import { ExecutorOrder } from '@components/executor/ExecutorOrder/ExecutorOrder'
+
 
 export const ExecutorProfileScreen = () => {
 
@@ -27,9 +31,10 @@ export const ExecutorProfileScreen = () => {
         <Stack.Navigator>
 
             <Stack.Group
-                options={{
+                screenOptions={{
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
+                    headerTintColor: blackColor,
                 }}
             >
 
@@ -37,7 +42,7 @@ export const ExecutorProfileScreen = () => {
                     name='ExecutorProfile'
                     component={ExecutorProfile}
                     options={{
-                        title: locale.profile,
+                        title: locale.executor,
                     }}
                 />
 
@@ -49,7 +54,6 @@ export const ExecutorProfileScreen = () => {
                     }}
                 />
 
-
                 <Stack.Screen
                     name='ExecutorOrder'
                     component={ExecutorOrder}
@@ -58,6 +62,13 @@ export const ExecutorProfileScreen = () => {
                     })}
                 />
 
+                <Stack.Screen
+                    name='Settings'
+                    component={Settings}
+                    options={{
+                        title: locale.settings,
+                    }}
+                />
 
             </Stack.Group>
 

@@ -9,6 +9,9 @@ import { ClientOrders } from '@components/client/ClientProfile/ClientOrders/Clie
 import { ClientOrder } from '@components/client/ClientOrder/ClientOrder'
 import { ClientOrderRequests } from '@components/client/ClientOrder/ClientOrderRequests'
 
+//common components
+import { Settings } from '@common_components/Settings/Settings'
+
 //colors
 import { blackColorVar, localeVar, whiteColorVar } from '@utils/cache'
 
@@ -28,9 +31,10 @@ export const ClientProfileScreen = () => {
         <Stack.Navigator>
 
             <Stack.Group
-                options={{
+                screenOptions={{
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
+                    headerTintColor: blackColor,
                 }}
             >
 
@@ -38,7 +42,7 @@ export const ClientProfileScreen = () => {
                     name='ClientProfile'
                     component={ClientProfile}
                     options={{
-                        title: locale.profile,
+                        title: locale.client,
                     }}
                 />
 
@@ -63,6 +67,14 @@ export const ClientProfileScreen = () => {
                     component={ClientOrderRequests}
                     options={{
                         title: locale.requests,
+                    }}
+                />
+
+                <Stack.Screen
+                    name='Settings'
+                    component={Settings}
+                    options={{
+                        title: locale.settings,
                     }}
                 />
 

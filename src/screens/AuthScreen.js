@@ -6,14 +6,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 //utils
-import { isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //components
-// import { EditProfile } from '@components/Profile/EditProfile/EditProfile'
-
-
-//common components
-import { Notify } from '@common_components/Notify/Notify'
 import { Auth } from '@components/Auth/Auth'
 import { Selector } from '@components/Auth/Selector'
 
@@ -30,6 +25,7 @@ export const AuthScreen = () => {
 
     //color hooks
     const whiteColor = useReactiveVar(whiteColorVar)
+    const blackColor = useReactiveVar(blackColorVar)
 
     //handles
     isNotifed !== '' && setTimeout(() => isNotifedVar(''), 3500)
@@ -47,21 +43,31 @@ export const AuthScreen = () => {
 
                 <Stack.Navigator>
 
-                    <Stack.Screen
-                        name="Selector"
-                        component={Selector}
-                        options={{
-                            headerShown: false,
+                    <Stack.Group
+                        screenOptions={{
+                            headerStyle: { backgroundColor: whiteColor },
+                            headerTitleStyle: { color: blackColor },
+                            headerTintColor: blackColor,
                         }}
-                    />
+                    >
 
-                    <Stack.Screen
-                        name="Auth"
-                        component={Auth}
-                        options={({ route }) => ({
-                            title: route.params.type === 'client' ? locale.client : locale.executor
-                        })}
-                    />
+                        <Stack.Screen
+                            name="Selector"
+                            component={Selector}
+                            options={{
+                                headerShown: false,
+                            }}
+                        />
+
+                        <Stack.Screen
+                            name="Auth"
+                            component={Auth}
+                            options={({ route }) => ({
+                                title: route.params.type === 'client' ? locale.client : locale.executor
+                            })}
+                        />
+
+                    </Stack.Group>
 
                 </Stack.Navigator>
 

@@ -26,9 +26,10 @@ export const ExecutorFeedScreen = () => {
         <Stack.Navigator>
 
             <Stack.Group
-                options={{
+                screenOptions={{
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
+                    headerTintColor: blackColor,
                 }}
             >
 

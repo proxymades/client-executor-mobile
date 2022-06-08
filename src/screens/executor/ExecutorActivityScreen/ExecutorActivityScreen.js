@@ -25,23 +25,31 @@ export const ExecutorActivityScreen = () => {
     return (
         <Stack.Navigator>
 
-            <Stack.Screen
-                name='ExecutorActivityContainer'
-                component={ExecutorActivityContainer}
-                options={{
-                    title: locale.notifications,
+            <Stack.Group
+                screenOptions={{
                     headerStyle: { backgroundColor: whiteColor },
                     headerTitleStyle: { color: blackColor },
+                    headerTintColor: blackColor,
                 }}
-            />
+            >
 
-            <Stack.Screen
-                name='ExecutorOrder'
-                component={ExecutorOrder}
-                options={({ route }) => ({
-                    title: route.params.title,
-                })}
-            />
+                <Stack.Screen
+                    name='ExecutorActivityContainer'
+                    component={ExecutorActivityContainer}
+                    options={{
+                        title: locale.notifications,
+                    }}
+                />
+
+                <Stack.Screen
+                    name='ExecutorOrder'
+                    component={ExecutorOrder}
+                    options={({ route }) => ({
+                        title: route.params.title,
+                    })}
+                />
+
+            </Stack.Group>
 
         </Stack.Navigator>
     )

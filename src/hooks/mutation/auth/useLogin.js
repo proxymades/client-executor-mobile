@@ -1,7 +1,6 @@
 //core
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
-import { useMMKVString } from 'react-native-mmkv'
 import jwt_decode from 'jwt-decode'
 
 //gql
@@ -17,9 +16,6 @@ import { isNotifedVar } from '@utils/cache'
 
 export const useLogin = (loginState, type) => {
 
-    //global hooks
-    const [token, setToken] = useMMKVString('token')
-
     //states
     const [logining, setLogining] = useState(false)
 
@@ -34,8 +30,7 @@ export const useLogin = (loginState, type) => {
             password: loginState.password
         },
         onCompleted: ({ clientLogin }) => {
-            setToken(clientLogin.token)
-            registerClientNotificationToken(jwt_decode(clientLogin.token).phone)
+            registerClientNotificationToken(jwt_decode(clientLogin.token).phone, clientLogin.token)
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)
@@ -49,8 +44,7 @@ export const useLogin = (loginState, type) => {
             password: loginState.password
         },
         onCompleted: ({ executorLogin }) => {
-            setToken(executorLogin.token)
-            registerExecutorNotificationToken(jwt_decode(executorLogin.token).phone)
+            registerExecutorNotificationToken(jwt_decode(executorLogin.token).phone, executorLogin.token)
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)

@@ -1,6 +1,6 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
+import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //hooks
@@ -20,7 +20,8 @@ import { ProfileMenuForm } from '@common_components/Modals/Forms/ProfileMenuForm
 
 //icons
 import { MenuIcon } from '@common_components/Svg/Svg'
-import { useMMKVString } from 'react-native-mmkv'
+
+//colors
 import { blueColor } from '@utils/colors'
 
 export const ExecutorProfile = ({ navigation }) => {
@@ -85,10 +86,9 @@ export const ExecutorProfile = ({ navigation }) => {
     const handleOpenWorks = () => {
         navigation.push('ExecutorWorks')
     }
-    const [token, setToken] = useMMKVString('token')
 
     const handleOpenSettings = () => {
-        setToken('')
+        navigation.push('Settings')
     }
 
     if (executorProfileLoading) return <Loader />
