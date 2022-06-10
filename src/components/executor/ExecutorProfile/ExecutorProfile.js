@@ -91,6 +91,10 @@ export const ExecutorProfile = ({ navigation }) => {
         navigation.push('Settings')
     }
 
+    const handleOpenFeedbacks = () => {
+        navigation.push('ExecutorFeedbacks')
+    }
+
     if (executorProfileLoading) return <Loader />
 
     return (
@@ -126,6 +130,7 @@ export const ExecutorProfile = ({ navigation }) => {
                 reviewsCount={reviews}
                 type={isUserTypeVar()}
                 openWorks={handleOpenWorks}
+                openFeedbacks={handleOpenFeedbacks}
             />
 
             <ProfileRegisterDate createdAt={executorProfileData.createdAt} />

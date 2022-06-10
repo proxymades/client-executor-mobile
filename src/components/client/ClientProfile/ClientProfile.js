@@ -98,6 +98,10 @@ export const ClientProfile = ({ navigation }) => {
         navigation.push('Settings')
     }
 
+    const handleOpenFeedbacks = () => {
+        navigation.push('ClientFeedbacks')
+    }
+
     if (clientProfileLoading) return <Loader />
 
     return (
@@ -133,6 +137,7 @@ export const ClientProfile = ({ navigation }) => {
                 reviewsCount={reviews}
                 type={isUserTypeVar()}
                 openOrders={handleOpenOrders}
+                openFeedbacks={handleOpenFeedbacks}
             />
 
             <View style={styles.orderButton}>

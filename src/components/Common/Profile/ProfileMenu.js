@@ -17,6 +17,7 @@ export const ProfileMenu = ({
     type,
     openOrders,
     openWorks,
+    openFeedbacks,
 }) => {
 
     //lang hooks
@@ -61,11 +62,16 @@ export const ProfileMenu = ({
                     <Text style={styles.text}>{locale.rating}</Text>
                     <Text style={styles.count}>{Math.round(ratingCount * 10) / 10}</Text>
                 </View>
-                <View style={styles.item}>
+
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={openFeedbacks}
+                    disabled={reviewsCount === 0}
+                >
                     <ReviewsIcon width={40} height={40} fill={blackColor} />
                     <Text style={styles.text}>{locale.reviews}</Text>
                     <Text style={styles.count}>{reviewsCount}</Text>
-                </View>
+                </TouchableOpacity>
 
             </View>
 

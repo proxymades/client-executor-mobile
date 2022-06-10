@@ -8,6 +8,7 @@ import { ClientProfile } from '@components/client/ClientProfile/ClientProfile'
 import { ClientOrders } from '@components/client/ClientProfile/ClientOrders/ClientOrders'
 import { ClientOrder } from '@components/client/ClientOrder/ClientOrder'
 import { ClientOrderRequests } from '@components/client/ClientOrder/ClientOrderRequests'
+import { ClientFeedbacks } from '@components/client/ClientFeedbacks/ClientFeedbacks'
 
 //common components
 import { Settings } from '@common_components/Settings/Settings'
@@ -75,6 +76,14 @@ export const ClientProfileScreen = () => {
                     component={Settings}
                     options={{
                         title: locale.settings,
+                    }}
+                />
+
+                <Stack.Screen
+                    name='ClientFeedbacks'
+                    component={ClientFeedbacks}
+                    options={{
+                        title: locale.reviews,
                     }}
                 />
 

@@ -7,6 +7,9 @@ import cuid from 'cuid'
 import { WRITE_FEEDBACK_EXECUTOR } from '@gql_mutation/client/order/WriteFeedbackExecutor'
 import { CLIENT_ACTIVITY } from '@gql_query/client/activity/ClientActivity'
 import { REPULSE_ORDER_WORK } from '@gql_mutation/client/order/RepulseOrderWork'
+import { CLIENT_NEW_ORDERS } from '@gql_query/client/order/ClientNewOrders'
+import { CLIENT_WORK_ORDERS } from '@gql_query/client/order/ClientWorkOrders'
+import { CLIENT_READY_ORDERS } from '@gql_query/client/order/ClientReadyOrders'
 
 //utils
 import { isNotifedVar, localeVar } from '@utils/cache'
@@ -20,6 +23,18 @@ export const useRepulseOrderWork = (orderId, requestId, formState) => {
     //cache
     const activityQuery = client.readQuery({
         query: CLIENT_ACTIVITY
+    })
+
+    const newOrdersQuery = client.readQuery({
+        query: CLIENT_NEW_ORDERS
+    })
+
+    const workOrdersQuery = client.readQuery({
+        query: CLIENT_WORK_ORDERS
+    })
+
+    const readyOrdersQuery = client.readQuery({
+        query: CLIENT_READY_ORDERS
     })
 
     //lang hooks
@@ -44,7 +59,13 @@ export const useRepulseOrderWork = (orderId, requestId, formState) => {
             toUser: formState.phone,
             orderId: orderId,
         },
-        refetchQueries: activityQuery === null ? ['ClientOrder', 'ClientWorkOrders', 'ClientNewOrders', 'ClientOrderRequests'] : false,
+        refetchQueries:
+            activityQuery !== null && newOrdersQuery === null && workOrdersQuery === null && readyOrdersQuery === null ?
+                ['ClientOrderRequests', 'ClientActivity'] :
+                activityQuery !== null && newOrdersQuery !== null && workOrdersQuery !== null && readyOrdersQuery !== null ?
+                    ['ClientOrderRequests', 'ClientActivity', 'ClientNewOrders', 'ClientWorkOrders', 'ClientReadyOrders'] :
+                    activityQuery === null ? ['ClientOrderRequests', 'ClientNewOrders', 'ClientWorkOrders', 'ClientReadyOrders', 'ClientOrder'] :
+                        false,
         onCompleted: (data) => {
             if (data.feedbackExecutor) {
                 setTimeout(() => {

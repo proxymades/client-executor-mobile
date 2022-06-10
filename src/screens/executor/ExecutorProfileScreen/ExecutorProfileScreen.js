@@ -7,6 +7,7 @@ import { useReactiveVar } from '@apollo/client'
 import { ExecutorProfile } from '@components/executor/ExecutorProfile/ExecutorProfile'
 import { ExecutorWorks } from '@components/executor/ExecutorWorks/ExecutorWorks'
 import { ExecutorOrder } from '@components/executor/ExecutorOrder/ExecutorOrder'
+import { ExecutorFeedbacks } from '@components/executor/ExecutorFeedbacks/ExecutorFeedbacks'
 
 //common components
 import { Settings } from '@components/Common/Settings/Settings'
@@ -67,6 +68,14 @@ export const ExecutorProfileScreen = () => {
                     component={Settings}
                     options={{
                         title: locale.settings,
+                    }}
+                />
+
+                <Stack.Screen
+                    name='ExecutorFeedbacks'
+                    component={ExecutorFeedbacks}
+                    options={{
+                        title: locale.reviews,
                     }}
                 />
 
