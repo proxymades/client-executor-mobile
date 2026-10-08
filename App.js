@@ -4,7 +4,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { useReactiveVar } from '@apollo/client'
 import { useColorScheme, Keyboard } from 'react-native'
 import { useMMKVString } from 'react-native-mmkv'
-import jwt_decode from 'jwt-decode'
+import { clearSession, setSession } from '@utils/session'
+import { useRegisterClientNotificationToken } from '@hooks_mutation/auth/useRegisterClientNotificationToken'
+import { useRegisterExecutorNotificationToken } from '@hooks_mutation/auth/useRegisterExecutorNotificationToken'
 import messaging from '@react-native-firebase/messaging'
 
 //screens
@@ -18,10 +20,7 @@ import { useLanguage } from '@hooks_utils/useLanguage'
 //utils
 import {
   isLoggedInVar,
-  isUserPhoneVar,
   isUserTypeVar,
-  isUserIdVar,
-  isTokenVar,
   whiteColorVar,
   blackColorVar,
   darkblueColorVar,
@@ -35,48 +34,47 @@ export const App = () => {
 
   //global hooks
   const colorScheme = useColorScheme()
-  const [token, setToken] = useMMKVString('token')
-  const [theme, setTheme] = useMMKVString('theme')
-  const [language, setLanguage] = useMMKVString('language')
+  const [token] = useMMKVString('token')
+  const [theme] = useMMKVString('theme')
   const isLoggedIn = useReactiveVar(isLoggedInVar)
   const isUserType = useReactiveVar(isUserTypeVar)
   const { lang } = useLanguage()
+  const { registerClientNotificationToken } = useRegisterClientNotificationToken()
+  const { registerExecutorNotificationToken } = useRegisterExecutorNotificationToken()
 
   //states
   const [loading, setLoading] = useState(true)
 
   //effects
   useEffect(() => {
-    return messaging().onTokenRefresh(token => {
-      saveTokenToDatabase(token)
+    if (!token) return
+    return messaging().onTokenRefresh(pushToken => {
+      const user = setSession(token)
+      if (!user) return
+      const register = user.type === 'client' ? registerClientNotificationToken : registerExecutorNotificationToken
+      register(user.phone, token, pushToken).catch(() => {
+        isNotifedVar('Не удалось обновить push-уведомления')
+      })
     })
-  }, [])
+  }, [token, registerClientNotificationToken, registerExecutorNotificationToken])
 
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      isNotifedVar(remoteMessage.notification.body)
-    })
-    return unsubscribe
-  }, [])
-
-  useEffect(() => {
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('BACKGROUND!', remoteMessage)
+    return messaging().onMessage(async remoteMessage => {
+      if (remoteMessage.notification?.body) isNotifedVar(remoteMessage.notification.body)
     })
   }, [])
 
   useEffect(() => {
     if (token) {
-      setLoading(false)
-      isLoggedInVar(true)
-      isUserPhoneVar(jwt_decode(token).phone)
-      isUserTypeVar(jwt_decode(token).type)
-      isUserIdVar(jwt_decode(token).id)
-      isTokenVar(token)
-    } else {
-      setLoading(false)
-      isLoggedInVar(false)
-    }
+      const user = setSession(token)
+      if (user) {
+        const remaining = user.exp * 1000 - Date.now()
+        const timer = setTimeout(clearSession, remaining)
+        setLoading(false)
+        return () => clearTimeout(timer)
+      }
+    } else clearSession()
+    setLoading(false)
   }, [token])
 
   useEffect(() => {
@@ -109,28 +107,21 @@ export const App = () => {
 
   useEffect(() => {
     localeVar(lang)
-  }, [language])
+  }, [lang])
 
   useEffect(() => {
     const keyboardOpened = Keyboard.addListener('keyboardDidShow', (e) => {
       isKeyboardHeightVar(e.endCoordinates.height);
     })
     return () => keyboardOpened.remove()
-  }, [Keyboard])
+  }, [])
 
   useEffect(() => {
     const keyboardClosed = Keyboard.addListener('keyboardDidHide', (e) => {
       isKeyboardHeightVar(e.endCoordinates.height);
     })
     return () => keyboardClosed.remove()
-  }, [Keyboard])
-
-  //handles
-  const saveTokenToDatabase = (token) => {
-    // Assume user is already signed in
-
-    console.log(token)
-  }
+  }, [])
 
   return (
     <SafeAreaProvider>

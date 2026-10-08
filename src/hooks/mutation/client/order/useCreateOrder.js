@@ -1,68 +1,38 @@
-//core
-import { useMutation, useReactiveVar } from '@apollo/client'
+import { useApolloClient, useMutation, useReactiveVar } from '@apollo/client'
 import cuid from 'cuid'
 import { ReactNativeFile } from 'apollo-upload-client'
 import { useNavigation } from '@react-navigation/native'
-
-//gql
 import { CREATE_ORDER } from '@gql_mutation/client/order/CreateOrder'
 import { UPLOAD_ORDER_IMAGE } from '@gql_mutation/client/order/UploadOrderImage'
-
-//utils
 import { isNotifedVar, localeVar } from '@utils/cache'
 
-export const useCreateOrder = (formState) => {
-
-    //global hooks
+export const useCreateOrder = (formState, setCreating) => {
     const navigation = useNavigation()
-
-    //lang hooks
+    const client = useApolloClient()
     const locale = useReactiveVar(localeVar)
+    const [create] = useMutation(CREATE_ORDER)
+    const [upload] = useMutation(UPLOAD_ORDER_IMAGE)
 
-    //mutations
-    const [createOrder] = useMutation(CREATE_ORDER, {
-        variables: {
-            id: cuid(),
-            header: formState.header,
-            category: formState.category,
-            count: formState.count,
-            text: formState.text,
-            city: formState.city,
-            urgent: formState.urgent,
-            image: formState.image,
-        },
-        refetchQueries: ['ClientProfile'],
-        onCompleted: (data) => {
-            createImageFile(formState.image, data.createOrder.id)
-            setTimeout(() => {
-                isNotifedVar(locale.orderCreated_notify)
-                navigation.goBack()
-            }, 2000)
-        }
-    })
-
-    const [uploadFile] = useMutation(UPLOAD_ORDER_IMAGE)
-
-    //handles
-    const createImageFile = (image, orderId) => {
-        if (image) {
-            const file = new ReactNativeFile({
-                uri: image,
-                name: 'file.jpg',
-                type: 'image/jpeg',
-            })
-            setTimeout(() => uploadOrderImage(file, orderId), 300)
-        }
-    }
-
-    const uploadOrderImage = (file, orderId) => {
-        uploadFile({
-            variables: {
-                file: file,
-                orderId: orderId
+    const createOrder = async () => {
+        let saved = false
+        try {
+            const { data } = await create({ variables: { ...formState, id: cuid() } })
+            saved = true
+            if (formState.image) {
+                await upload({ variables: {
+                    file: new ReactNativeFile({ uri: formState.image, name: 'file.jpg', type: 'image/jpeg' }),
+                    orderId: data.createOrder.id,
+                } })
             }
-        })
+            await client.refetchQueries({ include: 'active' })
+            isNotifedVar(locale.orderCreated_notify)
+        } catch (error) {
+            // An order saved before an upload/refetch failure must not be created again.
+            isNotifedVar(saved ? `${locale.orderCreated_notify}. ${error.message}` : error.message)
+        } finally {
+            setCreating(false)
+            if (saved) navigation.goBack()
+        }
     }
-
     return { createOrder }
 }

@@ -33,7 +33,9 @@ export const useSignup = (signupState, type) => {
             name: signupState.name.trim(),
         },
         onCompleted: ({ clientSignup }) => {
-            registerClientNotificationToken(jwt_decode(clientSignup.token).phone, clientSignup.token)
+            registerClientNotificationToken(jwt_decode(clientSignup.token).phone, clientSignup.token).catch(() => {
+                isNotifedVar('Вход выполнен, push-уведомления недоступны')
+            })
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)
@@ -49,7 +51,9 @@ export const useSignup = (signupState, type) => {
             name: signupState.name.trim(),
         },
         onCompleted: ({ executorSignup }) => {
-            registerExecutorNotificationToken(jwt_decode(executorSignup.token).phone, executorSignup.token)
+            registerExecutorNotificationToken(jwt_decode(executorSignup.token).phone, executorSignup.token).catch(() => {
+                isNotifedVar('Вход выполнен, push-уведомления недоступны')
+            })
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)

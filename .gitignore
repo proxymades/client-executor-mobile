@@ -59,3 +59,14 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+# Local configuration and Firebase project bindings
+/config/local.json
+/android/app/google-services.json
+/ios/GoogleService-Info.plist
+/ios/clex/GoogleService-Info.plist
+.env
+.env.*
+*.p12
+*.mobileprovision
+coverage/

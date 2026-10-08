@@ -54,7 +54,7 @@ export const EditOrder = ({ route }) => {
     const { orderQuery } = useClientOrderCache(route.params.orderId)
     const { setOpenImagePicker, preview, setPreview } = useImagePicker(false, pickerType)
     const { deleteOrderImage } = useDeleteOrderImage(route.params.orderId)
-    const { updateOrder } = useUpdateOrder(formState, preview, route.params.orderId)
+    const { updateOrder } = useUpdateOrder(formState, preview, route.params.orderId, setUpdating)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -123,7 +123,7 @@ export const EditOrder = ({ route }) => {
     }
 
     const handleDeletePreview = () => {
-        setPreview('')
+        setPreview({ image: '' })
         setFormState({
             ...formState,
             image: ''
@@ -141,7 +141,7 @@ export const EditOrder = ({ route }) => {
     const handleCheckData = () => {
         formState.header === '' ?
             isNotifedVar(`${locale.checkField_notify} - ${locale.header}`) :
-            formState.count === '' && formState.count.match(IS_COIUNT_NUMBERS) === null ?
+            formState.count === '' || formState.count.match(IS_COIUNT_NUMBERS) === null || Number(formState.count) < 1 ?
                 isNotifedVar(`${locale.checkField_notify} - ${locale.quantity}`) :
                 formState.text === '' ?
                     isNotifedVar(`${locale.checkField_notify} - ${locale.text}`) :

@@ -1,0 +1,7 @@
+{
+  "clientUri": "https://clex.kz/",
+  "graphqlUri": "http://localhost:4000/graphql",
+  "androidGraphqlUri": "http://10.0.2.2:4000/graphql",
+  "imagesUri": "http://localhost:5001/",
+  "androidImagesUri": "http://10.0.2.2:5001/"
+}

@@ -1,9 +1,8 @@
-export const CLIENT_URI = 'https://clex.kz/'
+import { Platform } from 'react-native'
+import defaults from '../../config/default.json'
+import local from '../../config/local.json'
 
-export const URI = 'http://192.168.145.101:4000/graphql'
-export const IMAGES_URI = 'http://192.168.145.101:5001/'
-
-// export const URI = 'https://clex.kz/api/gql/'
-// export const IMAGES_URI = 'https://clex.kz/'
-
-// export const SUB_URI = 'wss://clex.kz/api/msub/'
+const config = { ...defaults, ...local }
+export const CLIENT_URI = config.clientUri
+export const URI = Platform.OS === 'android' ? config.androidGraphqlUri : config.graphqlUri
+export const IMAGES_URI = Platform.OS === 'android' ? config.androidImagesUri : config.imagesUri

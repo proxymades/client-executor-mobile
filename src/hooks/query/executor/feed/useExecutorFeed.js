@@ -21,18 +21,7 @@ export const useExecutorFeed = (city, category, selectedCity) => {
 
     //effects
     useEffect(() => {
-        city.nursultan ?
-            setCityArray(actual => [...actual, 'nursultan']) :
-            setCityArray(actual => actual.filter(el => el !== 'nursultan'))
-        city.karaganda ?
-            setCityArray(actual => [...actual, 'karaganda']) :
-            setCityArray(actual => actual.filter(el => el !== 'karaganda'))
-        city.almaty ?
-            setCityArray(actual => [...actual, 'almaty']) :
-            setCityArray(actual => actual.filter(el => el !== 'almaty'))
-        city.atyrau ?
-            setCityArray(actual => [...actual, 'atyrau']) :
-            setCityArray(actual => actual.filter(el => el !== 'atyrau'))
+        setCityArray(Object.keys(city).filter(name => city[name]))
     }, [selectedCity])
 
     return {

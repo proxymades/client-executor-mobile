@@ -7,7 +7,11 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "configure": "node scripts/configure.js",
+    "postinstall": "node scripts/configure.js",
+    "check": "node scripts/check.js",
+    "check:public": "node scripts/check-public-files.js"
   },
   "dependencies": {
     "@apollo/client": "^3.6.4",
@@ -46,5 +50,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "license": "ISC"
 }

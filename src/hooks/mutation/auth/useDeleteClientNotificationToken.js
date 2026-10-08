@@ -11,7 +11,7 @@ export const useDeleteClientNotificationToken = () => {
 
     //handles
     const deleteClientNotificationToken = (phone, token) => {
-        deleteToken({
+        return deleteToken({
             variables: {
                 phone: phone,
                 token: token

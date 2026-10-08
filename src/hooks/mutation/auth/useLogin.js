@@ -30,7 +30,9 @@ export const useLogin = (loginState, type) => {
             password: loginState.password
         },
         onCompleted: ({ clientLogin }) => {
-            registerClientNotificationToken(jwt_decode(clientLogin.token).phone, clientLogin.token)
+            registerClientNotificationToken(jwt_decode(clientLogin.token).phone, clientLogin.token).catch(() => {
+                isNotifedVar('Вход выполнен, push-уведомления недоступны')
+            })
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)
@@ -44,7 +46,9 @@ export const useLogin = (loginState, type) => {
             password: loginState.password
         },
         onCompleted: ({ executorLogin }) => {
-            registerExecutorNotificationToken(jwt_decode(executorLogin.token).phone, executorLogin.token)
+            registerExecutorNotificationToken(jwt_decode(executorLogin.token).phone, executorLogin.token).catch(() => {
+                isNotifedVar('Вход выполнен, push-уведомления недоступны')
+            })
         },
         onError: (err) => {
             isNotifedVar(`${err.message}`)

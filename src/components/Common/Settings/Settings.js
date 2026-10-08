@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { useApolloClient, useReactiveVar } from '@apollo/client'
 import messaging from '@react-native-firebase/messaging'
+import { clearSession } from '@utils/session'
 import { useMMKVString } from 'react-native-mmkv'
 import { useNavigation } from '@react-navigation/native'
 
@@ -17,7 +18,7 @@ import { ExtraModal } from '@components/Common/Modals/ExtraModal'
 import { QuestionMenuForm } from '@components/Common/Modals/Forms/QuestionMenuForm'
 
 //utils
-import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, isUserPhoneVar, isUserTypeVar, localeVar, whiteColorVar, isNotifedVar } from '@utils/cache'
 
 //colors
 import { blueColor, lightblueColor, lightgrayColor } from '@utils/colors'
@@ -30,7 +31,6 @@ export const Settings = () => {
     //global hooks
     const client = useApolloClient()
     const navigation = useNavigation()
-    const [token, setToken] = useMMKVString('token')
     const [theme, setTheme] = useMMKVString('theme')
     const [language, setLanguage] = useMMKVString('language')
 
@@ -109,13 +109,17 @@ export const Settings = () => {
         setLogoutRequest(true)
     }
 
-    const handleLogout = () => {
-        deleteNotificationToken(isUserTypeVar())
+    const handleLogout = async () => {
         setLogout(true)
-        setTimeout(() => {
-            client.clearStore()
-            setToken(undefined)
-        }, 2000)
+        try {
+            await deleteNotificationToken(isUserTypeVar())
+        } catch {
+            isNotifedVar('Не удалось отключить push-уведомления на сервере')
+        } finally {
+            clearSession()
+            await client.clearStore().catch(() => {})
+            setLogout(false)
+        }
     }
 
     const handleOpenDeletingAccountExtra = () => {
@@ -123,7 +127,7 @@ export const Settings = () => {
     }
 
     const deleteNotificationToken = (userType) => {
-        messaging()
+        return messaging()
             .getToken()
             .then(token => {
                 if (userType === 'client') {

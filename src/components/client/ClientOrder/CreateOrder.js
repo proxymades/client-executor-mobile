@@ -48,7 +48,7 @@ export const CreateOrder = () => {
 
     //hooks
     const { setOpenImagePicker, preview, setPreview } = useImagePicker(false, pickerType)
-    const { createOrder } = useCreateOrder(formState)
+    const { createOrder } = useCreateOrder(formState, setCreating)
 
     //lang hooks
     const locale = useReactiveVar(localeVar)
@@ -104,7 +104,7 @@ export const CreateOrder = () => {
     }
 
     const handleDeletePreview = () => {
-        setPreview('')
+        setPreview({ image: '' })
         setFormState({
             ...formState,
             image: ''
@@ -114,7 +114,7 @@ export const CreateOrder = () => {
     const handleCheckData = () => {
         formState.header === '' ?
             isNotifedVar(`${locale.checkField_notify} - ${locale.header}`) :
-            formState.count === '' && formState.count.match(IS_COIUNT_NUMBERS) === null ?
+            formState.count === '' || formState.count.match(IS_COIUNT_NUMBERS) === null || Number(formState.count) < 1 ?
                 isNotifedVar(`${locale.checkField_notify} - ${locale.quantity}`) :
                 formState.text === '' ?
                     isNotifedVar(`${locale.checkField_notify} - ${locale.text}`) :
