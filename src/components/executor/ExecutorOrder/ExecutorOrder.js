@@ -1,6 +1,6 @@
 //core
 import React, { useState, useEffect } from 'react'
-import { TouchableOpacity, ActivityIndicator } from 'react-native'
+import { TouchableOpacity, ActivityIndicator, Text, View } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
 
@@ -10,21 +10,22 @@ import { useCreateOrderRequest } from '@hooks_mutation/executor/order/useCreateO
 import { useCancelOrderRequest } from '@hooks_mutation/executor/order/useCancelOrderRequest'
 
 //common components
-import { Loader } from '@components/Common/Loaders/Loader'
-import { ExtraModal } from '@components/Common/Modals/ExtraModal'
-import { OrderExecutorMenuForm } from '@components/Common/Modals/Forms/OrderExecutorMenuForm'
-import { QuestionMenuForm } from '@components/Common/Modals/Forms/QuestionMenuForm'
-import { OrderData } from '@components/Common/Order/OrderData'
-import { ProfileData } from '@components/Common/Profile/ProfileData'
-import { ProfileMenu } from '@components/Common/Profile/ProfileMenu'
-import { ProfileRegisterDate } from '@components/Common/Profile/ProfileRegisterDate'
-import { OfferPriceMenuForm } from '@components/Common/Modals/Forms/OfferPriceMenuForm'
+import { Loader } from '@common_components/Loaders/Loader'
+import { ExtraModal } from '@common_components/Modals/ExtraModal'
+import { OrderExecutorMenuForm } from '@common_components/Modals/Forms/OrderExecutorMenuForm'
+import { QuestionMenuForm } from '@common_components/Modals/Forms/QuestionMenuForm'
+import { OrderData } from '@common_components/Order/OrderData'
+import { ProfileData } from '@common_components/Profile/ProfileData'
+import { ProfileMenu } from '@common_components/Profile/ProfileMenu'
+import { ProfileRegisterDate } from '@common_components/Profile/ProfileRegisterDate'
+import { OfferPriceMenuForm } from '@common_components/Modals/Forms/OfferPriceMenuForm'
+import { BlueButton } from '@common_components/Buttons/BlueButton'
 
 //utils
-import { blackColorVar, isUserTypeVar, localeVar, whiteColorVar } from '@utils/cache'
+import { blackColorVar, isNotifedVar, localeVar, whiteColorVar } from '@utils/cache'
 
 //icons
-import { MenuIcon } from '@components/Common/Svg/Svg'
+import { MenuIcon } from '@common_components/Svg/Svg'
 
 //colors
 import { lightblueColor } from '@utils/colors'
@@ -63,6 +64,9 @@ export const ExecutorOrder = ({ route }) => {
     const whiteColor = useReactiveVar(whiteColorVar)
     const blackColor = useReactiveVar(blackColorVar)
 
+    //styles
+    const styles = getStyles(whiteColor, blackColor)
+
     //effects
     useEffect(() => {
         navigation.setOptions({
@@ -83,16 +87,22 @@ export const ExecutorOrder = ({ route }) => {
     useEffect(() => {
         if (sending) {
             setExecutorMenuShow(false)
-            createOrderRequest()
+            createOrderRequest().catch(error => {
+                isNotifedVar(error.message)
+                setSending(false)
+            })
         }
-    }, [sending])
+    }, [sending, createOrderRequest])
 
     useEffect(() => {
         if (canceling) {
             setExecutorMenuShow(false)
-            cancelOrderRequest()
+            cancelOrderRequest().catch(error => {
+                isNotifedVar(error.message)
+                setCanceling(false)
+            })
         }
-    }, [canceling])
+    }, [canceling, cancelOrderRequest])
 
     //handles
     const handleInputFormChange = (value, name) => {
@@ -113,11 +123,44 @@ export const ExecutorOrder = ({ route }) => {
         setSending(true)
     }
 
+    const handleOpenRequestForm = () => {
+        if (orderData.isWork || orderData.isReady) {
+            setExecutorMenuShow(false)
+            isNotifedVar(locale.orderUAccepted_notify)
+        } else {
+            setRequestMenuShow(true)
+        }
+    }
+
+    const handleCancelMenuShow = () => {
+        setCancelMenuShow(true)
+    }
+
     if (orderLoading) return <Loader />
 
     return (
 
         <OrderData orderData={orderData}>
+
+            {orderData.orderRequest.length === 0 ?
+                <View style={styles.offerContainer}>
+                    <BlueButton handleAction={handleOpenRequestForm} isDisabled={sending || canceling}>
+                        <Text style={styles.offerText}>
+                            {locale.offerPrice}
+                        </Text>
+                    </BlueButton>
+                </View>
+                :
+                !orderData.isWork && !orderData.isReady ?
+                    <View style={styles.offerContainer}>
+                        <BlueButton handleAction={handleCancelMenuShow} isDisabled={sending || canceling}>
+                            <Text style={styles.offerText}>
+                                {locale.cancel}
+                            </Text>
+                        </BlueButton>
+                    </View>
+                    : null
+            }
 
             <ExtraModal
                 modalVisible={executorMenuShow}
@@ -125,11 +168,7 @@ export const ExecutorOrder = ({ route }) => {
             >
                 <OrderExecutorMenuForm
                     setModalVisible={setExecutorMenuShow}
-                    setCancelMenuShow={setCancelMenuShow}
                     setProfileMenuShow={setProfileMenuShow}
-                    setRequestMenuShow={setRequestMenuShow}
-                    isExistRequest={orderData.orderRequest.length > 0}
-                    isWorked={orderData.isWork || orderData.isReady}
                 />
             </ExtraModal>
 
@@ -194,3 +233,15 @@ export const ExecutorOrder = ({ route }) => {
 
     )
 }
+
+const getStyles = (whiteColor, blackColor) => ({
+    offerContainer: {
+        width: '50%',
+        alignSelf: 'center',
+        marginTop: 30,
+    },
+    offerText: {
+        color: whiteColor,
+        fontSize: 14
+    },
+})

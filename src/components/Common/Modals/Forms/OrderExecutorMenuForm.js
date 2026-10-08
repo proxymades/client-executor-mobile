@@ -4,18 +4,14 @@ import { Text, View, TouchableOpacity } from 'react-native'
 import { useReactiveVar } from '@apollo/client'
 
 //hooks
-import { blackColorVar, isNotifedVar, localeVar } from '@utils/cache'
+import { blackColorVar, localeVar } from '@utils/cache'
 
 //icons
-import { BackIcon, ProfileRatingIcon, SendRequestIcon, TerminateIcon } from '@common_components/Svg/Svg'
+import { BackIcon, ProfileRatingIcon } from '@common_components/Svg/Svg'
 
 export const OrderExecutorMenuForm = ({
     setModalVisible,
     setProfileMenuShow,
-    setRequestMenuShow,
-    setCancelMenuShow,
-    isExistRequest,
-    isWorked,
 }) => {
 
     //lang hooks
@@ -32,19 +28,6 @@ export const OrderExecutorMenuForm = ({
         setProfileMenuShow(true)
     }
 
-    const handleOpenRequestForm = () => {
-        if (isWorked) {
-            setModalVisible(false)
-            isNotifedVar(locale.orderUAccepted_notify)
-        } else {
-            setRequestMenuShow(true)
-        }
-    }
-
-    const handlCancelOrder = () => {
-        setCancelMenuShow()
-    }
-
     const handleCloseModal = () => {
         setModalVisible(false)
     }
@@ -54,17 +37,6 @@ export const OrderExecutorMenuForm = ({
 
             <View style={styles.items}>
 
-                {!isExistRequest ?
-                    <TouchableOpacity
-                        style={styles.item}
-                        onPress={handleOpenRequestForm}
-                    >
-                        <SendRequestIcon width='30' height='25' fill={blackColor} />
-                        <Text style={styles.text}>{locale.sendRequest}</Text>
-                    </TouchableOpacity>
-                    : null
-                }
-
                 <TouchableOpacity
                     style={styles.item}
                     onPress={handleShowProfileData}
@@ -72,18 +44,6 @@ export const OrderExecutorMenuForm = ({
                     <ProfileRatingIcon width='30' height='25' fill={blackColor} />
                     <Text style={styles.text}>{locale.profile}</Text>
                 </TouchableOpacity>
-
-                {isExistRequest &&
-                    !isWorked ?
-                    <TouchableOpacity
-                        style={styles.item}
-                        onPress={handlCancelOrder}
-                    >
-                        <TerminateIcon width='30' height='25' fill={blackColor} />
-                        <Text style={styles.text}>{locale.cancel}</Text>
-                    </TouchableOpacity>
-                    : null
-                }
 
                 <TouchableOpacity
                     style={styles.item}
