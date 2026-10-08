@@ -1,6 +1,6 @@
 # Preparation record
 
-Verified on 2026-10-08. Work was performed in the original repository, without creating a copy or rewriting Git history. No commits were pushed.
+Verified on 2026-10-08. Initial preparation was performed in the original repository without creating a copy. History was cleaned later for the new publication repositories; see the update below.
 
 ## Validation
 
@@ -54,3 +54,13 @@ A = new tracked file; M = modified; D = removed from Git (local configuration an
 | M | `src/hooks/query/executor/feed/useExecutorFeed.js` |
 | A | `src/utils/session.js` |
 | M | `src/utils/uri.js` |
+
+## History cleanup update – 2026-10-08
+
+The user chose to preserve and clean local history and publish to new repositories, leaving the old private repositories unchanged. The new names use hyphens: `client-executor-mobile` and `client-executor-server`.
+
+`git-filter-repo` 2.47.0 removed private/configuration paths and replaced the two old secret values throughout historical file contents and commit messages. No fetch or push to the old repositories was performed. All 29 mobile commits and 27 server commits that existed before cleanup were preserved. The branch is `main` for the new repositories.
+
+Checksums confirmed that the rewrite changed none of the current tracked working files. A full stored-object audit inspected 711 mobile blobs/commits and 153 server blobs/commits after cleanup, including unreachable objects. No known removed secret values or additional private-key/token indicators remained. Local ignored configuration and credential files were preserved.
+
+The publication update changes these tracked files: `README.md`, `PUBLISHING.md`, `docs/PREPARATION.md`, `scripts/check-public-files.js`, and on the server `scripts/check.js`. The historical check now inspects all reachable file blobs. The server recognizes the new companion folder name while retaining support for the original local layout.

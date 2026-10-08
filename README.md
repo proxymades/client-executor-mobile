@@ -1,4 +1,4 @@
-# CLEX Mobile
+# Client Executor Mobile – CLEX
 
 An archived React Native MVP for matching customers with contractors in printing, promotional products and outdoor advertising. Originally developed in 2022.
 
@@ -29,7 +29,7 @@ flowchart LR
     FCM --> App
 ```
 
-The backend is maintained in the companion `clex_server` repository. Place both repositories next to each other for local development; the backend can then validate all mobile GraphQL documents with `npm run check`.
+The backend is maintained in [client-executor-server](https://github.com/proxymades/client-executor-server). Place `client-executor-mobile` and `client-executor-server` next to each other for local development; the backend can then validate all mobile GraphQL documents with `npm run check`.
 
 ## Stack and prerequisites
 
@@ -80,7 +80,7 @@ Android and iOS JavaScript bundles, session tests and all 44 GraphQL documents h
 
 ## Publication
 
-See [PUBLISHING.md](PUBLISHING.md) before making the existing repository public. Current files and historical commits must be reviewed separately.
+See [PUBLISHING.md](PUBLISHING.md) before making the existing repository public. The local history was cleaned before publication; keep reviewing current files and historical commits separately.
 
 ## License
 
