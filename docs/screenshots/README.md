@@ -1,5 +1,7 @@
 # Native screenshot checklist
 
+[English](README.md) | [Русский](README.ru.md)
+
 Capture the actual application with synthetic demo accounts from the companion server. Do not use real customer names, phones, photos or push messages.
 
 Suggested screenshots:
